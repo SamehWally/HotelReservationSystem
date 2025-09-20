@@ -58,7 +58,7 @@ namespace Application.Services
             return _roomRepository.GetAllRooms();
         }
 
-        public void UpdateRoom(EditRoomDTO roomDTO) 
+        public void UpdateRoom(EditRoomDto roomDTO) 
         {
             var roomInDb = _roomRepository.GetRoomById(roomDTO.Id);
             if (roomInDb == null) 

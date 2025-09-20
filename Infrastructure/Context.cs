@@ -24,6 +24,8 @@ namespace Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<RoomFacility>().Ignore(r => r.Id);
+
             modelBuilder.Entity<RoomFacility>()
                 .HasKey(rf => new { rf.RoomId, rf.FacilityId });
 
