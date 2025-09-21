@@ -168,5 +168,22 @@ namespace Presentation.Controllers
         
         }
 
+
+        [HttpGet]
+        public ResponseViewModel<List<GetAllRoomsViewModel>> GetAllRooms()
+        {
+            var rooms = _roomService.GetAllRooms();
+            var viewModels = rooms.Select(room => new GetAllRoomsViewModel
+            {
+                Name = room.Name,
+                Type = room.Type,
+                PricePerNight = room.PricePerNight,
+                Description = room.Description,
+                PictureUrls = room.PictureUrls.Select(url => new RoomPicturesViewModel { Url = url.Url }).ToList(),
+                RoomFacilities=room.RoomFasilities.Select(fac => new RoomFacilityViewModel{Name = fac.Name }).ToList()
+            }).ToList();
+            return new SuccessResponseViewModel<List<GetAllRoomsViewModel>>(viewModels);
+        }
+
     }
 }

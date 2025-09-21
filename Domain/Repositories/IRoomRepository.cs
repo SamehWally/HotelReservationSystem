@@ -13,7 +13,7 @@ namespace Domain.Repositories
         void UpdateRoom(Room room);
         void DeleteRoom(int id);
         Room? GetRoomById(int id);
-        IEnumerable<Room> GetAllRooms();
+        IQueryable<Room> GetAllRooms();
         IEnumerable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut);
     }
 }

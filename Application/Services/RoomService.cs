@@ -53,9 +53,26 @@ namespace Application.Services
             return roomDTO;
         }
 
-        public IEnumerable<Room> GetAllRooms()
+        public IEnumerable<GetAllRoomsDto> GetAllRooms() 
         {
-            return _roomRepository.GetAllRooms();
+            var query=_roomRepository.GetAllRooms();
+            var roomsDTO = query.Select(room => new GetAllRoomsDto
+            {
+                Id = room.Id,
+                Name = room.Name,
+                Type = (int)room.Type,
+                PricePerNight = room.PricePerNight,
+                Description = room.Description,
+                PictureUrls = room.Pictures.Select(p => new RoomPictureDto { Url = p.Url ,Id=p.Id}).ToList(),
+                RoomFasilities = room.RoomFacilities.Select(rf => new RoomFacilityDto
+                {
+                    Id = rf.Facility.Id,
+                    Name = rf.Facility.Name,
+                    
+                }).ToList()
+            }).ToList();
+            return roomsDTO;
+
         }
 
         public void UpdateRoom(EditRoomDto roomDTO)
