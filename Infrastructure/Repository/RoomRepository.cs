@@ -28,9 +28,9 @@ namespace Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Room> GetAllRooms()
+        public IQueryable<Room> GetAllRooms()
         {
-            throw new NotImplementedException();
+            return _context.Rooms.Where(r=>!r.IsDeleted);
         }
 
         public IEnumerable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
