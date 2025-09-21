@@ -17,5 +17,6 @@ namespace Domain.Models.Room
 
         public List<RoomPicture> Pictures { get; set; } = new();
         public List<RoomFacility> RoomFacilities { get; set; } = new();
+        public List<Reservation.Reservation> Reservations { get; set; } = new();
     }
 }
