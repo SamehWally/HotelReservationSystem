@@ -61,8 +61,10 @@ namespace Application.Services
         public void UpdateRoom(EditRoomDto roomDTO)
         {
             var roomInDb = _roomRepository.GetRoomById(roomDTO.Id);
+
             if (roomInDb == null)
                 throw new ArgumentException($"Room with ID {roomDTO.Id} not found");
+
             roomInDb.Name = roomDTO.Name;
             roomInDb.Type = (RoomType)roomDTO.Type;
             roomInDb.PricePerNight = roomDTO.PricePerNight;
@@ -78,6 +80,7 @@ namespace Application.Services
 
             _roomRepository.UpdateRoom(roomInDb);
         }
+
         //public GetRoomDto UpdateRoom(EditRoomDto roomDTO)
         //{
         //    var roomInDb = _roomRepository.GetRoomById(roomDTO.Id);
