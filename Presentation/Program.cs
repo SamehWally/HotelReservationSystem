@@ -1,11 +1,6 @@
 
 using Application;
-using Application.Services;
-using Domain.Repositories;
 using Infrastructure;
-using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Presentation.Middlewares;
 
 namespace Presentation
@@ -41,7 +36,7 @@ namespace Presentation
 
             app.UseAuthorization();
 
-            app.UseStaticFiles(); 
+            app.UseStaticFiles();
 
             app.MapControllers();
 
