@@ -78,42 +78,19 @@ namespace Application.Services
 
             _roomRepository.UpdateRoom(roomInDb);
         }
-        //public GetRoomDto UpdateRoom(EditRoomDto roomDTO)
-        //{
-        //    var roomInDb = _roomRepository.GetRoomById(roomDTO.Id);
-        //    if (roomInDb == null)
-        //        throw new ArgumentException($"Room with ID {roomDTO.Id} not found");
+     
+        public bool SoftDeleteRoom(int id)
+        {
 
-        //    // Update basic info
-        //    roomInDb.Name = roomDTO.Name;
-        //    roomInDb.Type = (RoomType)roomDTO.Type;
-        //    roomInDb.PricePerNight = roomDTO.PricePerNight;
-        //    roomInDb.Description = roomDTO.Description;
+            var room = _roomRepository.GetRoomById(id);
+            if (room==null)
+            {
+                return false;
+            }
+            _roomRepository.DeleteRoom(id);
+            return true;
 
-        //    // Update Facilities
-        //    roomInDb.RoomFacilities.Clear();
-        //    roomInDb.RoomFacilities = roomDTO.FacilityIds
-        //        .Select(id => new RoomFacility { FacilityId = id, RoomId = roomInDb.Id })
-        //        .ToList();
 
-        //    // Update Pictures
-        //    roomInDb.Pictures.Clear();
-        //    roomInDb.Pictures = roomDTO.PictureUrls
-        //        .Select(url => new RoomPicture { Url = url, RoomId = roomInDb.Id })
-        //        .ToList();
+        }
 
-        //    _roomRepository.UpdateRoom(roomInDb);
-
-        //    // return updated DTO
-        //    return new GetRoomDto
-        //    {
-        //        Id = roomInDb.Id,
-        //        Name = roomInDb.Name,
-        //        Type = roomInDb.Type.ToString(),
-        //        PricePerNight = roomInDb.PricePerNight,
-        //        Description = roomInDb.Description,
-        //        Facilities = roomInDb.RoomFacilities.Select(f => f.FacilityId).ToList(),
-        //        Pictures = roomInDb.Pictures.Select(p => p.Url).ToList()
-        //    };
-    }
     }
