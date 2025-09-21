@@ -40,25 +40,6 @@ namespace Presentation.Controllers
             return new SuccessResponseViewModel<int>(newRoomId, "Room added successfully");
         }
 
-        //[HttpGet("{id}")]
-        //public ResponseViewModel<GetRoomViewModel> GetRoomById(int id)
-        //{
-        //    var room = _roomService.GetRoomById(id);
-        //    if (room == null)
-        //    {
-        //        return new ErrorResponseViewModel<GetRoomViewModel>
-        //                    (ErrorCode.RoomNotFound, $"Not found room with id {id}");
-        //    }
-
-        //    var viewModel = new GetRoomViewModel
-        //    {
-        //        Id = room!.Id,
-        //        Name = room.Name
-        //    };
-
-        //    return new SuccessResponseViewModel<GetRoomViewModel>(viewModel);
-        //}
-
         private async Task<List<string>> SavePictures(List<IFormFile> pictures)
         {
             var urls = new List<string>();
@@ -110,50 +91,7 @@ namespace Presentation.Controllers
 
             return new SuccessResponseViewModel<string>("Room updated successfully");
         }
-        //[HttpPut("{id}")]
-        //[Consumes("multipart/form-data")]
-        //public async Task<ActionResult<GetRoomDto>> UpdateRoom(int id, [FromForm] EditRoomViewModel vm)
-        //{
-        //    if (id != vm.Id)
-        //        return BadRequest("Id mismatch");
-
-        //    // ✅ Save new pictures if uploaded
-        //    var pictureUrls = new List<string>();
-        //    if (vm.NewPictures != null && vm.NewPictures.Any())
-        //    {
-        //        pictureUrls = await SavePictures(vm.NewPictures);
-        //    }
-
-        //    // ✅ Keep old pictures if needed
-        //    if (vm.ExistingPictureUrlsToKeep != null)
-        //    {
-        //        pictureUrls.AddRange(vm.ExistingPictureUrlsToKeep);
-        //    }
-
-        //    var dto = new EditRoomDto
-        //    {
-        //        Id = vm.Id,
-        //        Name = vm.Name,
-        //        Type = vm.Type,
-        //        PricePerNight = vm.PricePerNight,
-        //        Description = vm.Description,
-        //        FacilityIds = vm.FacilityIds,
-        //        PictureUrls = pictureUrls
-        //    };
-
-        //    try
-        //    {
-        //        var updatedRoom = _roomService.UpdateRoom(dto);
-        //        return Ok(updatedRoom);
-        //    }
-        //    catch (ArgumentException ex)
-        //    {
-        //        return NotFound(ex.Message);
-        //    }
-        //}
-
-
-
+       
         [HttpDelete("id")]
         public bool Delete(int id) {
 
@@ -167,7 +105,6 @@ namespace Presentation.Controllers
         
         
         }
-
 
         [HttpGet]
         public ResponseViewModel<List<GetAllRoomsViewModel>> GetAllRooms()

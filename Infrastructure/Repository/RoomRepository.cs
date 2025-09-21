@@ -1,11 +1,5 @@
 ﻿using Domain.Models.Room;
 using Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
@@ -26,32 +20,20 @@ namespace Infrastructure.Repository
 
         public void DeleteRoom(int id)
         {
-            // throw new NotImplementedException();
-            //var room = _context.Rooms.Include(r=>r.Pictures).FirstOrDefault(r=>r.Id==id);
-            //if (room != null) { 
-            //room.IsDeleted = true;
-            //    foreach (var photo in room.Pictures)
-            //    {
-            //        photo.IsDeleted = true;
-            //        _context.RoomPictures.Update(photo);
-            //    }
-            //    _context.Rooms.Update(room);
-            //    _context.SaveChanges();
-            //}
             var room = _context.Rooms.Find(id);
-            if (room != null) 
-            room.IsDeleted = true;
-            _context.Rooms.Update(room);
+            if (room != null)
+                room.IsDeleted = true;
+
             var photo = _context.RoomPictures.Where(p => p.RoomId == id);
             foreach (var photos in photo)
-             photos.IsDeleted = true;
+                photos.IsDeleted = true;
+
             _context.SaveChanges();
-         
         }
 
         public IQueryable<Room> GetAllRooms()
         {
-            return _context.Rooms.Where(r=>!r.IsDeleted);
+            return _context.Rooms.Where(r => !r.IsDeleted);
         }
 
         public IEnumerable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
