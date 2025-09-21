@@ -68,5 +68,20 @@ namespace Application.Services
 
             _roomRepository.UpdateRoom(roomInDb);
         }
+     
+        public bool SoftDeleteRoom(int id)
+        {
+
+            var room = _roomRepository.GetRoomById(id);
+            if (room==null)
+            {
+                return false;
+            }
+            _roomRepository.DeleteRoom(id);
+            return true;
+
+
+        }
+
     }
 }

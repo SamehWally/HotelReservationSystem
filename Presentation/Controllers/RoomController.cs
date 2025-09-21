@@ -89,5 +89,19 @@ namespace Presentation.Controllers
             return urls;
         }
 
+        [HttpDelete("id")]
+        public bool Delete(int id) {
+
+            var success = _roomService.SoftDeleteRoom(id);
+            if (!success) {
+                return false;
+            
+            }
+            
+            return true;
+        
+        
+        }
+
     }
 }
