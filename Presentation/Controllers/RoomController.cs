@@ -4,6 +4,7 @@ using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 using Presentation.ViewModels.Room;
+using Presentation.ViewModels.Room.Presentation.ViewModels.Room;
 
 namespace Presentation.Controllers
 {
@@ -87,6 +88,84 @@ namespace Presentation.Controllers
             }
 
             return urls;
+        }
+        [HttpPut]
+        [Consumes("multipart/form-data")]
+        public async Task<ResponseViewModel<string>> UpdateRoom([FromForm] EditRoomViewModel viewModel)
+        {
+            var pictureUrls = await SavePictures(viewModel.PictureUrls);
+
+            var roomDto = new EditRoomDto
+            {
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                Type = viewModel.Type,
+                PricePerNight = viewModel.PricePerNight,
+                Description = viewModel.Description,
+                FacilityIds = viewModel.FacilityIds,
+                PictureUrls = pictureUrls
+            };
+
+            _roomService.UpdateRoom(roomDto);
+
+            return new SuccessResponseViewModel<string>("Room updated successfully");
+        }
+        //[HttpPut("{id}")]
+        //[Consumes("multipart/form-data")]
+        //public async Task<ActionResult<GetRoomDto>> UpdateRoom(int id, [FromForm] EditRoomViewModel vm)
+        //{
+        //    if (id != vm.Id)
+        //        return BadRequest("Id mismatch");
+
+        //    // ✅ Save new pictures if uploaded
+        //    var pictureUrls = new List<string>();
+        //    if (vm.NewPictures != null && vm.NewPictures.Any())
+        //    {
+        //        pictureUrls = await SavePictures(vm.NewPictures);
+        //    }
+
+        //    // ✅ Keep old pictures if needed
+        //    if (vm.ExistingPictureUrlsToKeep != null)
+        //    {
+        //        pictureUrls.AddRange(vm.ExistingPictureUrlsToKeep);
+        //    }
+
+        //    var dto = new EditRoomDto
+        //    {
+        //        Id = vm.Id,
+        //        Name = vm.Name,
+        //        Type = vm.Type,
+        //        PricePerNight = vm.PricePerNight,
+        //        Description = vm.Description,
+        //        FacilityIds = vm.FacilityIds,
+        //        PictureUrls = pictureUrls
+        //    };
+
+        //    try
+        //    {
+        //        var updatedRoom = _roomService.UpdateRoom(dto);
+        //        return Ok(updatedRoom);
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return NotFound(ex.Message);
+        //    }
+        //}
+
+
+
+        [HttpDelete("id")]
+        public bool Delete(int id) {
+
+            var success = _roomService.SoftDeleteRoom(id);
+            if (!success) {
+                return false;
+            
+            }
+            
+            return true;
+        
+        
         }
 
 
