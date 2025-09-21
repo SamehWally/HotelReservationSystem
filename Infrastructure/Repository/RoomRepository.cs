@@ -67,7 +67,8 @@ namespace Infrastructure.Repository
 
         public void UpdateRoom(Room room)
         {
-            throw new NotImplementedException();
+            _context.Rooms.Update(room);
+            _context.SaveChanges();
         }
     }
 }
