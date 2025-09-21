@@ -106,8 +106,6 @@ namespace Application.Services
             }
             _roomRepository.DeleteRoom(id);
             return true;
-
-
         }
 
     }
