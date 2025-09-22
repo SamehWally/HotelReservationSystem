@@ -14,6 +14,6 @@ namespace Domain.Repositories
         void DeleteRoom(int id);
         Room? GetRoomById(int id);
         IQueryable<Room> GetAllRooms();
-        IEnumerable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut);
+        IQueryable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut);
     }
 }
