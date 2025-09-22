@@ -1,4 +1,4 @@
-﻿using Domain.Enums.Reservation;
+﻿using Domain.Enums;
 using Domain.Models.Reservation;
 using Domain.Repositories;
 using System;

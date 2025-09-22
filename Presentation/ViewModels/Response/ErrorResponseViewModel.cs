@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using Presentation.ViewModels.Response;
 using EnumContainer = Domain.Enums;
 
 namespace Presentation.ViewModels
