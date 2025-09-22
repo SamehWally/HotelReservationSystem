@@ -37,7 +37,7 @@ namespace Infrastructure.Repository
         }
         public IQueryable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
         {
-            return  GetAllRooms().Where(r => r.IsAvailable)
+            return GetAllRooms().Where(r => r.IsAvailable)
                 .Where(r => !_context.Reservations.Any(res =>
                 res.RoomId == r.Id &&
                 res.Status != ReservationStatus.Canceled &&

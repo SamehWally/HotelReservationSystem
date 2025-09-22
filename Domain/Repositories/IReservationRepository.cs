@@ -1,4 +1,4 @@
-﻿using Domain.Enums;
+﻿using Domain.Enums.Reservation;
 using Domain.Models.Reservation;
 using Domain.Models.Room;
 using System;

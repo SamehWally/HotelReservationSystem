@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Enums;
+using Domain.Enums.Reservation;
 
 namespace Domain.Models.Reservation
 {

@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ViewModels\ReservationViewModels\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
