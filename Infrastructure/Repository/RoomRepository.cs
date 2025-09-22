@@ -36,10 +36,12 @@ namespace Infrastructure.Repository
             return _context.Rooms.Where(r => !r.IsDeleted);
         }
 
-        public IEnumerable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
+        public IQueryable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
         {
-            throw new NotImplementedException();
+            var avilableRomms = _context.Rooms.Where((c) => c.IsAvailable);
+            return avilableRomms;
         }
+
 
         public Room? GetRoomById(int id)
         {
