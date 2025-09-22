@@ -1,22 +1,28 @@
 ﻿using Application.DTOs.Room;
+using Application.DTOs.Room.DTO;
 using Application.Services;
+using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 using Presentation.ViewModels.Room;
 using Presentation.ViewModels.Room.Presentation.ViewModels.Room;
+using System.Collections;
 
 namespace Presentation.Controllers
 {
+
     public class RoomController : BaseAPIsController
     {
         private readonly RoomService _roomService;
         private readonly IWebHostEnvironment _env;
+        private readonly IMapper _mapper;
 
-        public RoomController(RoomService roomService, IWebHostEnvironment env)
+        public RoomController(RoomService roomService, IWebHostEnvironment env, IMapper mapper)
         {
             _roomService = roomService;
             _env = env;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -91,21 +97,32 @@ namespace Presentation.Controllers
 
             return new SuccessResponseViewModel<string>("Room updated successfully");
         }
-       
         [HttpDelete("id")]
-        public bool Delete(int id) {
+        public bool Delete(int id)
+        {
 
             var success = _roomService.SoftDeleteRoom(id);
-            if (!success) {
+            if (!success)
+            {
                 return false;
-            
-            }
-            
-            return true;
-        
-        
-        }
 
+            }
+
+            return true;
+
+
+        }
+        [HttpGet("id")]
+        public  ResponseViewModel<GetRoomViewModel> GetRoomById(int id)
+        {
+            var room = _roomService.GetRoomById(id);
+            var roomVM = _mapper.Map<GetRoomViewModel>(room);
+
+            if (roomVM is not null)
+                return new SuccessResponseViewModel<GetRoomViewModel>(roomVM);
+            
+            return new ErrorResponseViewModel<GetRoomViewModel>(ErrorCode.RoomNotFound);
+        }
         [HttpGet]
         public ResponseViewModel<List<GetAllRoomsViewModel>> GetAllRooms()
         {
@@ -117,9 +134,17 @@ namespace Presentation.Controllers
                 PricePerNight = room.PricePerNight,
                 Description = room.Description,
                 PictureUrls = room.PictureUrls.Select(url => new RoomPicturesViewModel { Url = url.Url }).ToList(),
-                RoomFacilities=room.RoomFasilities.Select(fac => new RoomFacilityViewModel{Name = fac.Name }).ToList()
+                RoomFacilities = room.RoomFasilities.Select(fac => new RoomFacilityViewModel { Name = fac.Name }).ToList()
             }).ToList();
             return new SuccessResponseViewModel<List<GetAllRoomsViewModel>>(viewModels);
+        }
+        [HttpGet]
+        public async Task<ResponseViewModel<IEnumerable<AvailableRoomsVM>>> GetAllAvailableRooms(DateTime checkIn, DateTime checkOut)
+        {
+            var availableRooms = await _roomService.GetAllAvailableRooms(checkIn, checkOut);
+            var roomsVm = _mapper.Map<IEnumerable<AvailableRoomsVM>>(availableRooms);
+
+            return new SuccessResponseViewModel<IEnumerable<AvailableRoomsVM>>(roomsVm);
         }
 
     }

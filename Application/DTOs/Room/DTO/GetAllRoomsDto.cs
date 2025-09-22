@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Models.Room;
 
-namespace Application.DTOs.Room
+namespace Application.DTOs.Room.DTO
 {
     public class GetAllRoomsDto
     {

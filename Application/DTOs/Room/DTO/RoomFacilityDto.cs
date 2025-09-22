@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs.Room
+namespace Application.DTOs.Room.DTO
 {
-    public class RoomPictureDto
+    public class RoomFacilityDto
     {
         public int Id { get; set; }
-        public string Url { get; set; }
+        public string Name { get; set; }
     }
 }

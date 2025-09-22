@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs.Room
+namespace Application.DTOs.Room.DTO
 {
     public class AddRoomDto
     {
