@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class BaseModel
+    public abstract class BaseModel
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }=false;

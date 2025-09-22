@@ -1,6 +1,6 @@
 ﻿using EnumContainer = Domain.Enums;
 
-namespace Presentation.ViewModels
+namespace Presentation.ViewModels.Response
 {
     public class SuccessResponseViewModel<T> : ResponseViewModel<T>
     {

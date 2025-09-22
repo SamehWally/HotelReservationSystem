@@ -1,5 +1,6 @@
 ﻿using Domain.Models.Reservation;
 using Domain.Models.Room;
+using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace Infrastructure
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomPicture> RoomPictures { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Staff> Staff {  get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,4 +1,4 @@
-﻿using Domain.Enums;
+﻿using Domain.Enums.Reservation;
 using Domain.Models.Room;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +19,6 @@ namespace Infrastructure.Repository
             _context.Rooms.Add(room);
             _context.SaveChanges();
         }
-
         public void DeleteRoom(int id)
         {
             var room = _context.Rooms.Find(id);
@@ -32,18 +31,16 @@ namespace Infrastructure.Repository
 
             _context.SaveChanges();
         }
-
         public IQueryable<Room> GetAllRooms()
         {
             return _context.Rooms.Where(r => !r.IsDeleted);
         }
-
         public IQueryable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
         {
             return  GetAllRooms().Where(r => r.IsAvailable)
                 .Where(r => !_context.Reservations.Any(res =>
                 res.RoomId == r.Id &&
-                res.Status != ReservationStatus.canceled &&
+                res.Status != ReservationStatus.Canceled &&
                 res.CheckIn < checkOut &&
                 checkIn < res.CheckOut));
         }
@@ -58,7 +55,6 @@ namespace Infrastructure.Repository
             var room = _context.Rooms.FirstOrDefault(r => r.Id == id);
             return room;
         }
-
         public void UpdateRoom(Room room)
         {
             _context.Rooms.Update(room);

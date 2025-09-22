@@ -8,8 +8,8 @@ namespace Domain.Enums
 {
     public enum ReservationStatus
     {
-        pending=1,
-        confirmed=2,
-        canceled=3,
+        Pending = 1,
+        Confirmed = 2,
+        Canceled = 3,
     }
 }
