@@ -1,6 +1,6 @@
 ﻿using Domain.Enums;
 
-namespace Presentation.ViewModels
+namespace Presentation.ViewModels.Response
 {
     public class ResponseViewModel<T>
     {
