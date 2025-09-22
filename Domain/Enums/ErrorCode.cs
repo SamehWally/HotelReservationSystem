@@ -6,6 +6,7 @@
 
         RoomNotFound = 100,
         InvalidRoomId = 101,
+        NoRoomsAvailableBetweenThisDate=102,
 
         ValidationFailed = 2,
         Unauthorized = 3,
@@ -13,6 +14,6 @@
         Conflict = 5,
         InternalError = 6,
         DuplicateEntry = 7,
-        InvalidInput = 8
+        InvalidInput = 8,
     }
 }

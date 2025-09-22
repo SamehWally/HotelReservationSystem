@@ -1,4 +1,6 @@
-﻿using Application.DTOs.Room;
+﻿using Application.DTOs.Room.DTO;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.Enums.RoomType;
 using Domain.Models;
 using Domain.Models.Room;
@@ -8,18 +10,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
     public class RoomService
     {
         private readonly IRoomRepository _roomRepository;
+        private readonly IMapper _mapper;
 
-        public RoomService(IRoomRepository roomRepository)
+        public RoomService(IRoomRepository roomRepository, IMapper mapper)
         {
             _roomRepository = roomRepository;
+            _mapper = mapper;
         }
-
         public int AddRoom(AddRoomDto roomDto)
         {
             if (string.IsNullOrWhiteSpace(roomDto.Name) || roomDto.PricePerNight <= 0)
@@ -41,21 +45,15 @@ namespace Application.Services
             _roomRepository.AddRoom(newRoom);
             return newRoom.Id;
         }
-
-        public GetRoomDto? GetRoomById(int id)
+        public  GetRoomDto? GetRoomById(int id)
         {
             var room = _roomRepository.GetRoomById(id);
-            var roomDTO = new GetRoomDto
-            {
-                Id = room.Id,
-                Name = room.Name
-            };
-            return roomDTO;
+            var roomDto = _mapper.Map<GetRoomDto>(room);
+            return roomDto;
         }
-
-        public IEnumerable<GetAllRoomsDto> GetAllRooms() 
+        public IEnumerable<GetAllRoomsDto> GetAllRooms()
         {
-            var query=_roomRepository.GetAllRooms();
+            var query = _roomRepository.GetAllRooms();
             var roomsDTO = query.Select(room => new GetAllRoomsDto
             {
                 Id = room.Id,
@@ -63,18 +61,27 @@ namespace Application.Services
                 Type = (int)room.Type,
                 PricePerNight = room.PricePerNight,
                 Description = room.Description,
-                PictureUrls = room.Pictures.Select(p => new RoomPictureDto { Url = p.Url ,Id=p.Id}).ToList(),
+                PictureUrls = room.Pictures.Select(p => new RoomPictureDto { Url = p.Url, Id = p.Id }).ToList(),
                 RoomFasilities = room.RoomFacilities.Select(rf => new RoomFacilityDto
                 {
                     Id = rf.Facility.Id,
                     Name = rf.Facility.Name,
-                    
+
                 }).ToList()
             }).ToList();
             return roomsDTO;
 
         }
+        public async Task<IEnumerable<AvailableRoomsDto>> GetAllAvailableRooms(DateTime checkIn, DateTime checkOut)
+        {
+            var query = _roomRepository.GetAvailableRooms(checkIn, checkOut);
 
+            var avilableRooms = await query
+                .AsNoTracking()
+                .ProjectTo<AvailableRoomsDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+            return avilableRooms;
+        }
         public void UpdateRoom(EditRoomDto roomDTO)
         {
             var roomInDb = _roomRepository.GetRoomById(roomDTO.Id);
@@ -95,12 +102,11 @@ namespace Application.Services
 
             _roomRepository.UpdateRoom(roomInDb);
         }
-     
         public bool SoftDeleteRoom(int id)
         {
 
             var room = _roomRepository.GetRoomById(id);
-            if (room==null)
+            if (room == null)
             {
                 return false;
             }

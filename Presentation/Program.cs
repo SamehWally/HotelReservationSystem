@@ -1,7 +1,12 @@
-
+using AutoMapper;
 using Application;
 using Infrastructure;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Middlewares;
+using Domain.Models.Room;
+using Application.DTOs.Mapping;
+using Presentation.ViewModels.Mapping;
 
 namespace Presentation
 {
@@ -19,7 +24,12 @@ namespace Presentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //AutoMapper
+            builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
+                typeof(RoomProfileDto).Assembly);
+
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+
 
             var app = builder.Build();
 
@@ -28,6 +38,7 @@ namespace Presentation
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
