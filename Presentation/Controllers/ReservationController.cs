@@ -35,5 +35,19 @@ namespace Presentation.Controllers
             }
             return new ErrorResponseViewModel<UpdateReservationVM>(ErrorCode.UpdatedFailed);
         }
+        [HttpPut("Date")]
+        public async Task<ResponseViewModel<UpdateReservationDateVM>> UpdateDateAsync([FromForm] UpdateReservationDateVM vm)
+        {
+            if (vm is null) return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.InvalidInput, "Body is Required!");
+
+            var dto = _mapper.Map<UpdateReservationDateDto>(vm);
+            var isUpdated = await _reservationService.UpdateDateAsync(dto);
+            if (isUpdated)
+            {
+                var mappedVM = _mapper.Map<UpdateReservationDateVM>(dto);
+                return new SuccessResponseViewModel<UpdateReservationDateVM>(mappedVM);
+            }
+            return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
+        }
     }
 }

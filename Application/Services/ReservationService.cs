@@ -30,5 +30,14 @@ namespace Application.Services
             var isUpdated = await _reservationRepository.UpdateAsync(reservatio);
             return isUpdated;
         }
+        public async Task<bool> UpdateDateAsync(UpdateReservationDateDto dto)
+        {
+            if (dto is null || dto.Id <= 0) return false;
+            if (dto.CheckIn >= dto.CheckOut) return false;
+
+            var reservatio = _mapper.Map<Reservation>(dto);
+            var isUpdated = await _reservationRepository.UpdateAsync(reservatio);
+            return isUpdated;
+        }
     }
 }

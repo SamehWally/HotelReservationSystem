@@ -9,6 +9,8 @@ namespace Presentation.ViewModels.Mapping
         {
             //      UpdateReservationVM <-> UpdateReservationDto
             CreateMap<UpdateReservationVM, UpdateReservationDto>().ReverseMap();
+            CreateMap<UpdateReservationDateVM, UpdateReservationDateDto>().ReverseMap();
+
         }
     }
 }

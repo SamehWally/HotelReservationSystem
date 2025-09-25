@@ -17,6 +17,11 @@ namespace Application.DTOs.Mapping
              .ForMember(d => d.CheckIn, o => o.MapFrom(s => s.CheckIn))
              .ForMember(d => d.CheckOut, o => o.MapFrom(s => s.CheckOut))
              .ForMember(d => d.Status, o => o.MapFrom(o => o.Status));
+
+            CreateMap<UpdateReservationDateDto, Reservation>()
+           .ForMember(d => d.RoomId, o => o.MapFrom(s => s.Id))
+           .ForMember(d => d.CheckIn, o => o.MapFrom(s => s.CheckIn))
+           .ForMember(d => d.CheckOut, o => o.MapFrom(s => s.CheckOut));
         }
     }
 }
