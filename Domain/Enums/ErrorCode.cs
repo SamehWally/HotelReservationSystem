@@ -8,6 +8,9 @@
         InvalidRoomId = 101,
         NoRoomsAvailableBetweenThisDate=102,
 
+        //Reservations
+        UpdatedFailed = 200,
+
         ValidationFailed = 2,
         Unauthorized = 3,
         Forbidden = 4,

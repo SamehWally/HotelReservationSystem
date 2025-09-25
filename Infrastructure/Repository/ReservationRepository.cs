@@ -1,6 +1,7 @@
 ﻿using Domain.Enums;
 using Domain.Models.Reservation;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,13 +54,28 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-        public Task<bool> UpdateAsync(Reservation reservation)
+        public async Task<bool> UpdateAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == reservation.RoomId)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, reservation.CheckIn)
+             .SetProperty(r => r.CheckOut, reservation.CheckOut)
+             .SetProperty(r => r.Status, reservation.Status)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
         }
-        public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
+        public async Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == id)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, newCheckIn)
+             .SetProperty(r => r.CheckOut, newCheckOut)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
         }
         public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
         {
