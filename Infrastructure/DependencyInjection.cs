@@ -14,7 +14,7 @@ namespace Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IRoomRepository, RoomRepository>();
-            services.AddScoped<IReservationRepository, ReservationRepository>();
+           services.AddScoped<IReservationRepository, ReservationRepository>();
             return services;
         }
     }

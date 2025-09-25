@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    internal class ReservationRepository : IReservationRepository
+    public class ReservationRepository : IReservationRepository
     {
         private readonly Context _context;
         public ReservationRepository(Context context)
@@ -17,9 +17,10 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
-        public Task<bool> AddAsync(Reservation reservation)
+        public void AddReservation(Reservation reservation)
         {
-            throw new NotImplementedException();
+           _context.Reservations.Add(reservation);
+            _context.SaveChanges();
         }
         public Task<IQueryable<Reservation>> GetAllAsync()
         {
@@ -41,10 +42,10 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-        public Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut)
+        //{
+        //    throw new NotImplementedException();
+        //}
         public Task<IQueryable<Reservation>> SearchAsync(int? roomId = null, int? customerId = null, DateOnly? from = null, DateOnly? to = null, ReservationStatus? status = null)
         {
             throw new NotImplementedException();

@@ -1,11 +1,13 @@
-using AutoMapper;
 using Application;
-using Infrastructure;
+using Application.DTOs.Mapping;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Models.Room;
+using Domain.Repositories;
+using Infrastructure.Repository;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Middlewares;
-using Domain.Models.Room;
-using Application.DTOs.Mapping;
 using Presentation.ViewModels.Mapping;
 
 namespace Presentation
@@ -23,7 +25,7 @@ namespace Presentation
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+           // builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly);
