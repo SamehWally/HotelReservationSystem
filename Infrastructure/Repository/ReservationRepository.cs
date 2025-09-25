@@ -1,6 +1,7 @@
 ﻿using Domain.Enums;
 using Domain.Models.Reservation;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +34,33 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-        public Task<IQueryable<Reservation>> GetByRoomAsync(int roomId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
+        public IQueryable<Reservation> GetByRoomAsync(int roomId, DateTime? from, DateTime? to, ReservationStatus? status = null)
         {
-            throw new NotImplementedException();
+            var q = _context.Reservations
+                           .AsNoTracking()
+                           .Where(r => r.RoomId == roomId);
+
+            if (status.HasValue)
+                q = q.Where(r => r.Status == status.Value);
+
+            if (from.HasValue && to.HasValue)
+            {
+                var f = from.Value;
+                var t = to.Value;
+                q = q.Where(r => r.CheckIn < t && r.CheckOut > f);
+            }
+            else if (from.HasValue)
+            {
+                var f = from.Value;
+                q = q.Where(r => r.CheckOut > f);
+            }
+            else if (to.HasValue)
+            {
+                var t = to.Value;
+                q = q.Where(r => r.CheckIn < t);
+            }
+
+            return q;
         }
         public Task<Reservation?> GetDetailsAsync(int id)
         {
