@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.DTOs.Reservation;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace Application.DTOs.Mapping
     internal class ReservationProfileDto : Profile
     {
         public ReservationProfileDto() 
-        { 
-
+        {
+            CreateMap<AddReservationDto, Domain.Models.Reservation.Reservation>().ReverseMap();
+            CreateMap<Domain.Models.Reservation.Reservation, ReservationResponse>();
         }
     }
 }
