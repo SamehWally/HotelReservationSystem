@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.DTOs;
+using AutoMapper;
+using Domain.Models.Reservation;
 using Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,17 @@ namespace Application.Services
         {
             _reservationRepository = reservationRepository;
             _mapper = mapper;
+        }
+
+
+        public async Task<bool> UpdateAsync(UpdateReservationDto dto)
+        {
+            if (dto is null || dto.Id <= 0) return false;
+            if (dto.CheckIn >= dto.CheckOut) return false;
+
+            var reservatio = _mapper.Map<Reservation>(dto);
+            var isUpdated = await _reservationRepository.UpdateAsync(reservatio);
+            return isUpdated;
         }
     }
 }
