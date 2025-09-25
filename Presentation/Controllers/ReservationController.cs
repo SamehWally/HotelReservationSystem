@@ -1,5 +1,7 @@
 ﻿using Application.Services;
 using AutoMapper;
+using Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
@@ -14,6 +16,19 @@ namespace Presentation.Controllers
             _reservationService = reservationService;
             _env = env;
             _mapper = mapper;
+        }
+
+        [HttpPut("{id}/cancel")]
+        public async Task<bool> CancelReservation(int id)
+        {
+            await _reservationService.CancelReservation(id);
+            return true;
+        }
+        [HttpPut("{id}/cancel")]
+        public async Task<bool> ConfirmReservation(int id)
+        {
+            await _reservationService.ConfirmReservation(id);
+            return true;
         }
     }
 }
