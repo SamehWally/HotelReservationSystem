@@ -12,9 +12,8 @@ namespace Domain.Repositories
     public interface IReservationRepository
     {
         Task<bool> AddAsync(Reservation reservation);
-        Task UpdateAsync(Reservation reservation); 
+        Task UpdateStatusAsync(Reservation reservation); 
         Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut);
-       // Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus);
         Task<IQueryable<Reservation>> GetAllAsync();    
         Task<Reservation?> GetByIdAsync(int id);
         Task<Reservation?> GetDetailsAsync(int id);  //WhichRoom,Customer

@@ -55,7 +55,7 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-        public async Task UpdateAsync(Reservation reservation)
+        public async Task UpdateStatusAsync(Reservation reservation)
         {
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
@@ -65,9 +65,6 @@ namespace Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        //public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
-        //{
-        //    throw new NotImplementedException();
-        //}
+       
     }
 }

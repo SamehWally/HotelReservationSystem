@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Enums;
 
+
 namespace Domain.Models.Reservation
 {
     public class Reservation:BaseModel

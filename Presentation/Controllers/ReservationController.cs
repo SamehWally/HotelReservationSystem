@@ -1,7 +1,11 @@
-﻿using Application.Services;
+﻿using Application.DTOs.Reservation;
+using Application.Services;
 using AutoMapper;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ViewModels;
+using Presentation.ViewModels.Reservation;
+using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
 {
@@ -18,17 +22,26 @@ namespace Presentation.Controllers
             _mapper = mapper;
         }
 
-        [HttpPut("{id}/cancel")]
-        public async Task<bool> CancelReservation(int id)
+        [HttpPut("cancel")]
+        public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
         {
-            await _reservationService.CancelReservation(id);
-            return true;
+            var dto= _mapper.Map<CancelReservationDto>(cancelReservationVM);
+            var res = await _reservationService.CancelReservation(dto);
+            if (res)
+                return new SuccessResponseViewModel<bool>(res);
+            else
+                return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
+               
         }
-        [HttpPut("{id}/cancel")]
-        public async Task<bool> ConfirmReservation(int id)
+        [HttpPut("{confirm")]
+        public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
-            await _reservationService.ConfirmReservation(id);
-            return true;
+            var dto = _mapper.Map<ConfirmReservationDto>(confirmReservationVM);
+            var res=await _reservationService.ConfirmReservation(dto);
+            if (res)
+                return new SuccessResponseViewModel<bool>(res);
+            else
+                return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.ConfirmFailed);
         }
     }
 }

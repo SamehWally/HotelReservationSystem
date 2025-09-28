@@ -20,26 +20,29 @@ namespace Application.Services
             _mapper = mapper;
         }
         
-        public async Task<bool> CancelReservation(int id)
+        public async Task<bool> CancelReservation(CancelReservationDto cancelReservationDto)
         {
-            var reservation= await _reservationRepository.GetByIdAsync(id);
-            if (reservation == null)
+            var reservation= await _reservationRepository.GetByIdAsync(cancelReservationDto.ReservationId);
+            if (reservation == null || reservation.CustomerId != cancelReservationDto.CustomerId)
             {
                 return false;
             }
-            reservation.Status = Domain.Enums.ReservationStatus.Canceled;
-            await _reservationRepository.UpdateAsync(reservation);
+           
+            //                                Source       Destination
+            var mappedReservation =_mapper.Map(cancelReservationDto, reservation);
+            await _reservationRepository.UpdateStatusAsync(mappedReservation);
             return true;
         }
-        public async Task<bool> ConfirmReservation(int id)
+        public async Task<bool> ConfirmReservation(ConfirmReservationDto confirmReservationDto)
         {
-            var reservation = await _reservationRepository.GetByIdAsync(id);
+            var reservation = await _reservationRepository.GetByIdAsync(confirmReservationDto.ReservationId);
             if (reservation == null)
             {
                 return false;
             }
-            reservation.Status = Domain.Enums.ReservationStatus.Confirmed;
-            await _reservationRepository.UpdateAsync(reservation);
+            //                                   Source                  Destination
+            var mappedReservation = _mapper.Map(confirmReservationDto, reservation);
+            await _reservationRepository.UpdateStatusAsync(mappedReservation);
             return true;
         }
 

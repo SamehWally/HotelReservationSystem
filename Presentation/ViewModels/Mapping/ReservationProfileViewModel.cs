@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.DTOs.Reservation;
+using AutoMapper;
+using Presentation.ViewModels.Reservation;
 
 namespace Presentation.ViewModels.Mapping
 {
@@ -6,7 +8,8 @@ namespace Presentation.ViewModels.Mapping
     {
         public ReservationProfileViewModel()
         { 
-
+            CreateMap<CancelReservationViewModel,CancelReservationDto>().ReverseMap();
+            CreateMap<ConfirmReservationViewModel,ConfirmReservationDto>().ReverseMap();
         }
     }
 }
