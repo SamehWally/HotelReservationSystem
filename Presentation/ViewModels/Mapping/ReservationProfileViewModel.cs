@@ -1,12 +1,18 @@
-﻿using AutoMapper;
+﻿using Application.DTOs.Reservation;
+using AutoMapper;
+using Domain.Models.Reservation;
+using Presentation.ViewModels.Mapping.Resrvation;
 
-namespace Presentation.ViewModels.Mapping
+public class ReservationProfile : Profile
 {
-    public class ReservationProfileViewModel : Profile
+    public ReservationProfile()
     {
-        public ReservationProfileViewModel()
-        { 
+        // GetById => DTO
+        CreateMap<Reservation, ReservationDto>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
 
-        }
+        // GetDetails => ViewModel
+        CreateMap<Reservation, ReservationDetailsViewModel>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
     }
 }

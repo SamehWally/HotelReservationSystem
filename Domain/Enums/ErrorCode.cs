@@ -15,5 +15,6 @@
         InternalError = 6,
         DuplicateEntry = 7,
         InvalidInput = 8,
+        NotFound = 103,
     }
 }

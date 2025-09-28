@@ -4,7 +4,7 @@ namespace Presentation.ViewModels.Response
 {
     public class SuccessResponseViewModel<T> : ResponseViewModel<T>
     {
-        public SuccessResponseViewModel(T data, string message = "Operation Completed successfully.") 
+        public SuccessResponseViewModel(T data, string message = "Operation Completed successfully.")
         {
             Data = data;
             ErrorCode = EnumContainer.ErrorCode.NoError;
