@@ -13,7 +13,7 @@ namespace Domain.Repositories
     {
         Task<bool> AddAsync(Reservation reservation);
         Task<bool> UpdateAsync(Reservation reservation); 
-        Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut);
+        Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut);
         Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus);
         Task<IQueryable<Reservation>> GetAllAsync();    
         Task<Reservation?> GetByIdAsync(int id);

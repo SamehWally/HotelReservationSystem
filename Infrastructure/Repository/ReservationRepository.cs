@@ -90,9 +90,16 @@ namespace Infrastructure.Repository
 
             return rows == 1;
         }
-        public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
+        public async Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == id)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, newCheckIn)
+             .SetProperty(r => r.CheckOut, newCheckOut)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
         }
         public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
         {

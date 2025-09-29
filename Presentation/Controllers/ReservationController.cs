@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
@@ -36,6 +36,22 @@ namespace Presentation.Controllers
             return new ErrorResponseViewModel<UpdateReservationVM>(ErrorCode.UpdatedFailed);
         }
 
+        [HttpPut("Date")]
+        public async Task<ResponseViewModel<UpdateReservationDateVM>> UpdateDateAsync([FromForm] UpdateReservationDateVM vm)
+        {
+            if (vm is null) return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.InvalidInput, "Body is Required!");
+
+            var dto = _mapper.Map<UpdateReservationDateDto>(vm);
+            var isUpdated = await _reservationService.UpdateDateAsync(dto);
+            if (isUpdated)
+            {
+                var mappedVM = _mapper.Map<UpdateReservationDateVM>(dto);
+                return new SuccessResponseViewModel<UpdateReservationDateVM>(mappedVM);
+            }
+            return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
+            }
+
+
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
         {
@@ -46,6 +62,7 @@ namespace Presentation.Controllers
             var vms = _mapper.Map<IEnumerable<GetReservationByRoomIdVM>>(dtoResult);
 
             return new SuccessResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>(vms);
+
         }
     }
 }
