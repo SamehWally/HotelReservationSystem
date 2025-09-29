@@ -8,6 +8,9 @@
         InvalidRoomId = 101,
         NoRoomsAvailableBetweenThisDate=102,
 
+        //Reservations
+        UpdatedFailed = 200,
+
         ValidationFailed = 2,
         Unauthorized = 3,
         Forbidden = 4,
@@ -15,6 +18,10 @@
         InternalError = 6,
         DuplicateEntry = 7,
         InvalidInput = 8,
+
         NotFound = 103,
+
+        CancelFailed=101,
+        ConfirmFailed=102,
     }
 }
