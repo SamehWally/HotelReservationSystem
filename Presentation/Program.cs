@@ -1,12 +1,16 @@
 using Application;
+
+using Application.DTOs;
 using Application.DTOs.Mapping;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Models.Room;
 using Domain.Repositories;
 using Infrastructure.Repository;
+
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 
@@ -29,6 +33,8 @@ namespace Presentation
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly);
+            builder.Services.AddAutoMapper(typeof(ReservationProfileViewModel).Assembly,
+                typeof(UpdateReservationDto).Assembly);
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
 

@@ -11,16 +11,24 @@ namespace Domain.Repositories
 {
     public interface IReservationRepository
     {
+
         void AddReservation(Reservation reservation);
+
+        Task UpdateStatusAsync(Reservation reservation); 
+
+  
         Task<bool> UpdateAsync(Reservation reservation); 
-        Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut);
-        Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus);
+        Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut);
+    
+
         Task<IQueryable<Reservation>> GetAllAsync();    
         Task<Reservation?> GetByIdAsync(int id);
         Task<Reservation?> GetDetailsAsync(int id);  //WhichRoom,Customer
         Task<IQueryable<Reservation>> GetByCustomerAsync(int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null);
-        Task<IQueryable<Reservation>> GetByRoomAsync(int roomId, DateOnly? from, DateOnly? to, ReservationStatus? status = null);
-        //Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut);
+
+        IQueryable<Reservation> GetByRoomAsync(int roomId, DateTime? from, DateTime? to, ReservationStatus? status = null);
+        Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut);
+
         Task<IQueryable<Reservation>> SearchAsync(int? roomId = null, int? customerId = null, DateOnly? from = null, DateOnly? to = null, ReservationStatus? status = null);
         Task<bool> SoftDeleteAsync(int id);
     }
