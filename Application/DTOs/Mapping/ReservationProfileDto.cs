@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Models.Reservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,15 @@ namespace Application.DTOs.Mapping
 {
     internal class ReservationProfileDto : Profile
     {
-        public ReservationProfileDto() 
-        { 
+        public ReservationProfileDto()
+        {
+            //Reservation  -->  GetReservationByRoomIdDto
+            CreateMap<Reservation, GetReservationByRoomIdDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.RoomId))
+            .ForMember(d => d.CheckIn, o => o.MapFrom(s => s.CheckIn))
+            .ForMember(d => d.CheckOut, o => o.MapFrom(s => s.CheckOut))
+            .ForMember(d => d.Status, o => o.MapFrom(s => s.Status));
+
 
         }
     }
