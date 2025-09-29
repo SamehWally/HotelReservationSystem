@@ -2,7 +2,7 @@ using Application;
 using Application.DTOs.Mapping;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Models.Auth;
+using Domain.Models.Auth.Models;
 using Domain.Models.Room;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
+using System.Security.Claims;
 
 namespace Presentation
 {
@@ -51,15 +52,13 @@ namespace Presentation
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero,
+                        NameClaimType = ClaimTypes.Name,
+                        RoleClaimType = ClaimTypes.Role
                     };
                 });
 
             builder.Services.AddAuthorization();
-
-
-
-
 
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
@@ -78,6 +77,7 @@ namespace Presentation
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseStaticFiles();

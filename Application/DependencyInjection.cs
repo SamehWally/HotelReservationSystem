@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using Domain.Models.Auth.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -9,6 +10,7 @@ namespace Application
         {
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
+            services.AddScoped<TokenService>();
             return services;
         }
     }
