@@ -1,4 +1,4 @@
-﻿using Domain.Enums.Role;
+﻿using Domain.Models.AccessControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,7 @@ namespace Domain.Models.Users
     public class Staff : User
     {
         public Role Role { get; set; }
+        public int RoleId { get; set; }
         public string? Department { get; set; } 
         public DateTime HireDate { get; set; } = DateTime.Now;
     }

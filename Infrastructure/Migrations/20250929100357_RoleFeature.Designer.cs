@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250929100357_RoleFeature")]
+    partial class RoleFeature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,108 +67,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Features", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "role.read",
-                            Name = "عرض الأدوار",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "role.create",
-                            Name = "إنشاء دور",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "role.update",
-                            Name = "تعديل دور",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "role.delete",
-                            Name = "حذف دور",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "role.assignFeatures",
-                            Name = "تعيين الصلاحيات",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "feature.read",
-                            Name = "عرض الصلاحيات",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 20,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "staff.read",
-                            Name = "عرض الموظفين",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 21,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "staff.create",
-                            Name = "إنشاء موظف",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 22,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "staff.update",
-                            Name = "تعديل موظف",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 23,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Key = "staff.delete",
-                            Name = "حذف موظف",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.AccessControl.Role", b =>
@@ -209,18 +110,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            Description = "النظام/كل الصلاحيات",
-                            IsActive = true,
-                            IsDeleted = false,
-                            Name = "Admin",
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.AccessControl.RoleFeature", b =>
@@ -263,108 +152,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("RoleFeatures", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1001,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 1,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1002,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 2,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1003,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 3,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1004,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 4,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1005,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 5,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1010,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 10,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1020,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 20,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1021,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 21,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1022,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 22,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        },
-                        new
-                        {
-                            Id = 1023,
-                            CreatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118),
-                            FeatureId = 23,
-                            IsActive = true,
-                            IsDeleted = false,
-                            RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 9, 29, 10, 21, 12, 136, DateTimeKind.Utc).AddTicks(7118)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Reservation.Reservation", b =>
