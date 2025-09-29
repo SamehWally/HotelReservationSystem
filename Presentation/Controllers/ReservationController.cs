@@ -2,6 +2,16 @@
 ﻿using Application.DTOs.Reservation;
 using Application.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Presentation.ViewModels;
+using Presentation.ViewModels.Reservation;
+using Presentation.ViewModels.Response;
+using System.Collections.Generic;
+
+﻿using Application.DTOs.Reservation;
+using Application.Services;
+using AutoMapper;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
@@ -30,6 +40,27 @@ namespace Presentation.Controllers
             _env = env;
             _mapper = mapper;
         }
+
+        [HttpPost]
+
+        public ReservationResponse AddReservation([FromForm] AddReservationVM addReservationVM)
+        {
+
+            //var ReservationDto = new AddReservationDto
+            //{
+
+            //    Number = addReservationVM.Number,
+            //    CheckIn = addReservationVM.CheckIn,
+            //    CheckOut = addReservationVM.CheckOut,
+            //    Status = addReservationVM.Status,
+            //    RoomId = addReservationVM.RoomId,
+            //    CustomerId = addReservationVM.CustomerId,
+            //};
+            var ReservationDto = _mapper.Map<AddReservationDto>(addReservationVM);
+            var Reselt = _reservationService.addReservation(ReservationDto);
+            return Reselt;
+
+}
 
         [HttpPut("cancel")]
         public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
