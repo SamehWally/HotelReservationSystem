@@ -1,11 +1,14 @@
-using AutoMapper;
 using Application;
-using Infrastructure;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using Presentation.Middlewares;
-using Domain.Models.Room;
 using Application.DTOs.Mapping;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain.Models.Auth;
+using Domain.Models.Room;
+using Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 
 namespace Presentation
@@ -28,8 +31,38 @@ namespace Presentation
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly);
 
-            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+            //JWT Authentication
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
+            var jwt = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
+            var key = System.Text.Encoding.ASCII.GetBytes(jwt.Key);
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwt.Issuer,
+                        ValidateAudience = true,
+                        ValidAudience = jwt.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            builder.Services.AddAuthorization();
+
+
+
+
+
+
+            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
 
             var app = builder.Build();
 
