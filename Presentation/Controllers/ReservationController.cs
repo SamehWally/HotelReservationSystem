@@ -1,3 +1,4 @@
+
 ﻿using Application.DTOs.Reservation;
 using Application.Services;
 using AutoMapper;
@@ -5,6 +6,14 @@ using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 using Presentation.ViewModels.Reservation;
+
+using Application.DTOs;
+using Application.Services;
+using AutoMapper;
+using Domain.Enums;
+using Microsoft.AspNetCore.Mvc;
+using Presentation.ViewModels;
+
 using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
@@ -33,6 +42,7 @@ namespace Presentation.Controllers
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
                
         }
+        
         [HttpPut("{confirm")]
         public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
@@ -42,6 +52,50 @@ namespace Presentation.Controllers
                 return new SuccessResponseViewModel<bool>(res);
             else
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.ConfirmFailed);
+        }
+
+        [HttpPut]
+        public async Task<ResponseViewModel<UpdateReservationVM>> UpdateAsync([FromForm] UpdateReservationVM vm)
+        {
+            if (vm is null) return new ErrorResponseViewModel<UpdateReservationVM>(ErrorCode.InvalidInput, "Body is Required!");
+
+            var dto = _mapper.Map<UpdateReservationDto>(vm);
+            var isUpdated = await _reservationService.UpdateAsync(dto);
+            if (isUpdated)
+            {
+                var mappedVM = _mapper.Map<UpdateReservationVM>(dto);
+                return new SuccessResponseViewModel<UpdateReservationVM>(mappedVM);
+            }
+            return new ErrorResponseViewModel<UpdateReservationVM>(ErrorCode.UpdatedFailed);
+        }
+
+        [HttpPut("Date")]
+        public async Task<ResponseViewModel<UpdateReservationDateVM>> UpdateDateAsync([FromForm] UpdateReservationDateVM vm)
+        {
+            if (vm is null) return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.InvalidInput, "Body is Required!");
+
+            var dto = _mapper.Map<UpdateReservationDateDto>(vm);
+            var isUpdated = await _reservationService.UpdateDateAsync(dto);
+            if (isUpdated)
+            {
+                var mappedVM = _mapper.Map<UpdateReservationDateVM>(dto);
+                return new SuccessResponseViewModel<UpdateReservationDateVM>(mappedVM);
+            }
+            return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
+            }
+
+        }
+        
+        [HttpGet("Room Id")]
+        public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
+        {
+            var dtoFilter = _mapper.Map<GetReservationByRoomIdDto>(vm);
+
+            var dtoResult = await _reservationService.GetByRoomAsync(dtoFilter);
+
+            var vms = _mapper.Map<IEnumerable<GetReservationByRoomIdVM>>(dtoResult);
+
+            return new SuccessResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>(vms);
         }
     }
 }

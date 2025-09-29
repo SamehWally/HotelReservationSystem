@@ -35,9 +35,33 @@ namespace Infrastructure.Repository
             var reservation = await _context.Reservations.FirstOrDefaultAsync(res=>res.Id==id&&!res.IsDeleted);
             return reservation;
         }
-        public Task<IQueryable<Reservation>> GetByRoomAsync(int roomId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
+        public IQueryable<Reservation> GetByRoomAsync(int roomId, DateTime? from, DateTime? to, ReservationStatus? status = null)
         {
-            throw new NotImplementedException();
+            var q = _context.Reservations
+                           .AsNoTracking()
+                           .Where(r => r.RoomId == roomId);
+
+            if (status.HasValue)
+                q = q.Where(r => r.Status == status.Value);
+
+            if (from.HasValue && to.HasValue)
+            {
+                var f = from.Value;
+                var t = to.Value;
+                q = q.Where(r => r.CheckIn < t && r.CheckOut > f);
+            }
+            else if (from.HasValue)
+            {
+                var f = from.Value;
+                q = q.Where(r => r.CheckOut > f);
+            }
+            else if (to.HasValue)
+            {
+                var t = to.Value;
+                q = q.Where(r => r.CheckIn < t);
+            }
+
+            return q;
         }
         public Task<Reservation?> GetDetailsAsync(int id)
         {
@@ -55,14 +79,36 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
+
         public async Task UpdateStatusAsync(Reservation reservation)
         {
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
         }
-        public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
+        
+        public async Task<bool> UpdateAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == reservation.RoomId)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, reservation.CheckIn)
+             .SetProperty(r => r.CheckOut, reservation.CheckOut)
+             .SetProperty(r => r.Status, reservation.Status)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
+        }
+        
+        public async Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut)
+        {
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == id)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, newCheckIn)
+             .SetProperty(r => r.CheckOut, newCheckOut)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
         }
 
        
