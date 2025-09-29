@@ -19,6 +19,8 @@
         DuplicateEntry = 7,
         InvalidInput = 8,
 
+        NotFound = 103,
+
         CancelFailed=101,
         ConfirmFailed=102,
     }

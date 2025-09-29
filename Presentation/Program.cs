@@ -37,6 +37,7 @@ namespace Presentation
                 typeof(UpdateReservationDto).Assembly);
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+            builder.Services.AddAutoMapper(typeof(ReservationProfile));
 
 
             var app = builder.Build();

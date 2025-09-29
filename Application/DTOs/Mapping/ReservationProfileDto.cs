@@ -1,3 +1,6 @@
+﻿using Application.DTOs.Reservation;
+using AutoMapper;
+using Domain.Models.Reservation;
 
 ﻿using Application.DTOs.Reservation;
 using AutoMapper;
@@ -16,12 +19,21 @@ using Domain.Models.Reservation;
 using AutoMapper;
 using Domain.Enums;
 
-namespace Application.DTOs.Mapping
+namespace Application.Mappings
 {
-    internal class ReservationProfileDto : Profile
+    public class ReservationProfile : Profile
     {
-        public ReservationProfileDto() 
+        public ReservationProfile()
         {
+           
+            CreateMap<Reservation, SearchReservationDto>();
+
+            CreateMap<Reservation, ReservationDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+
+           
+            CreateMap<Reservation, ReservationDetailsDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
 
             CreateMap<AddReservationDto, Domain.Models.Reservation.Reservation>().ReverseMap();
             CreateMap<Domain.Models.Reservation.Reservation, ReservationResponse>();
