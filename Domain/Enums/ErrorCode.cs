@@ -18,5 +18,8 @@
         InternalError = 6,
         DuplicateEntry = 7,
         InvalidInput = 8,
+
+        CancelFailed=101,
+        ConfirmFailed=102,
     }
 }

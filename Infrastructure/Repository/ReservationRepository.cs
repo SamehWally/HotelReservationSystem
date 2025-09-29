@@ -30,9 +30,10 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
-        public Task<Reservation?> GetByIdAsync(int id)
+        public async Task<Reservation?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var reservation = await _context.Reservations.FirstOrDefaultAsync(res=>res.Id==id&&!res.IsDeleted);
+            return reservation;
         }
         public IQueryable<Reservation> GetByRoomAsync(int roomId, DateTime? from, DateTime? to, ReservationStatus? status = null)
         {
@@ -78,6 +79,13 @@ namespace Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task UpdateStatusAsync(Reservation reservation)
+        {
+            _context.Reservations.Update(reservation);
+            await _context.SaveChangesAsync();
+        }
+        
         public async Task<bool> UpdateAsync(Reservation reservation)
         {
             var rows = await _context.Reservations
@@ -90,6 +98,7 @@ namespace Infrastructure.Repository
 
             return rows == 1;
         }
+        
         public async Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut)
         {
             var rows = await _context.Reservations
@@ -101,9 +110,7 @@ namespace Infrastructure.Repository
 
             return rows == 1;
         }
-        public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
-        {
-            throw new NotImplementedException();
-        }
+
+       
     }
 }

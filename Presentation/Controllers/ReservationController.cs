@@ -1,9 +1,19 @@
+
+﻿using Application.DTOs.Reservation;
+using Application.Services;
+using AutoMapper;
+using Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Presentation.ViewModels;
+using Presentation.ViewModels.Reservation;
+
 using Application.DTOs;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
+
 using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
@@ -19,6 +29,29 @@ namespace Presentation.Controllers
             _reservationService = reservationService;
             _env = env;
             _mapper = mapper;
+        }
+
+        [HttpPut("cancel")]
+        public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
+        {
+            var dto= _mapper.Map<CancelReservationDto>(cancelReservationVM);
+            var res = await _reservationService.CancelReservation(dto);
+            if (res)
+                return new SuccessResponseViewModel<bool>(res);
+            else
+                return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
+               
+        }
+        
+        [HttpPut("{confirm")]
+        public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
+        {
+            var dto = _mapper.Map<ConfirmReservationDto>(confirmReservationVM);
+            var res=await _reservationService.ConfirmReservation(dto);
+            if (res)
+                return new SuccessResponseViewModel<bool>(res);
+            else
+                return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.ConfirmFailed);
         }
 
         [HttpPut]
@@ -51,7 +84,8 @@ namespace Presentation.Controllers
             return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
             }
 
-
+        }
+        
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
         {
@@ -62,7 +96,6 @@ namespace Presentation.Controllers
             var vms = _mapper.Map<IEnumerable<GetReservationByRoomIdVM>>(dtoResult);
 
             return new SuccessResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>(vms);
-
         }
     }
 }

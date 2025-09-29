@@ -1,10 +1,15 @@
-﻿using AutoMapper;
+using System;
+using AutoMapper;
 using Domain.Models.Reservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs.Reservation;
+using Domain.Models.Reservation;
+using AutoMapper;
+using Domain.Enums;
 
 namespace Application.DTOs.Mapping
 {
@@ -12,6 +17,12 @@ namespace Application.DTOs.Mapping
     {
         public ReservationProfileDto() 
         {
+            CreateMap<CancelReservationDto, Domain.Models.Reservation.Reservation>()
+             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => ReservationStatus.Canceled));
+
+            CreateMap<ConfirmReservationDto, Domain.Models.Reservation.Reservation>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => ReservationStatus.Confirmed));
+                
             CreateMap<UpdateReservationDto, Reservation>()
              .ForMember(d => d.RoomId, o => o.MapFrom(s => s.Id))
              .ForMember(d => d.CheckIn, o => o.MapFrom(s => s.CheckIn))

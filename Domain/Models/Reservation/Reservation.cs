@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Domain.Models.Reservation
 {
     [Index(nameof(RoomId), nameof(CheckIn))]
