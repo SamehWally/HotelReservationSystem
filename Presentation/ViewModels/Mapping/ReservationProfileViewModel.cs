@@ -7,6 +7,9 @@ namespace Presentation.ViewModels.Mapping
     {
         public ReservationProfileViewModel()
         {
+            //      UpdateReservationVM <-> UpdateReservationDto
+            CreateMap<UpdateReservationVM, UpdateReservationDto>().ReverseMap();
+
             // VM <-> DTO
             CreateMap<GetReservationByRoomIdDto, GetReservationByRoomIdVM>().ReverseMap();
         }

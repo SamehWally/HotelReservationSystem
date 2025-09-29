@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using AutoMapper;
+using Domain.Models.Reservation;
 using AutoMapper.QueryableExtensions;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,16 @@ namespace Application.Services
             _mapper = mapper;
         }
 
+        public async Task<bool> UpdateAsync(UpdateReservationDto dto)
+        {
+            if (dto is null || dto.Id <= 0) return false;
+            if (dto.CheckIn >= dto.CheckOut) return false;
+
+            var reservatio = _mapper.Map<Reservation>(dto);
+            var isUpdated = await _reservationRepository.UpdateAsync(reservatio);
+            return isUpdated;
+        }
+      
         public async Task<IEnumerable<GetReservationByRoomIdDto>> GetByRoomAsync(GetReservationByRoomIdDto dto)
         {
             if (dto is null) throw new ArgumentNullException(nameof(dto));
