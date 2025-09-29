@@ -35,5 +35,17 @@ namespace Presentation.Controllers
             }
             return new ErrorResponseViewModel<UpdateReservationVM>(ErrorCode.UpdatedFailed);
         }
+
+        [HttpGet("Room Id")]
+        public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
+        {
+            var dtoFilter = _mapper.Map<GetReservationByRoomIdDto>(vm);
+
+            var dtoResult = await _reservationService.GetByRoomAsync(dtoFilter);
+
+            var vms = _mapper.Map<IEnumerable<GetReservationByRoomIdVM>>(dtoResult);
+
+            return new SuccessResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>(vms);
+        }
     }
 }

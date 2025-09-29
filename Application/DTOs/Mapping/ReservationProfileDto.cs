@@ -17,6 +17,14 @@ namespace Application.DTOs.Mapping
              .ForMember(d => d.CheckIn, o => o.MapFrom(s => s.CheckIn))
              .ForMember(d => d.CheckOut, o => o.MapFrom(s => s.CheckOut))
              .ForMember(d => d.Status, o => o.MapFrom(o => o.Status));
+        public ReservationProfileDto()
+        {
+            //Reservation  -->  GetReservationByRoomIdDto
+            CreateMap<Reservation, GetReservationByRoomIdDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.RoomId))
+            .ForMember(d => d.CheckIn, o => o.MapFrom(s => s.CheckIn))
+            .ForMember(d => d.CheckOut, o => o.MapFrom(s => s.CheckOut))
+            .ForMember(d => d.Status, o => o.MapFrom(s => s.Status));
         }
     }
 }
