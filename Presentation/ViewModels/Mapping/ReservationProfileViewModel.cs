@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using AutoMapper;
 
 namespace Presentation.ViewModels.Mapping
@@ -9,8 +9,11 @@ namespace Presentation.ViewModels.Mapping
         {
             //      UpdateReservationVM <-> UpdateReservationDto
             CreateMap<UpdateReservationVM, UpdateReservationDto>().ReverseMap();
+
             CreateMap<UpdateReservationDateVM, UpdateReservationDateDto>().ReverseMap();
 
+            // VM <-> DTO
+            CreateMap<GetReservationByRoomIdDto, GetReservationByRoomIdVM>().ReverseMap();
         }
     }
 }
