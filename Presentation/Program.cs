@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
+using Application.Mappings;
 
 namespace Presentation
 {

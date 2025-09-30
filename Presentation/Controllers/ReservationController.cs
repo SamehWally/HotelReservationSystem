@@ -152,9 +152,9 @@ namespace Presentation.Controllers
                 return new SuccessResponseViewModel<UpdateReservationDateVM>(mappedVM);
             }
             return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
-            }
-
         }
+
+        
         
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)

@@ -46,5 +46,7 @@ namespace Domain.Repositories
         Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut);    
   
         Task<bool> SoftDeleteAsync(int id);
+
+        Task<Reservation> GetByIdAsync(int id);
     }
 }
