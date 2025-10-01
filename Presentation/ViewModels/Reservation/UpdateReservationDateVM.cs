@@ -1,13 +1,8 @@
 ﻿using Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.DTOs
+namespace Presentation.ViewModels.Reservation
 {
-    public class UpdateReservationDateDto
+    public class UpdateReservationDateVM
     {
         public int Id { get; set; }
         public DateTime? CheckIn { get; set; }

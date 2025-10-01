@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Room.DTO;
+﻿using Application.DTOs.Room;
 using AutoMapper;
 using Domain.Enums.RoomType;
 using Domain.Models.Room;

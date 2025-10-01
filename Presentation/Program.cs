@@ -1,5 +1,3 @@
-using Application;
-
 using Application.DTOs.Mapping;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -27,6 +25,8 @@ using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 using System.Security.Claims;
 using Application.Mappings;
+using Application.DTOs.Reservation;
+using Application.DI;
 
 namespace Presentation
 {

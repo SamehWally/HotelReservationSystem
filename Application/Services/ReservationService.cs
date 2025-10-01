@@ -1,12 +1,11 @@
-﻿using Application.DTOs.Room.DTO;
-﻿using Application.DTOs.Reservation;
+using Application.DTOs.Reservation;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums;
-using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-﻿using Application.DTOs;
+using Application.DTOs;
 using Domain.Models.Reservation;
+using Domain.Repositories;
 
 namespace Application.Services
 {

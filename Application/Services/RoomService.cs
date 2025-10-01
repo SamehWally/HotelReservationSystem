@@ -1,16 +1,16 @@
-﻿using Application.DTOs.Room.DTO;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums.RoomType;
 using Domain.Models;
 using Domain.Models.Room;
-using Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.DTOs.Room;
+using Domain.Repositories;
 
 namespace Application.Services
 {
