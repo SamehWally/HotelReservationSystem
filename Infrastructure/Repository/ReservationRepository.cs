@@ -19,6 +19,16 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
+        public IQueryable<Reservation> GetAll()
+        {
+            return _context.Reservations.AsQueryable();
+        }
+
+        public IQueryable<Reservation> GetByCustomer(int customerId)
+        {
+            return _context.Reservations.Where(r => r.CustomerId == customerId && !r.IsDeleted);
+        }
+
         public void AddReservation(Reservation reservation)
         {
             _context.Reservations.Add(reservation);

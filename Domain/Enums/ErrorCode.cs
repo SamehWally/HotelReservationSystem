@@ -10,6 +10,7 @@
 
         //Reservations
         UpdatedFailed = 200,
+        ReservationNotFound = 200,
 
         ValidationFailed = 2,
         Unauthorized = 3,
