@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 using System.Security.Claims;
+using Application.Mappings;
 
 namespace Presentation
 {

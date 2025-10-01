@@ -1,15 +1,15 @@
 
-﻿using Application.DTOs.Room.DTO;
+using Application.DTOs.Room.DTO;
 
 
-﻿using Application.DTOs.Reservation;
+using Application.DTOs.Reservation;
 
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
-﻿using Application.DTOs.Reservation;
+using Application.DTOs.Reservation;
 using Application.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ using Presentation.ViewModels.Reservation;
 using Presentation.ViewModels.Response;
 using System.Collections.Generic;
 
-﻿using Application.DTOs.Reservation;
+using Application.DTOs.Reservation;
 using Application.Services;
 using AutoMapper;
 using Domain.Repositories;
@@ -84,7 +84,7 @@ namespace Presentation.Controllers
                 return new ErrorResponseViewModel<ReservationDto>(ErrorCode.NotFound, "Reservation details not found.");
 
             return new SuccessResponseViewModel<ReservationDto>(result, "Reservation details fetched successfully.");
-}
+        }
         [HttpPost]
         public ReservationResponse AddReservation([FromForm] AddReservationVM addReservationVM)
         {
@@ -108,20 +108,20 @@ namespace Presentation.Controllers
         [HttpPut("cancel")]
         public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
         {
-            var dto= _mapper.Map<CancelReservationDto>(cancelReservationVM);
+            var dto = _mapper.Map<CancelReservationDto>(cancelReservationVM);
             var res = await _reservationService.CancelReservation(dto);
             if (res)
                 return new SuccessResponseViewModel<bool>(res);
             else
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
-               
+
         }
-        
-        [HttpPut("{confirm")]
+
+        [HttpPut("(confirm)")]
         public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
             var dto = _mapper.Map<ConfirmReservationDto>(confirmReservationVM);
-            var res=await _reservationService.ConfirmReservation(dto);
+            var res = await _reservationService.ConfirmReservation(dto);
             if (res)
                 return new SuccessResponseViewModel<bool>(res);
             else
@@ -156,10 +156,8 @@ namespace Presentation.Controllers
                 return new SuccessResponseViewModel<UpdateReservationDateVM>(mappedVM);
             }
             return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
-            }
-
         }
-        
+
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
         {
