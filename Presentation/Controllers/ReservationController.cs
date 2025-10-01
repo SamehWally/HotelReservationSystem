@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Room.DTO;
 using Application.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;

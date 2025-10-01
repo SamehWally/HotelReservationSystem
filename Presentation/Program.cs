@@ -30,7 +30,8 @@ namespace Presentation
 
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
-                typeof(RoomProfileDto).Assembly);
+                typeof(RoomProfileDto).Assembly,
+                typeof(TokenProfileViewModel).Assembly);
 
             //JWT Authentication
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.DTOs.Room.DTO;
+using AutoMapper;
 using Domain.Models.Reservation;
 using System;
 using System.Collections.Generic;

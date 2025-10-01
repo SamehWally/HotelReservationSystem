@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Room.DTO;
 using AutoMapper;
 
 namespace Presentation.ViewModels.Mapping

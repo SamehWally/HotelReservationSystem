@@ -9,11 +9,12 @@ namespace Domain.Models.Auth.Models
     public record AuthClaimsData
     (
         int UserId,
-        int RoleId,
+        int? RoleId,
         string RoleName,
         IEnumerable<string> FeatureKeys,
         string? Username = null,
-        string? Email = null
+        string? Email = null,
+        string? AccountType = null 
     );
-    public record TokenResult(string AccessToken, DateTime ExpiresAt);
+    public record TokenResponseDto(string AccessToken, DateTime ExpiresAt);
 }

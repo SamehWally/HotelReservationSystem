@@ -1,5 +1,7 @@
 ﻿using Application.Services;
-using Domain.Models.Auth.Service;
+using Application.Services.StaffServices;
+using Domain.Models.Auth.Authentication;
+using Domain.Models.Auth.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -11,6 +13,9 @@ namespace Application
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
             services.AddScoped<TokenService>();
+            services.AddScoped<StaffAuthService>();
+            services.AddScoped<CredentialsAuthenticator>();
+            services.AddScoped<BcryptPasswordHasher>();
             return services;
         }
     }
