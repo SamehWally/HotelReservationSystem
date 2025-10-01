@@ -15,5 +15,6 @@ namespace Domain.Repositories
         Room? GetRoomById(int id);
         IQueryable<Room> GetAllRooms();
         IQueryable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut);
+        bool IsRoomAvailable(int roomid, DateTime checkIn, DateTime checkOut);
     }
 }

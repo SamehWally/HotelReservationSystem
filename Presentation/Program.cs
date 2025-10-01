@@ -1,4 +1,5 @@
 using Application;
+
 using Application.DTOs.Mapping;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -8,6 +9,20 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
+
+using Application.DTOs;
+using Application.DTOs.Mapping;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain.Models.Room;
+using Domain.Repositories;
+using Infrastructure.Repository;
+
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 using System.Security.Claims;
@@ -27,8 +42,9 @@ namespace Presentation
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+           // builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
             //AutoMapper
+
             builder.Services.AddAutoMapper(
                 typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly,
@@ -61,6 +77,15 @@ namespace Presentation
                         RoleClaimType = ClaimTypes.Role
                     };
                 });
+
+            builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
+                typeof(RoomProfileDto).Assembly);
+            builder.Services.AddAutoMapper(typeof(ReservationProfileViewModel).Assembly,
+                typeof(UpdateReservationDto).Assembly);
+
+            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+            builder.Services.AddAutoMapper(typeof(ReservationProfile));
+
 
             builder.Services.AddAuthorization();
 

@@ -22,6 +22,7 @@ namespace Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IRoomRepository, RoomRepository>();
+
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
@@ -31,6 +32,9 @@ namespace Infrastructure
             services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             services.AddScoped<ITokenService, TokenService>();
+
+           services.AddScoped<IReservationRepository, ReservationRepository>();
+
             return services;
         }
     }

@@ -60,5 +60,18 @@ namespace Infrastructure.Repository
             _context.Rooms.Update(room);
             _context.SaveChanges();
         }
+
+        public bool IsRoomAvailable(int roomid, DateTime checkIn, DateTime checkOut)
+        {
+            return !_context.Reservations
+             .Any(r =>
+                 r.RoomId == roomid &&
+     
+                 (
+                     (checkIn >= r.CheckIn && checkIn < r.CheckOut) ||   // CheckIn داخل فترة قديمة
+                     (checkOut > r.CheckIn && checkOut <= r.CheckOut) || // CheckOut داخل فترة قديمة
+                     (checkIn <= r.CheckIn && checkOut >= r.CheckOut)    // الفترة الجديدة تغطي حجز قديم
+               )  );
+        }
     }
 }

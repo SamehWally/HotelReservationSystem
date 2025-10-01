@@ -2,6 +2,7 @@
 using Domain.Models.Reservation;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    internal class ReservationRepository : IReservationRepository
+    public class ReservationRepository : IReservationRepository
     {
         private readonly Context _context;
         public ReservationRepository(Context context)
@@ -18,22 +19,28 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
-        public Task<bool> AddAsync(Reservation reservation)
+        public void AddReservation(Reservation reservation)
         {
-            throw new NotImplementedException();
+           _context.Reservations.Add(reservation);
+            _context.SaveChanges();
         }
+        
         public Task<IQueryable<Reservation>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
+        
         public Task<IQueryable<Reservation>> GetByCustomerAsync(int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
         {
             throw new NotImplementedException();
         }
-        public Task<Reservation?> GetByIdAsync(int id)
+        
+        public async Task<Reservation?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var reservation = await _context.Reservations.FirstOrDefaultAsync(res=>res.Id==id&&!res.IsDeleted);
+            return reservation;
         }
+        
         public IQueryable<Reservation> GetByRoomAsync(int roomId, DateTime? from, DateTime? to, ReservationStatus? status = null)
         {
             var q = _context.Reservations
@@ -62,33 +69,97 @@ namespace Infrastructure.Repository
 
             return q;
         }
+
         public Task<Reservation?> GetDetailsAsync(int id)
         {
             throw new NotImplementedException();
         }
-        public Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut)
+
+        public IQueryable<Reservation> GetDetails(int id)
         {
-            throw new NotImplementedException();
+            return _context.Reservations
+                           .Where(r => r.Id == id);
         }
-        public Task<IQueryable<Reservation>> SearchAsync(int? roomId = null, int? customerId = null, DateOnly? from = null, DateOnly? to = null, ReservationStatus? status = null)
+
+        public async Task UpdateStatusAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            _context.Reservations.Update(reservation);
+            await _context.SaveChangesAsync();
         }
-        public Task<bool> SoftDeleteAsync(int id)
+
+        public IQueryable<Reservation> Search(
+        int? roomId = null,
+        int? customerId = null,
+        DateOnly? from = null,
+        DateOnly? to = null,
+        ReservationStatus? status = null)
         {
-            throw new NotImplementedException();
+            var query = _context.Reservations.AsQueryable();
+
+            if (roomId.HasValue)
+                query = query.Where(r => r.RoomId == roomId.Value);
+
+            if (customerId.HasValue)
+                query = query.Where(r => r.CustomerId == customerId.Value);
+
+            if (from.HasValue)
+                query = query.Where(r => r.CheckIn >= from.Value.ToDateTime(TimeOnly.MinValue));
+
+            if (to.HasValue)
+                query = query.Where(r => r.CheckOut <= to.Value.ToDateTime(TimeOnly.MaxValue));
+
+            if (status.HasValue)
+                query = query.Where(r => r.Status == status.Value);
+
+            return query;
         }
-        public Task<bool> UpdateAsync(Reservation reservation)
+        
+            public Task<bool> SoftDeleteAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+            
+            public Task<bool> UpdateAsync(Reservation reservation)
+            {
+                throw new NotImplementedException();
+            }
+            
+            public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
+            {
+                throw new NotImplementedException();
+            }
+            
+            public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
+            {
+                throw new NotImplementedException();
+            }
+        
+        
+        public async Task<bool> UpdateAsync(Reservation reservation)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == reservation.RoomId)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, reservation.CheckIn)
+             .SetProperty(r => r.CheckOut, reservation.CheckOut)
+             .SetProperty(r => r.Status, reservation.Status)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
         }
-        public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
+        
+        public async Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Reservations
+             .Where(r => r.RoomId == id)
+             .ExecuteUpdateAsync(setters => setters
+             .SetProperty(r => r.CheckIn, newCheckIn)
+             .SetProperty(r => r.CheckOut, newCheckOut)
+             .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
+
+            return rows == 1;
+            
         }
-        public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
-        {
-            throw new NotImplementedException();
-        }
+
+       
     }
-}

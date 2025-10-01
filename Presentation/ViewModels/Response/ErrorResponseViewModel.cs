@@ -1,16 +1,15 @@
-﻿using Domain.Enums;
-using Presentation.ViewModels.Response;
-using EnumContainer = Domain.Enums;
+﻿using EnumContainer = Domain.Enums;
 
-namespace Presentation.ViewModels
+namespace Presentation.ViewModels.Response
 {
     public class ErrorResponseViewModel<T> : ResponseViewModel<T>
     {
-        public ErrorResponseViewModel(ErrorCode errorCode, string message = "Operation Failed.")
+        public ErrorResponseViewModel(EnumContainer.ErrorCode errorCode, string message = "Operation Failed.")
         {
             ErrorCode = errorCode;
             IsSuccess = false;
             Message = message;
+            Data = default!;
         }
     }
 }
