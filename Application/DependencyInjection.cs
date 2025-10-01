@@ -2,6 +2,7 @@
 using Application.Services.StaffServices;
 using Domain.Models.Auth.Authentication;
 using Domain.Models.Auth.Interfaces;
+using Domain.Repositories.Staff;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -16,6 +17,7 @@ namespace Application
             services.AddScoped<StaffAuthService>();
             services.AddScoped<CredentialsAuthenticator>();
             services.AddScoped<BcryptPasswordHasher>();
+            services.AddScoped<StaffService>();
             return services;
         }
     }

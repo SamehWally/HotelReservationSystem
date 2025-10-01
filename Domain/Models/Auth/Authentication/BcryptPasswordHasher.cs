@@ -9,6 +9,13 @@ namespace Domain.Models.Auth.Authentication
 {
     public class BcryptPasswordHasher : IPasswordHasher
     {
+        public string Hash(string plainPassword)
+        {
+            if (string.IsNullOrWhiteSpace(plainPassword))
+                throw new ArgumentException("Password is required.", nameof(plainPassword));
+
+            return BCrypt.Net.BCrypt.HashPassword(plainPassword);
+        }
         public bool Verify(string hashedPassword, string plainPassword)
         {
             if (string.IsNullOrWhiteSpace(hashedPassword) || string.IsNullOrEmpty(plainPassword))

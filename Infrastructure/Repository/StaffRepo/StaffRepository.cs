@@ -1,4 +1,6 @@
-﻿using Domain.Models.Users;
+﻿using AutoMapper;
+using Domain.Models.Auth.Interfaces;
+using Domain.Models.Users;
 using Domain.Repositories.Staff;
 using Domain.Repositories.StaffRepo;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,12 @@ namespace Infrastructure.Repository.StaffRepo
         public IQueryable<Domain.Models.Users.Staff> Query()
         {
             return _context.Set<Domain.Models.Users.Staff>().AsNoTracking();
+        }
+
+        public async Task AddAsync(Domain.Models.Users.Staff staff)
+        {
+            await _context.AddAsync(staff);
+            await _context.SaveChangesAsync();
         }
     }
 }

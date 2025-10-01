@@ -29,9 +29,12 @@ namespace Presentation
             builder.Services.AddSwaggerGen();
 
             //AutoMapper
-            builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
+            builder.Services.AddAutoMapper(
+                typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly,
-                typeof(TokenProfileViewModel).Assembly);
+                typeof(TokenProfileViewModel).Assembly,
+                typeof(StaffProfileDto).Assembly,
+                typeof(StaffProfileViewModel).Assembly);
 
             //JWT Authentication
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));

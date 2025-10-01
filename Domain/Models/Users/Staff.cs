@@ -12,6 +12,6 @@ namespace Domain.Models.Users
         public Role Role { get; set; }
         public int RoleId { get; set; }
         public string? Department { get; set; } 
-        public DateTime HireDate { get; set; } = DateTime.Now;
+        public DateTime? HireDate { get; set; } = DateTime.Now;
     }
 }
