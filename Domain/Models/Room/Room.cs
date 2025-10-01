@@ -10,6 +10,7 @@ namespace Domain.Models.Room
     public class Room : BaseModel
     {
         public string Name { get; set; } = string.Empty;
+        public int Number { get; set; }
         public RoomType Type { get; set; } 
         public decimal PricePerNight { get; set; }
         public string Description { get; set; } = string.Empty;

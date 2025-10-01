@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.DTOs;
 using Domain.Models.Reservation;
 using Domain.Repositories;
+using Application.Filters;
 
 namespace Application.Services
 {
@@ -20,6 +21,54 @@ namespace Application.Services
             _reservationRepository = reservationRepository;
             _roomRepository = roomRepository;
             _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<GetAllReservationDto>> GetAllReservationAsync(ReservationFilter filter)
+        {
+            var query = _reservationRepository.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(filter.CustomerName))
+            {
+                query = query.Where(r =>
+                    (r.Customer.FirstName + " " + r.Customer.LastName)
+                    .Contains(filter.CustomerName));
+            }
+
+            if (filter.FromDate.HasValue)
+                query = query.Where(r => r.CheckIn >= filter.FromDate.Value);
+
+            if (filter.ToDate.HasValue)
+                query = query.Where(r => r.CheckOut <= filter.ToDate.Value);
+
+            if (filter.Status.HasValue)
+                query = query.Where(r => r.Status == filter.Status.Value);
+
+            if (filter.RoomNumber.HasValue)
+                query = query.Where(r => r.Room.Number == filter.RoomNumber.Value);
+
+            var reservationsDto = await _mapper
+                .ProjectTo<GetAllReservationDto>(query)
+                .ToListAsync();
+
+            return reservationsDto;
+        }
+
+        public async Task<IEnumerable<GetByCustomerReservationDto>> GetByCustomerAsync(
+        int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
+        {
+            var query = _reservationRepository.GetByCustomer(customerId);
+
+            if (from.HasValue)
+                query = query.Where(r => r.CheckIn >= from.Value.ToDateTime(TimeOnly.MinValue));
+
+            if (to.HasValue)
+                query = query.Where(r => r.CheckOut <= to.Value.ToDateTime(TimeOnly.MaxValue));
+
+            if (status.HasValue)
+                query = query.Where(r => r.Status == status.Value);
+
+            var result = await _mapper.ProjectTo<GetByCustomerReservationDto>(query).ToListAsync();
+            return result;
         }
 
         // 🔹 Search

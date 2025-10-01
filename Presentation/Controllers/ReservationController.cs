@@ -1,27 +1,10 @@
 using Application.DTOs.Reservation;
-
+using Application.Filters;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Application.Services;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Presentation.ViewModels.Reservation;
-using Presentation.ViewModels.Response;
-using System.Collections.Generic;
-using Application.Services;
-using AutoMapper;
-using Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
-
-using Application.DTOs;
-using Application.Services;
-using AutoMapper;
-using Domain.Enums;
-using Microsoft.AspNetCore.Mvc;
-
 using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
@@ -38,6 +21,34 @@ namespace Presentation.Controllers
             _env = env;
             _mapper = mapper;
         }
+
+        [HttpGet("GetAll")]
+        public async Task<ResponseViewModel<IEnumerable<GetAllReservationViewModel>>> GetAllAsync(ReservationFilter filter)
+        {
+            var result = await _reservationService.GetAllReservationAsync(filter);
+
+            if (!result.Any())
+                return new ErrorResponseViewModel<IEnumerable<GetAllReservationViewModel>>(ErrorCode.ReservationNotFound, "No reservations found.");
+
+            var mappedResult = _mapper.Map<IEnumerable<GetAllReservationViewModel>>(result);
+
+            return new SuccessResponseViewModel<IEnumerable<GetAllReservationViewModel>>(mappedResult);
+        }
+
+        [HttpGet("GetByCustomer")]
+        public async Task<ResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>> GetByCustomerAsync(
+        int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
+        {
+            var result = await _reservationService.GetByCustomerAsync(customerId, from, to, status);
+          
+            if (!result.Any())
+                return new ErrorResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>(ErrorCode.ReservationNotFound, "No reservations found.");
+
+            var mappedResult = _mapper.Map<IEnumerable<GetByCustomerReservationViewModel>>(result);
+
+            return new SuccessResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>(mappedResult);
+        }
+
 
         [HttpGet("Search")]
         public async Task<ResponseViewModel<IEnumerable<SearchReservationDto>>> Search(
