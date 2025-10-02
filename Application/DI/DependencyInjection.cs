@@ -17,7 +17,6 @@ namespace Application.DI
         {
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
-
             services.AddScoped<TokenService>();
             services.AddScoped<StaffAuthService>();
             services.AddScoped<CredentialsAuthenticator>();

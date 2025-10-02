@@ -1,14 +1,15 @@
+using Application.DI;
 using Application.DTOs.Mapping;
+using Application.DTOs.Reservation;
+using Application.Mappings;
 using Domain.Models.Auth.Models;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 using System.Security.Claims;
-using Application.Mappings;
-using Application.DTOs.Reservation;
-using Application.DI;
 
 namespace Presentation
 {
@@ -26,11 +27,10 @@ namespace Presentation
             builder.Services.AddSwaggerGen();
 
             //JWT Authentication
+            #region JWT
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
-
             var jwt = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
             var key = System.Text.Encoding.ASCII.GetBytes(jwt.Key);
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -50,8 +50,10 @@ namespace Presentation
                         RoleClaimType = ClaimTypes.Role
                     };
                 });
+            #endregion
 
             //AutoMapper
+            #region AutoMapper
             builder.Services.AddAutoMapper(
             typeof(RoomProfileViewModel).Assembly,
             typeof(RoomProfileDto).Assembly,
@@ -59,17 +61,17 @@ namespace Presentation
             typeof(StaffProfileDto).Assembly,
             typeof(StaffProfileViewModel).Assembly,
             typeof(ReservationProfileViewModel).Assembly,
-            typeof(UpdateReservationDto).Assembly);
+            typeof(UpdateReservationDto).Assembly,
+            typeof(ReservationProfile).Assembly);
+            #endregion
 
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
-            builder.Services.AddAutoMapper(typeof(ReservationProfile));
+            builder.Services.AddScoped<TransactionMiddleware>();
 
 
             builder.Services.AddAuthorization();
-
-
-            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+           
 
             var app = builder.Build();
 
@@ -84,12 +86,11 @@ namespace Presentation
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseStaticFiles();
 
+            app.UseMiddleware<TransactionMiddleware>();
             app.MapControllers();
 
             app.Run();
