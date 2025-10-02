@@ -39,24 +39,10 @@ namespace Application.Services
                 new(JwtRegisteredClaimNames.Sub, data.UserId.ToString()),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
-                new("uid", data.UserId.ToString()),
-                new(ClaimTypes.NameIdentifier, data.UserId.ToString()),
             };
-
-            if (data.RoleId.HasValue)
-                claims.Add(new("roleId", data.RoleId.Value.ToString()));
 
             if (!string.IsNullOrWhiteSpace(data.RoleName))
                 claims.Add(new(ClaimTypes.Role, data.RoleName));
-
-            if (!string.IsNullOrWhiteSpace(data.Username))
-                claims.Add(new(ClaimTypes.Name, data.Username));
-
-            if (!string.IsNullOrWhiteSpace(data.Email))
-                claims.Add(new(JwtRegisteredClaimNames.Email, data.Email));
-
-            if (!string.IsNullOrWhiteSpace(data.AccountType))
-                claims.Add(new("acc", data.AccountType)); // "customer", "staff"
 
             foreach (var key in (data.FeatureKeys ?? Enumerable.Empty<string>())
                                  .Where(k => !string.IsNullOrWhiteSpace(k))
