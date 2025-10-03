@@ -2,30 +2,31 @@
 using Application.DTOs.Login;
 using Application.SecurityInterfaces;
 using Domain.Models.Auth.Interfaces;
+using Domain.Repositories;
 
-namespace Application.Services.StaffServices
+namespace Application.Services.CustomerServices
 {
-    public sealed class StaffAuthService
+    public class CustomerService
     {
-        private readonly IStaffAuthRepository _staffAuthRepository;
+        private readonly ICustomerRepository _customerRepository;
         private readonly ICredentialsAuthenticator _authenticator;
         private readonly ITokenService _tokenService;
 
-        public StaffAuthService(
-         IStaffAuthRepository staffAuthRepository,
+        public CustomerService(
+         ICustomerRepository customerRepository,
          ICredentialsAuthenticator authenticator,
          ITokenService tokenService)
         {
-            _staffAuthRepository = staffAuthRepository;
+            _customerRepository = customerRepository;
             _authenticator = authenticator;
             _tokenService = tokenService;
         }
 
         public async Task<TokenResponseDto?> LoginAsync(LoginRequestDto dto)
         {
-            var q = _staffAuthRepository.Query();
+            var q = _customerRepository.Query();
 
-            var claims = await _authenticator.AuthenticateStaffAsync(q, dto.UsernameOrEmail, dto.Password);
+            var claims = await _authenticator.AuthenticateCustomerAsync(q, dto.UsernameOrEmail, dto.Password);
             if (claims is null) return null;
 
             var token = _tokenService.GenerateToken(claims);

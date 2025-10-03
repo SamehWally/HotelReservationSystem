@@ -1,4 +1,7 @@
-﻿using Application.DTOs.StaffDtos;
+﻿using Application.DTOs.JWT;
+using Application.DTOs.Login;
+using Application.DTOs.StaffDtos;
+using Application.SecurityInterfaces;
 using AutoMapper;
 using Domain.Models.Auth.Interfaces;
 using Domain.Models.Users;
@@ -14,15 +17,31 @@ namespace Application.Services.StaffServices
         private readonly IMapper _mapper;
         private readonly IPasswordHasher _hasher;
         private readonly IRoleRepository _roleRepo;
+        private readonly ICredentialsAuthenticator _authenticator;
+        private readonly ITokenService _tokenService;
 
-        public StaffService(IStaffRepository repo, IMapper mapper, IPasswordHasher hasher, IRoleRepository roleRepo)
+
+        public StaffService(IStaffRepository repo, IMapper mapper, IPasswordHasher hasher,
+            IRoleRepository roleRepo, ICredentialsAuthenticator authenticator, ITokenService tokenService)
         {
             _repo = repo;
             _mapper = mapper;
             _hasher = hasher;
             _roleRepo = roleRepo;
+            _authenticator = authenticator;
+            _tokenService = tokenService;
         }
 
+        public async Task<TokenResponseDto?> LoginAsync(LoginRequestDto dto)
+        {
+            var q = _repo.Query();
+
+            var claims = await _authenticator.AuthenticateStaffAsync(q, dto.UsernameOrEmail, dto.Password);
+            if (claims is null) return null;
+
+            var token = _tokenService.GenerateToken(claims);
+            return token;
+        }
         public async Task<StaffDto> AddAsync(AddStaffDto dto)
         {
             var username = dto.Username?.Trim();

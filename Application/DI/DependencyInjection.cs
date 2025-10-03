@@ -14,9 +14,8 @@ namespace Application.DI
         {
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
-            services.AddScoped<StaffAuthService>();
             services.AddScoped<StaffService>(); 
-            services.AddScoped<CustomerAuthService>(); 
+            services.AddScoped<CustomerService>();
             services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             services.AddScoped<ITokenService, TokenService>();  

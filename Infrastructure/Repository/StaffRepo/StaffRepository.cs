@@ -11,6 +11,7 @@ namespace Infrastructure.Repository.StaffRepo
         {
             _context = context;
         }
+
         public IQueryable<Domain.Models.Users.Staff> Query()
         {
             return _context.Set<Domain.Models.Users.Staff>().AsNoTracking();

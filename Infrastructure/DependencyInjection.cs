@@ -1,10 +1,8 @@
 ﻿using Domain.Models.Auth.Interfaces;
 using Domain.Repositories;
-using Domain.Repositories.CustomerInterfaces;
 using Domain.Repositories.Staff;
 using Domain.Repositories.StaffRepo;
 using Infrastructure.Repository;
-using Infrastructure.Repository.CustomerRepo;
 using Infrastructure.Repository.Staff;
 using Infrastructure.Repository.StaffRepo;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +25,7 @@ namespace Infrastructure
             services.AddScoped<IFeatureRepository, FeatureRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IStaffRepository, StaffRepository>();
-            services.AddScoped<IStaffAuthRepository, StaffAuthRepository>();
-            services.AddScoped<ICustomerAuthRepository, CustomerAuthRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             return services;
         }

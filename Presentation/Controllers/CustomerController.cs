@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Login;
-using Application.Services.StaffServices;
+using Application.Services.CustomerServices;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +9,11 @@ using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
 {
-    public class StaffAuthController : BaseAPIsController
+    public class CustomerController : BaseAPIsController
     {
-        private readonly StaffAuthService _authService;
+        private readonly CustomerService _authService;
         private readonly IMapper _mapper;
-        public StaffAuthController(StaffAuthService authService,IMapper mapper)
+        public CustomerController(CustomerService authService, IMapper mapper)
         {
             _authService = authService;
             _mapper = mapper;

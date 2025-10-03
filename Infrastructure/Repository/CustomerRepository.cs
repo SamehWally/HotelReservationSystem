@@ -1,13 +1,13 @@
 ﻿using Domain.Models.Users;
-using Domain.Repositories.CustomerInterfaces;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repository.CustomerRepo
+namespace Infrastructure.Repository
 {
-    public class CustomerAuthRepository : ICustomerAuthRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly Context _context;
-        public CustomerAuthRepository(Context context)
+        public CustomerRepository(Context context)
         {
             _context = context;
         }
