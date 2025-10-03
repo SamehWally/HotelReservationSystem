@@ -1,21 +1,16 @@
 ﻿using Domain.Models.Auth.Models;
 using Domain.Models.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.Models.Auth.Interfaces
+namespace Application.SecurityInterfaces
 {
     public interface ICredentialsAuthenticator
     {
-        Task<AuthClaimsData?> AuthenticateStaffAsync(
+        Task<AuthClaimsDataDto?> AuthenticateStaffAsync(
             IQueryable<Staff> staffQuery,
             string usernameOrEmail,
             string password);
 
-        Task<AuthClaimsData?> AuthenticateCustomerAsync(
+        Task<AuthClaimsDataDto?> AuthenticateCustomerAsync(
             IQueryable<Customer> customerQuery,
             string usernameOrEmail,
             string password);

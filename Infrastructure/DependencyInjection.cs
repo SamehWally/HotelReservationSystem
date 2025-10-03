@@ -1,11 +1,10 @@
-﻿using Application.Services;
-using Application.Services.StaffServices;
-using Domain.Models.Auth.Authentication;
-using Domain.Models.Auth.Interfaces;
+﻿using Domain.Models.Auth.Interfaces;
 using Domain.Repositories;
+using Domain.Repositories.CustomerInterfaces;
 using Domain.Repositories.Staff;
 using Domain.Repositories.StaffRepo;
 using Infrastructure.Repository;
+using Infrastructure.Repository.CustomerRepo;
 using Infrastructure.Repository.Staff;
 using Infrastructure.Repository.StaffRepo;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +22,13 @@ namespace Infrastructure
 
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
-            services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleFeatureRepository, RoleFeatureRepository>();
             services.AddScoped<IFeatureRepository, FeatureRepository>();
-            services.AddScoped<IStaffAuthService, StaffAuthService>();
-            services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
-            services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
-            services.AddScoped<ITokenService, TokenService>();
-           services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IStaffAuthRepository, StaffAuthRepository>();
+            services.AddScoped<ICustomerAuthRepository, CustomerAuthRepository>();
 
             return services;
         }

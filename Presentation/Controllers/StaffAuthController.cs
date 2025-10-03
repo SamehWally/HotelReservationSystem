@@ -2,9 +2,7 @@
 using Application.Services.StaffServices;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Models.Auth.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ViewModels;
 using Presentation.ViewModels.JWT;
 using Presentation.ViewModels.Login;
 using Presentation.ViewModels.Response;
@@ -13,9 +11,9 @@ namespace Presentation.Controllers
 {
     public class StaffAuthController : BaseAPIsController
     {
-        private readonly IStaffAuthService _authService;
+        private readonly StaffAuthService _authService;
         private readonly IMapper _mapper;
-        public StaffAuthController(IStaffAuthService authService,IMapper mapper)
+        public StaffAuthController(StaffAuthService authService,IMapper mapper)
         {
             _authService = authService;
             _mapper = mapper;

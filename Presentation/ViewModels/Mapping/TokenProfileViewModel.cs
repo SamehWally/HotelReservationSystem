@@ -1,6 +1,6 @@
-﻿using Application.DTOs.Login;
+﻿using Application.DTOs.JWT;
+using Application.DTOs.Login;
 using AutoMapper;
-using Domain.Models.Auth.Models;
 using Presentation.ViewModels.JWT;
 using Presentation.ViewModels.Login;
 

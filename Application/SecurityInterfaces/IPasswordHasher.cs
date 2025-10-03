@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Models.Auth.Interfaces
+﻿namespace Domain.Models.Auth.Interfaces
 {
     public interface IPasswordHasher
     {

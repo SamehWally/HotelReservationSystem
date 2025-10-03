@@ -3,7 +3,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
-using Application.DTOs;
 using Domain.Models.Reservation;
 using Domain.Repositories;
 using Application.Filters;

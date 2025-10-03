@@ -1,14 +1,10 @@
-﻿using Domain.Models.Auth.Interfaces;
+﻿using Application.SecurityInterfaces;
+using Domain.Models.Auth.Interfaces;
 using Domain.Models.Auth.Models;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.Models.Auth.Authentication
+namespace Application.Helpers.PWHashing
 {
     public class CredentialsAuthenticator : ICredentialsAuthenticator
     {
@@ -19,7 +15,7 @@ namespace Domain.Models.Auth.Authentication
         }
 
 
-        public async Task<AuthClaimsData?> AuthenticateStaffAsync(
+        public async Task<AuthClaimsDataDto?> AuthenticateStaffAsync(
              IQueryable<Staff> staffQuery,
              string usernameOrEmail,
              string password)
@@ -52,7 +48,7 @@ namespace Domain.Models.Auth.Authentication
                 .SelectMany(s => s.Role.RoleFeatures.Select(rf => rf.Feature.Key))
                 .ToListAsync();
 
-            return new AuthClaimsData(
+            return new AuthClaimsDataDto(
                 UserId: user.Id,
                 RoleId: user.RoleId,
                 RoleName: user.RoleName ?? "Staff",
@@ -63,9 +59,40 @@ namespace Domain.Models.Auth.Authentication
         }
 
         //Customer
-        public Task<AuthClaimsData?> AuthenticateCustomerAsync(IQueryable<Customer> customerQuery, string usernameOrEmail, string password)
+        public async Task<AuthClaimsDataDto?> AuthenticateCustomerAsync(
+          IQueryable<Customer> customerQuery,
+          string usernameOrEmail,
+          string password)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(usernameOrEmail) || string.IsNullOrEmpty(password))
+                return null;
+
+            var key = usernameOrEmail.Trim().ToLower();
+
+            var user = await customerQuery
+                .Where(c =>
+                    (c.Username != null && c.Username.ToLower() == key) ||
+                    (c.Email != null && c.Email.ToLower() == key))
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Username,
+                    c.Email,
+                    c.PasswordHash
+                })
+                .FirstOrDefaultAsync();
+
+            if (user is null) return null;
+            if (!_hasher.Verify(user.PasswordHash, password)) return null;
+
+            return new AuthClaimsDataDto(
+                UserId: user.Id,
+                RoleId: null,
+                RoleName: null,
+                FeatureKeys: Array.Empty<string>(),
+                Username: user.Username,
+                Email: user.Email
+            );
         }
     }
 }

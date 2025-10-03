@@ -1,14 +1,11 @@
-﻿using Domain.Models.Auth.Interfaces;
+﻿using Application.DTOs.JWT;
+using Domain.Models.Auth.Interfaces;
 using Domain.Models.Auth.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -29,7 +26,7 @@ namespace Application.Services
                 throw new InvalidOperationException("JWT key too short. Use at least 32 bytes for HS256.");
         }
 
-        public TokenResponseDto GenerateToken(AuthClaimsData data)
+        public TokenResponseDto GenerateToken(AuthClaimsDataDto data)
         {
             var now = DateTime.UtcNow;
             var expires = now.AddMinutes(_opt.AccessTokenMinutes);

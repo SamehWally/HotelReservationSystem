@@ -5,7 +5,6 @@ using Application.Mappings;
 using Domain.Models.Auth.Models;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
@@ -25,6 +24,9 @@ namespace Presentation
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+            builder.Services.AddScoped<TransactionMiddleware>();
+            builder.Services.AddAuthorization();
 
             //JWT Authentication
             #region JWT
@@ -65,13 +67,6 @@ namespace Presentation
             typeof(ReservationProfile).Assembly);
             #endregion
 
-
-            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
-            builder.Services.AddScoped<TransactionMiddleware>();
-
-
-            builder.Services.AddAuthorization();
-           
 
             var app = builder.Build();
 

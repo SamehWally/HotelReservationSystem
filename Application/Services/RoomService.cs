@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums.RoomType;
-using Domain.Models;
 using Domain.Models.Room;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Application.DTOs.Room;
 using Domain.Repositories;

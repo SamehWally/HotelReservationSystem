@@ -1,12 +1,9 @@
-
+using Application.Helpers.PWHashing;
+using Application.SecurityInterfaces;
 using Application.Services;
+using Application.Services.CustomerServices;
 using Application.Services.StaffServices;
-using Domain.Models.Auth.Authentication;
 using Domain.Models.Auth.Interfaces;
-using Domain.Repositories.Staff;
-
-using Application.Services;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.DI
@@ -17,11 +14,12 @@ namespace Application.DI
         {
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
-            services.AddScoped<TokenService>();
             services.AddScoped<StaffAuthService>();
-            services.AddScoped<CredentialsAuthenticator>();
-            services.AddScoped<BcryptPasswordHasher>();
-            services.AddScoped<StaffService>();
+            services.AddScoped<StaffService>(); 
+            services.AddScoped<CustomerAuthService>(); 
+            services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
+            services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+            services.AddScoped<ITokenService, TokenService>();  
 
             return services;
         }
