@@ -8,23 +8,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Helpers;
 
 namespace Infrastructure
 {
     public class Context : DbContext
     {
         public Context(DbContextOptions<Context> options) : base(options) { }
+        
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomPicture> RoomPictures { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+
+
+        public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Staff> Staff {  get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<RoleFeature> RoleFeatures { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -86,17 +93,17 @@ namespace Infrastructure
                 // SoftDelete filter
                 b.HasQueryFilter(x => !x.IsDeleted);
 
-                b.HasMany(x => x.StaffMembers)
+                b.HasMany(x => x.UserRoles)
                  .WithOne(s => s.Role)
                  .HasForeignKey(s => s.RoleId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                 .OnDelete(DeleteBehavior.Restrict)
+                 .IsRequired(false);
 
                 b.HasMany(x => x.RoleFeatures)
                  .WithOne(rf => rf.Role)
                  .HasForeignKey(rf => rf.RoleId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
-
             // =========================
             // Feature
             // =========================
@@ -148,46 +155,257 @@ namespace Infrastructure
             });
             #endregion
 
+
             #region Seeding
-            var seedAt = DateTime.UtcNow;
 
-            // 1) Features
-            modelBuilder.Entity<Feature>().HasData(
-                new Feature { Id = 1, Key = "role.read", Name = "عرض الأدوار", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 2, Key = "role.create", Name = "إنشاء دور", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 3, Key = "role.update", Name = "تعديل دور", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 4, Key = "role.delete", Name = "حذف دور", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 5, Key = "role.assignFeatures", Name = "تعيين الصلاحيات", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
+            // ===== Users =====
+            var user1 = new User
+            {
+                Id = 1,
+                Username = "customer1",
+                Email = "customer1@email.com",
+                PasswordHash = "hashed_password_1",
+                FirstName = "Ali",
+                LastName = "Mahmoud",
+                PhoneNumber = "0100000001",
+                Address = "Cairo",
+                City = "Cairo",
+                Country = "Egypt",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
-                new Feature { Id = 10, Key = "feature.read", Name = "عرض الصلاحيات", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
+            var user2 = new User
+            {
+                Id = 2,
+                Username = "staff1",
+                Email = "staff1@email.com",
+                PasswordHash = "hashed_password_2",
+                FirstName = "Sara",
+                LastName = "Youssef",
+                PhoneNumber = "0100000002",
+                Address = "Giza",
+                City = "Giza",
+                Country = "Egypt",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
-                new Feature { Id = 20, Key = "staff.read", Name = "عرض الموظفين", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 21, Key = "staff.create", Name = "إنشاء موظف", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 22, Key = "staff.update", Name = "تعديل موظف", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new Feature { Id = 23, Key = "staff.delete", Name = "حذف موظف", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt }
-            );
+            // ===== Customers =====
+            var customer1 = new Customer
+            {
+                Id = 1,
+                UserId = 1,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
-            // 2) Role: Admin
-            modelBuilder.Entity<Role>().HasData(
-                new Role { Id = 1, Name = "Admin", Description = "النظام/كل الصلاحيات", IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt }
-            );
+            // ===== Staff =====
+            var staff1 = new Staff
+            {
+                Id = 1,
+                UserId = 2,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
-            // 3) RoleFeatures:  Admin Access to all Features
+            // ===== Roles =====
+            //var roleAdmin = new Role
+            //{
+            //    Id = 1,
+            //    Name = "Admin",
+            //    Description = "System administrator with full access",
+            //    IsActive = true,
+            //    IsDeleted = false,
+            //    CreatedDate = DateTime.Now,
+            //    UpdatedDate = DateTime.Now
+            //};
+
+            //var roleCustomer = new Role
+            //{
+            //    Id = 2,
+            //    Name = "Customer",
+            //    Description = "Can make reservations and manage bookings",
+            //    IsActive = true,
+            //    IsDeleted = false,
+            //    CreatedDate = DateTime.Now,
+            //    UpdatedDate = DateTime.Now
+            //};
+
+            //var roleStaff = new Role
+            //{
+            //    Id = 3,
+            //    Name = "Staff",
+            //    Description = "Handles reservations and room management",
+            //    IsActive = true,
+            //    IsDeleted = false,
+            //    CreatedDate = DateTime.Now,
+            //    UpdatedDate = DateTime.Now
+            //};
+
+            // ===== Features =====
+            var featureBooking = new Feature
+            {
+                Id = 1,
+                Key = "BOOKING_MANAGEMENT",
+                Name = "Manage Bookings",
+                Description="Allows creating, updating, and cancelling bookings",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var featureRooms = new Feature
+            {
+                Id = 2,
+                Key = "ROOM_MANAGEMENT",
+                Name = "Manage Rooms",
+                Description =" Allows adding, updating, and removing rooms",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var featureReports = new Feature
+            {
+                Id = 3,
+                Key = "REPORTS_VIEW",
+                Name = "View Reports",
+                Description= "Allows viewing various system reports",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            // ===== RoleFeatures =====
+            var roleFeatureAdmin1 = new RoleFeature
+            {
+                Id = 1,
+                RoleId = 1,
+                FeatureId = 1,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var roleFeatureAdmin2 = new RoleFeature
+            {
+                Id = 2,
+                RoleId = 1,
+                FeatureId = 2,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var roleFeatureAdmin3 = new RoleFeature
+            {
+                Id = 3,
+                RoleId = 1,
+                FeatureId = 3,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var roleFeatureStaff = new RoleFeature
+            {
+                Id = 4,
+                RoleId = 3,
+                FeatureId = 1,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var roleFeatureCustomer = new RoleFeature
+            {
+                Id = 5,
+                RoleId = 2,
+                FeatureId = 1,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            // ===== UserRoles =====
+            var userRoleCustomer = new UserRole
+            {
+                Id = 1,
+                UserId = 1,
+                RoleId = 2,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            var userRoleStaff = new UserRole
+            {
+                Id = 2,
+                UserId = 2,
+                RoleId = 3,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            // Add to modelBuilder
+            modelBuilder.Entity<User>().HasData(user1, user2);
+            modelBuilder.Entity<Customer>().HasData(customer1);
+            modelBuilder.Entity<Staff>().HasData(staff1);
+            modelBuilder.Entity<Role>().HasData(roleAdmin, roleCustomer, roleStaff);
+            modelBuilder.Entity<Feature>().HasData(featureBooking, featureRooms, featureReports);
             modelBuilder.Entity<RoleFeature>().HasData(
-                new RoleFeature { Id = 1001, RoleId = 1, FeatureId = 1, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1002, RoleId = 1, FeatureId = 2, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1003, RoleId = 1, FeatureId = 3, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1004, RoleId = 1, FeatureId = 4, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1005, RoleId = 1, FeatureId = 5, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
+                roleFeatureAdmin1, roleFeatureAdmin2, roleFeatureAdmin3,
+                roleFeatureStaff, roleFeatureCustomer
+            );
+            modelBuilder.Entity<UserRole>().HasData(userRoleCustomer, userRoleStaff);
 
-                new RoleFeature { Id = 1010, RoleId = 1, FeatureId = 10, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-
-                new RoleFeature { Id = 1020, RoleId = 1, FeatureId = 20, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1021, RoleId = 1, FeatureId = 21, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1022, RoleId = 1, FeatureId = 22, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt },
-                new RoleFeature { Id = 1023, RoleId = 1, FeatureId = 23, IsActive = true, IsDeleted = false, CreatedDate = seedAt, UpdatedDate = seedAt }
-            ); 
             #endregion
+
+
+            #region Composite Design
+
+            #endregion
+            modelBuilder.Entity<Customer>(b =>
+            {
+                b.ToTable("Customers");
+                b.HasKey(c => c.Id);
+                b.HasIndex(c => c.UserId).IsUnique();
+                b.HasOne(c => c.User)
+                 .WithOne(u => u.Customer)
+                 .HasForeignKey<Customer>(c => c.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Staff>(b =>
+            {
+                b.ToTable("Staff");
+                b.HasKey(s => s.Id);
+                b.HasIndex(s => s.UserId).IsUnique();
+                b.HasOne(s => s.User)
+                 .WithOne(u => u.Staff)
+                 .HasForeignKey<Staff>(s => s.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

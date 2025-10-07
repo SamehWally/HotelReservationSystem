@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250929100357_RoleFeature")]
-    partial class RoleFeature
+    [Migration("20251004190809_InitialCompositeDesign")]
+    partial class InitialCompositeDesign
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -67,6 +72,52 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Features", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3579),
+                            Description = "Create new user",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Key = "USER_CREATE",
+                            Name = "CanCreateUser",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3581)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3585),
+                            Description = "View all users",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Key = "USER_VIEW",
+                            Name = "CanViewUsers",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3586)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3589),
+                            Description = "Assign role to user",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Key = "ROLE_ASSIGN",
+                            Name = "CanAssignRoleToUser",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3590)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3593),
+                            Description = "Assign feature to role",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Key = "FEATURE_ASSIGN",
+                            Name = "CanAssignFeatureToRole",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3594)
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.AccessControl.Role", b =>
@@ -110,6 +161,38 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3486),
+                            Description = "System Administrator",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Admin",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3529)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3537),
+                            Description = "Hotel Staff",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Staff",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3538)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3541),
+                            Description = "Regular Customer",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Customer",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3542)
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.AccessControl.RoleFeature", b =>
@@ -152,6 +235,131 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("RoleFeatures", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4031),
+                            FeatureId = 1,
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 1,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4033)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4035),
+                            FeatureId = 2,
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 1,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4036)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4038),
+                            FeatureId = 3,
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 1,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4039)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4041),
+                            FeatureId = 4,
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 1,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4042)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4044),
+                            FeatureId = 2,
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 2,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4045)
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Models.AccessControl.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3999),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 1,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4002),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4006),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 2,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4007),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4010),
+                            IsActive = true,
+                            IsDeleted = false,
+                            RoleId = 3,
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(4011),
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Reservation.Reservation", b =>
@@ -412,15 +620,6 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
@@ -430,30 +629,13 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NationalId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UpdatedBy")
@@ -462,16 +644,75 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId1")
+                        .IsUnique()
+                        .HasFilter("[UserId1] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Domain.Models.Users.Staff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Department")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId1")
+                        .IsUnique()
+                        .HasFilter("[UserId1] IS NOT NULL");
+
+                    b.ToTable("Staff");
+                });
+
+            modelBuilder.Entity("Domain.Models.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -494,18 +735,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("HireDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -523,9 +758,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
@@ -538,9 +770,60 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.ToTable("Users");
 
-                    b.ToTable("Staff");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "HQ Office",
+                            City = "Cairo",
+                            Country = "Egypt",
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3607),
+                            Email = "admin@hotel.com",
+                            FirstName = "System",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LastName = "Admin",
+                            PasswordHash = "6G94qKPK8LYNjnTllCqm2G3BUM08AzOK7yW30tfjrMc=",
+                            PhoneNumber = "01000000001",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3609),
+                            Username = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg="
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Hotel Reception",
+                            City = "Cairo",
+                            Country = "Egypt",
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3881),
+                            Email = "staff@hotel.com",
+                            FirstName = "Hotel",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LastName = "Staff",
+                            PasswordHash = "39SPNjOKo2Io67niBLumtOGNsLYj4lxFiQHtyDH7GOk=",
+                            PhoneNumber = "01000000002",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3884),
+                            Username = "FWIgZUPadkEjwhvVJGdPCoqvSciol0TJc1L+Z39+QAY="
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Main Street",
+                            City = "Giza",
+                            Country = "Egypt",
+                            CreatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3913),
+                            Email = "customer@hotel.com",
+                            FirstName = "John",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LastName = "Doe",
+                            PasswordHash = "mOxlSo3yj48PjwIiBIPUaRa4UBfeC3TY7HVcKMuFOag=",
+                            PhoneNumber = "01000000003",
+                            UpdatedDate = new DateTime(2025, 10, 4, 22, 8, 8, 732, DateTimeKind.Local).AddTicks(3914),
+                            Username = "tsRYY4deNEh8o8FV7RRe/hKnRYHie+/sWqZhuO6Mpt0="
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.AccessControl.RoleFeature", b =>
@@ -560,6 +843,24 @@ namespace Infrastructure.Migrations
                     b.Navigation("Feature");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Models.AccessControl.UserRole", b =>
+                {
+                    b.HasOne("Domain.Models.AccessControl.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Models.Users.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.Reservation.Reservation", b =>
@@ -607,15 +908,34 @@ namespace Infrastructure.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("Domain.Models.Users.Staff", b =>
+            modelBuilder.Entity("Domain.Models.Users.Customer", b =>
                 {
-                    b.HasOne("Domain.Models.AccessControl.Role", "Role")
-                        .WithMany("StaffMembers")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Domain.Models.Users.User", "User")
+                        .WithOne()
+                        .HasForeignKey("Domain.Models.Users.Customer", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Role");
+                    b.HasOne("Domain.Models.Users.User", null)
+                        .WithOne("Customer")
+                        .HasForeignKey("Domain.Models.Users.Customer", "UserId1");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Models.Users.Staff", b =>
+                {
+                    b.HasOne("Domain.Models.Users.User", "User")
+                        .WithOne()
+                        .HasForeignKey("Domain.Models.Users.Staff", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Users.User", null)
+                        .WithOne("Staff")
+                        .HasForeignKey("Domain.Models.Users.Staff", "UserId1");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.AccessControl.Feature", b =>
@@ -627,7 +947,7 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("RoleFeatures");
 
-                    b.Navigation("StaffMembers");
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("Domain.Models.Room.Facility", b =>
@@ -647,6 +967,15 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Models.Users.Customer", b =>
                 {
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("Domain.Models.Users.User", b =>
+                {
+                    b.Navigation("Customer");
+
+                    b.Navigation("Staff");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

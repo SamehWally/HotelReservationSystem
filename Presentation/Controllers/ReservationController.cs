@@ -113,7 +113,7 @@ namespace Presentation.Controllers
                
         }
         
-        [HttpPut("{confirm")]
+        [HttpPut("{confirm}")]
         public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
             var dto = _mapper.Map<ConfirmReservationDto>(confirmReservationVM);
@@ -152,9 +152,9 @@ namespace Presentation.Controllers
                 return new SuccessResponseViewModel<UpdateReservationDateVM>(mappedVM);
             }
             return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
-            }
-
         }
+
+        
         
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)

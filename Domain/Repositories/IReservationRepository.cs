@@ -31,6 +31,7 @@ namespace Domain.Repositories
        ReservationStatus? status = null);
 
         Reservation? GetById(int id);
+        Task<Reservation?> GetByIdAsync(int id);
       
         IQueryable<Reservation> GetDetails(int id);
 

@@ -21,26 +21,26 @@ namespace Infrastructure.Repository
 
         public void AddReservation(Reservation reservation)
         {
-           _context.Reservations.Add(reservation);
+            _context.Reservations.Add(reservation);
             _context.SaveChanges();
         }
-        
+
         public Task<IQueryable<Reservation>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
-        
+
         public Task<IQueryable<Reservation>> GetByCustomerAsync(int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
         {
             throw new NotImplementedException();
         }
-        
+
         public async Task<Reservation?> GetByIdAsync(int id)
         {
-            var reservation = await _context.Reservations.FirstOrDefaultAsync(res=>res.Id==id&&!res.IsDeleted);
+            var reservation = await _context.Reservations.FirstOrDefaultAsync(res => res.Id == id && !res.IsDeleted);
             return reservation;
         }
-        
+
         public IQueryable<Reservation> GetByRoomAsync(int roomId, DateTime? from, DateTime? to, ReservationStatus? status = null)
         {
             var q = _context.Reservations
@@ -113,28 +113,23 @@ namespace Infrastructure.Repository
 
             return query;
         }
-        
-            public Task<bool> SoftDeleteAsync(int id)
-            {
-                throw new NotImplementedException();
-            }
-            
-            public Task<bool> UpdateAsync(Reservation reservation)
-            {
-                throw new NotImplementedException();
-            }
-            
-            public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
-            {
-                throw new NotImplementedException();
-            }
-            
-            public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
-            {
-                throw new NotImplementedException();
-            }
-        
-        
+
+        public Task<bool> SoftDeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public async Task<bool> UpdateAsync(Reservation reservation)
         {
             var rows = await _context.Reservations
@@ -147,7 +142,7 @@ namespace Infrastructure.Repository
 
             return rows == 1;
         }
-        
+
         public async Task<bool> UpdateDatesAsync(int id, DateTime newCheckIn, DateTime newCheckOut)
         {
             var rows = await _context.Reservations
@@ -158,8 +153,17 @@ namespace Infrastructure.Repository
              .SetProperty(r => r.UpdatedDate, DateTime.UtcNow));
 
             return rows == 1;
-            
+
         }
 
-       
+        public Reservation? GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsRoomAvailableAsync(int roomId, DateOnly checkIn, DateOnly checkOut)
+        {
+            throw new NotImplementedException();
+        }
     }
+}

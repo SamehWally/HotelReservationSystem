@@ -9,6 +9,14 @@ namespace Application
         {
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
+
+            services.AddScoped< AuthService>();
+
+            services.AddScoped< UserService>();
+            services.AddScoped<RoleService>();
+            services.AddScoped<FeatureService>();
+            services.AddScoped< UserRoleService>();
+            services.AddScoped< RoleFeatureService>();
             // سجل باقي الخدمات هنا
             return services;
         }

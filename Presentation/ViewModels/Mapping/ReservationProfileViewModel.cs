@@ -15,6 +15,7 @@ using Presentation.ViewModels.Reservation;
 
 using Application.DTOs;
 using AutoMapper;
+using Presentation.ViewModels;
 
 public class ReservationProfileViewModel : Profile
 {

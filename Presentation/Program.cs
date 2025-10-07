@@ -1,16 +1,19 @@
+using System.Text;
 using Application;
-
 using Application.DTOs;
 using Application.DTOs.Mapping;
+using Application.Helpers;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Models.Room;
 using Domain.Repositories;
-using Infrastructure.Repository;
-
 using Infrastructure;
+using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 
@@ -37,8 +40,36 @@ namespace Presentation
                 typeof(UpdateReservationDto).Assembly);
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
-            builder.Services.AddAutoMapper(typeof(ReservationProfile));
+            // builder.Services.AddAutoMapper(typeof(ReservationProfile));
 
+
+            #region Jwt
+            var key = Encoding.ASCII.GetBytes(Constant.SecretKey);
+            builder.Services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    //Define the Secret Key used for encrypting the token
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+
+                    //set of parameters to be validated (who Generate the Toke)
+                    ValidIssuer = "yourdomain.com",
+
+                    //set of parameters to be validated (who will use the Toke)
+                    ValidAudience = "yourdomain.com-Front",
+
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+
+                };
+            }); 
+            #endregion
 
             var app = builder.Build();
 

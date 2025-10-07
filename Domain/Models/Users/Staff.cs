@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Users
 {
-    public class Staff : User
+    public class Staff : BaseModel
     {
-        public Role Role { get; set; }
-        public int RoleId { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }=default!;
         public string? Department { get; set; } 
         public DateTime HireDate { get; set; } = DateTime.Now;
     }
