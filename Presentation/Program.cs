@@ -16,8 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
-using System.Security.Claims;
 using Application.DTOs.Reservation;
+using Application.DI;
 
 namespace Presentation
 {
