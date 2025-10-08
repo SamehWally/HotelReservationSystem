@@ -1,14 +1,23 @@
-using Application.DI;
+using System.Text;
+using Application;
+using Application.DTOs;
 using Application.DTOs.Mapping;
-using Application.DTOs.Reservation;
-using Application.Mappings;
-using Domain.Models.Auth.Models;
+using Application.Helpers;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain.Models.Room;
+using Domain.Repositories;
 using Infrastructure;
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 using System.Security.Claims;
+using Application.DTOs.Reservation;
 
 namespace Presentation
 {
@@ -30,43 +39,67 @@ namespace Presentation
 
             //JWT Authentication
             #region JWT
-            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
-            var jwt = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
-            var key = System.Text.Encoding.ASCII.GetBytes(jwt.Key);
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = jwt.Issuer,
-                        ValidateAudience = true,
-                        ValidAudience = jwt.Audience,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero,
-                        NameClaimType = ClaimTypes.Name,
-                        RoleClaimType = ClaimTypes.Role
-                    };
-                });
+            //builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+            //var jwt = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
+            //var key = System.Text.Encoding.ASCII.GetBytes(jwt.Key);
+            //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.RequireHttpsMetadata = false;
+            //        options.SaveToken = true;
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidIssuer = jwt.Issuer,
+            //            ValidateAudience = true,
+            //            ValidAudience = jwt.Audience,
+            //            ValidateIssuerSigningKey = true,
+            //            IssuerSigningKey = new SymmetricSecurityKey(key),
+            //            ValidateLifetime = true,
+            //            ClockSkew = TimeSpan.Zero,
+            //            NameClaimType = ClaimTypes.Name,
+            //            RoleClaimType = ClaimTypes.Role
+            //        };
+            //    });
             #endregion
 
             //AutoMapper
-            #region AutoMapper
-            builder.Services.AddAutoMapper(
-            typeof(RoomProfileViewModel).Assembly,
-            typeof(RoomProfileDto).Assembly,
-            typeof(TokenProfileViewModel).Assembly,
-            typeof(StaffProfileDto).Assembly,
-            typeof(StaffProfileViewModel).Assembly,
-            typeof(ReservationProfileViewModel).Assembly,
-            typeof(UpdateReservationDto).Assembly,
-            typeof(ReservationProfile).Assembly);
-            #endregion
+            builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
+                typeof(RoomProfileDto).Assembly);
+            builder.Services.AddAutoMapper(typeof(ReservationProfileViewModel).Assembly,
+                typeof(UpdateReservationDto).Assembly);
 
+            builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
+            // builder.Services.AddAutoMapper(typeof(ReservationProfile));
+
+
+            #region Jwt
+            var key = Encoding.ASCII.GetBytes(Constant.SecretKey);
+            builder.Services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    //Define the Secret Key used for encrypting the token
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+
+                    //set of parameters to be validated (who Generate the Toke)
+                    ValidIssuer = "yourdomain.com",
+
+                    //set of parameters to be validated (who will use the Toke)
+                    ValidAudience = "yourdomain.com-Front",
+
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+
+                };
+            }); 
+            #endregion
 
             var app = builder.Build();
 

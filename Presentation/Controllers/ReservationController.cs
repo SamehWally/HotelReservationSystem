@@ -22,18 +22,18 @@ namespace Presentation.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("GetAll")]
-        public async Task<ResponseViewModel<IEnumerable<GetAllReservationViewModel>>> GetAllAsync(ReservationFilter filter)
-        {
-            var result = await _reservationService.GetAllReservationAsync(filter);
+        //[HttpGet("GetAll")]
+        //public async Task<ResponseViewModel<IEnumerable<GetAllReservationViewModel>>> GetAllAsync(ReservationFilter filter)
+        //{
+        //    var result = await _reservationService.GetAllReservationAsync(filter);
 
-            if (!result.Any())
-                return new ErrorResponseViewModel<IEnumerable<GetAllReservationViewModel>>(ErrorCode.ReservationNotFound, "No reservations found.");
+        //    if (!result.Any())
+        //        return new ErrorResponseViewModel<IEnumerable<GetAllReservationViewModel>>(ErrorCode.ReservationNotFound, "No reservations found.");
 
-            var mappedResult = _mapper.Map<IEnumerable<GetAllReservationViewModel>>(result);
+        //    var mappedResult = _mapper.Map<IEnumerable<GetAllReservationViewModel>>(result);
 
-            return new SuccessResponseViewModel<IEnumerable<GetAllReservationViewModel>>(mappedResult);
-        }
+        //    return new SuccessResponseViewModel<IEnumerable<GetAllReservationViewModel>>(mappedResult);
+        //}
 
         [HttpGet("GetByCustomer")]
         public async Task<ResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>> GetByCustomerAsync(
@@ -115,8 +115,8 @@ namespace Presentation.Controllers
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
 
         }
-
-        [HttpPut("(confirm)")]
+        
+        [HttpPut("{confirm}")]
         public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
             var dto = _mapper.Map<ConfirmReservationDto>(confirmReservationVM);
@@ -157,6 +157,8 @@ namespace Presentation.Controllers
             return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
         }
 
+        
+        
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
         {

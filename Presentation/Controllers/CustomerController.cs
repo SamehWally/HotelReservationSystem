@@ -1,40 +1,34 @@
-﻿using Application.DTOs.Login;
-using Application.Services.CustomerServices;
+﻿using Application.DTOs.Customer;
+using Application.Services;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ViewModels.JWT;
-using Presentation.ViewModels.Login;
-using Presentation.ViewModels.Response;
+using Presentation.ViewModels.Customer;
 
 namespace Presentation.Controllers
 {
-    public class CustomerController : BaseAPIsController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CustomerController:ControllerBase
     {
-        private readonly CustomerService _authService;
+        private readonly CustomerService _customerService;
         private readonly IMapper _mapper;
-        public CustomerController(CustomerService authService, IMapper mapper)
+        public CustomerController(CustomerService customerService, IMapper mapper)
         {
-            _authService = authService;
+            _customerService = customerService;
             _mapper = mapper;
         }
-
-        [HttpPost("login")]
-        public async Task<ResponseViewModel<TokenResponseVM>> Login([FromQuery] LoginRequestVM request)
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterCustomer([FromBody] AddCustomerVM cutomerVM)
         {
-            if (!ModelState.IsValid)
-                return new ErrorResponseViewModel<TokenResponseVM>(
-                    ErrorCode.InvalidInput, "Invalid input data.");
+           var dto= _mapper.Map<AddCustomerDto>(cutomerVM);
 
-            var loginDto = _mapper.Map<LoginRequestDto>(request);
-
-            var tokenDto = await _authService.LoginAsync(loginDto);
-            if (tokenDto is null)
-                return new ErrorResponseViewModel<TokenResponseVM>(
-                    ErrorCode.Unauthorized, "Invalid username or password.");
-
-            var tokenVm = _mapper.Map<TokenResponseVM>(tokenDto);
-            return new SuccessResponseViewModel<TokenResponseVM>(tokenVm);
+            var result = await _customerService.RegisterCustomerAsync(dto);
+            if (!result.IsSuccess)
+        {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

@@ -22,35 +22,35 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GetAllReservationDto>> GetAllReservationAsync(ReservationFilter filter)
-        {
-            var query = _reservationRepository.GetAll();
+        //public async Task<IEnumerable<GetAllReservationDto>> GetAllReservationAsync(ReservationFilter filter)
+        //{
+        //    var query = _reservationRepository.GetAll();
 
-            if (!string.IsNullOrWhiteSpace(filter.CustomerName))
-            {
-                query = query.Where(r =>
-                    (r.Customer.FirstName + " " + r.Customer.LastName)
-                    .Contains(filter.CustomerName));
-            }
+        //    if (!string.IsNullOrWhiteSpace(filter.CustomerName))
+        //    {
+        //        query = query.Where(r =>
+        //            (r.Customer.FirstName + " " + r.Customer.LastName)
+        //            .Contains(filter.CustomerName));
+        //    }
 
-            if (filter.FromDate.HasValue)
-                query = query.Where(r => r.CheckIn >= filter.FromDate.Value);
+        //    if (filter.FromDate.HasValue)
+        //        query = query.Where(r => r.CheckIn >= filter.FromDate.Value);
 
-            if (filter.ToDate.HasValue)
-                query = query.Where(r => r.CheckOut <= filter.ToDate.Value);
+        //    if (filter.ToDate.HasValue)
+        //        query = query.Where(r => r.CheckOut <= filter.ToDate.Value);
 
-            if (filter.Status.HasValue)
-                query = query.Where(r => r.Status == filter.Status.Value);
+        //    if (filter.Status.HasValue)
+        //        query = query.Where(r => r.Status == filter.Status.Value);
 
-            if (filter.RoomNumber.HasValue)
-                query = query.Where(r => r.Room.Number == filter.RoomNumber.Value);
+        //    if (filter.RoomNumber.HasValue)
+        //        query = query.Where(r => r.Room.Number == filter.RoomNumber.Value);
 
-            var reservationsDto = await _mapper
-                .ProjectTo<GetAllReservationDto>(query)
-                .ToListAsync();
+        //    var reservationsDto = await _mapper
+        //        .ProjectTo<GetAllReservationDto>(query)
+        //        .ToListAsync();
 
-            return reservationsDto;
-        }
+        //    return reservationsDto;
+        //}
 
         public async Task<IEnumerable<GetByCustomerReservationDto>> GetByCustomerAsync(
         int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
