@@ -1,24 +1,11 @@
-
-﻿using Application.DTOs.Reservation;
+using Application.DTOs.Reservation;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums;
-using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-
-﻿using Application.DTOs;
-using AutoMapper;
 using Domain.Models.Reservation;
-using AutoMapper.QueryableExtensions;
-
 using Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Application.Filters;
 
 namespace Application.Services
 {
@@ -33,6 +20,54 @@ namespace Application.Services
             _reservationRepository = reservationRepository;
             _roomRepository = roomRepository;
             _mapper = mapper;
+        }
+
+        //public async Task<IEnumerable<GetAllReservationDto>> GetAllReservationAsync(ReservationFilter filter)
+        //{
+        //    var query = _reservationRepository.GetAll();
+
+        //    if (!string.IsNullOrWhiteSpace(filter.CustomerName))
+        //    {
+        //        query = query.Where(r =>
+        //            (r.Customer.FirstName + " " + r.Customer.LastName)
+        //            .Contains(filter.CustomerName));
+        //    }
+
+        //    if (filter.FromDate.HasValue)
+        //        query = query.Where(r => r.CheckIn >= filter.FromDate.Value);
+
+        //    if (filter.ToDate.HasValue)
+        //        query = query.Where(r => r.CheckOut <= filter.ToDate.Value);
+
+        //    if (filter.Status.HasValue)
+        //        query = query.Where(r => r.Status == filter.Status.Value);
+
+        //    if (filter.RoomNumber.HasValue)
+        //        query = query.Where(r => r.Room.Number == filter.RoomNumber.Value);
+
+        //    var reservationsDto = await _mapper
+        //        .ProjectTo<GetAllReservationDto>(query)
+        //        .ToListAsync();
+
+        //    return reservationsDto;
+        //}
+
+        public async Task<IEnumerable<GetByCustomerReservationDto>> GetByCustomerAsync(
+        int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
+        {
+            var query = _reservationRepository.GetByCustomer(customerId);
+
+            if (from.HasValue)
+                query = query.Where(r => r.CheckIn >= from.Value.ToDateTime(TimeOnly.MinValue));
+
+            if (to.HasValue)
+                query = query.Where(r => r.CheckOut <= to.Value.ToDateTime(TimeOnly.MaxValue));
+
+            if (status.HasValue)
+                query = query.Where(r => r.Status == status.Value);
+
+            var result = await _mapper.ProjectTo<GetByCustomerReservationDto>(query).ToListAsync();
+            return result;
         }
 
         // 🔹 Search
@@ -79,24 +114,9 @@ namespace Application.Services
             bool isAvailable =  _roomRepository.IsRoomAvailable(addReservationDto.RoomId, addReservationDto.CheckIn, addReservationDto.CheckOut);
             if (!isAvailable)
                 return new ReservationResponse { Message = "Room is not available for the selected dates." };
-            //var Resrvation = new Reservation
-            //{
-            //    CheckIn = addReservationDto.CheckIn,
-            //    CheckOut = addReservationDto.CheckOut,
-            //    RoomId = addReservationDto.RoomId,
-            //    CustomerId = addReservationDto.CustomerId,
-            //    Number = addReservationDto.Number,
-            //    Status = addReservationDto.Status,
-            //};
+        
             var Resrvation = _mapper.Map<Reservation>(addReservationDto);
             _reservationRepository.AddReservation(Resrvation);
-            //return new ReservationResponse
-            //{
-            //    CheckIn = Resrvation.CheckIn,
-            //    CheckOut = Resrvation.CheckOut,
-            //    RoomId = Resrvation.RoomId,
-            //    Message = "Reservation created successfully"
-            //};
             var ReservationResponse = _mapper.Map<ReservationResponse>(Resrvation);
             ReservationResponse.Message = "Reservation created successfully";
 

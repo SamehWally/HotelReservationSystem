@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Domain.Models.Auth.Interfaces;
+using Domain.Repositories;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

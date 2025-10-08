@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Customer;
 using Application.Services;
 using AutoMapper;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Customer;
 
@@ -24,7 +25,7 @@ namespace Presentation.Controllers
 
             var result = await _customerService.RegisterCustomerAsync(dto);
             if (!result.IsSuccess)
-            {
+        {
                 return BadRequest(result);
             }
             return Ok(result);

@@ -1,6 +1,6 @@
 ﻿using Domain.Enums;
 
-namespace Presentation.ViewModels
+namespace Presentation.ViewModels.Reservation
 {
     public class UpdateReservationVM
     {

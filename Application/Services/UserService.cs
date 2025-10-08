@@ -20,16 +20,21 @@ namespace Application.Services
         {
             var user = await _userRepository.GetByIdAsync(userId);
 
-            // I will use AutoMapper in the future
-            var userDto = new UserInfoDto()
-            {
-                Id= user.Id,
-                FullName = (string)user.FirstName.Concat(user.LastName),
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
 
-            };
+            if (user != null)
+            {
+                // I will use AutoMapper in the future
+                var userDto = new UserInfoDto()
+                {
+                    Id = user.Id,
+                    FullName = (string)user.FirstName.Concat(user.LastName),
+                    Email = user.Email ?? "empty",
+                    PhoneNumber = user.PhoneNumber ?? "empty",
+
+                };
             return userDto;
+            }
+            return null!;
         }
 
         public async Task<UserInfoDto> GetUserByEmailAsync(string email)

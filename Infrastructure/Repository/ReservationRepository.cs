@@ -3,12 +3,6 @@ using Domain.Models.Reservation;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Infrastructure.Repository
 {
     public class ReservationRepository : IReservationRepository
@@ -17,6 +11,16 @@ namespace Infrastructure.Repository
         public ReservationRepository(Context context)
         {
             _context = context;
+        }
+
+        public IQueryable<Reservation> GetAll()
+        {
+            return _context.Reservations.AsQueryable();
+        }
+
+        public IQueryable<Reservation> GetByCustomer(int customerId)
+        {
+            return _context.Reservations.Where(r => r.CustomerId == customerId && !r.IsDeleted);
         }
 
         public void AddReservation(Reservation reservation)
@@ -69,24 +73,20 @@ namespace Infrastructure.Repository
 
             return q;
         }
-
         public Task<Reservation?> GetDetailsAsync(int id)
         {
             throw new NotImplementedException();
         }
-
         public IQueryable<Reservation> GetDetails(int id)
         {
             return _context.Reservations
                            .Where(r => r.Id == id);
         }
-
         public async Task UpdateStatusAsync(Reservation reservation)
         {
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
         }
-
         public IQueryable<Reservation> Search(
         int? roomId = null,
         int? customerId = null,

@@ -1,35 +1,10 @@
-
-﻿using Application.DTOs.Reservation;
+using Application.DTOs.Reservation;
+using Application.Filters;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
-
-﻿using Application.DTOs.Reservation;
-using Application.Services;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Presentation.ViewModels;
 using Presentation.ViewModels.Reservation;
-using Presentation.ViewModels.Response;
-using System.Collections.Generic;
-
-﻿using Application.DTOs.Reservation;
-using Application.Services;
-using AutoMapper;
-using Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Presentation.ViewModels;
-using Presentation.ViewModels.Reservation;
-
-using Application.DTOs;
-using Application.Services;
-using AutoMapper;
-using Domain.Enums;
-using Microsoft.AspNetCore.Mvc;
-using Presentation.ViewModels;
-
 using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
@@ -46,6 +21,34 @@ namespace Presentation.Controllers
             _env = env;
             _mapper = mapper;
         }
+
+        //[HttpGet("GetAll")]
+        //public async Task<ResponseViewModel<IEnumerable<GetAllReservationViewModel>>> GetAllAsync(ReservationFilter filter)
+        //{
+        //    var result = await _reservationService.GetAllReservationAsync(filter);
+
+        //    if (!result.Any())
+        //        return new ErrorResponseViewModel<IEnumerable<GetAllReservationViewModel>>(ErrorCode.ReservationNotFound, "No reservations found.");
+
+        //    var mappedResult = _mapper.Map<IEnumerable<GetAllReservationViewModel>>(result);
+
+        //    return new SuccessResponseViewModel<IEnumerable<GetAllReservationViewModel>>(mappedResult);
+        //}
+
+        [HttpGet("GetByCustomer")]
+        public async Task<ResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>> GetByCustomerAsync(
+        int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
+        {
+            var result = await _reservationService.GetByCustomerAsync(customerId, from, to, status);
+          
+            if (!result.Any())
+                return new ErrorResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>(ErrorCode.ReservationNotFound, "No reservations found.");
+
+            var mappedResult = _mapper.Map<IEnumerable<GetByCustomerReservationViewModel>>(result);
+
+            return new SuccessResponseViewModel<IEnumerable<GetByCustomerReservationViewModel>>(mappedResult);
+        }
+
 
         [HttpGet("Search")]
         public async Task<ResponseViewModel<IEnumerable<SearchReservationDto>>> Search(
@@ -80,7 +83,7 @@ namespace Presentation.Controllers
                 return new ErrorResponseViewModel<ReservationDto>(ErrorCode.NotFound, "Reservation details not found.");
 
             return new SuccessResponseViewModel<ReservationDto>(result, "Reservation details fetched successfully.");
-}
+        }
         [HttpPost]
         public ReservationResponse AddReservation([FromForm] AddReservationVM addReservationVM)
         {
@@ -104,20 +107,20 @@ namespace Presentation.Controllers
         [HttpPut("cancel")]
         public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
         {
-            var dto= _mapper.Map<CancelReservationDto>(cancelReservationVM);
+            var dto = _mapper.Map<CancelReservationDto>(cancelReservationVM);
             var res = await _reservationService.CancelReservation(dto);
             if (res)
                 return new SuccessResponseViewModel<bool>(res);
             else
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
-               
+
         }
         
         [HttpPut("{confirm}")]
         public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
             var dto = _mapper.Map<ConfirmReservationDto>(confirmReservationVM);
-            var res=await _reservationService.ConfirmReservation(dto);
+            var res = await _reservationService.ConfirmReservation(dto);
             if (res)
                 return new SuccessResponseViewModel<bool>(res);
             else

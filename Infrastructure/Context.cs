@@ -218,38 +218,38 @@ namespace Infrastructure
             };
 
             // ===== Roles =====
-            //var roleAdmin = new Role
-            //{
-            //    Id = 1,
-            //    Name = "Admin",
-            //    Description = "System administrator with full access",
-            //    IsActive = true,
-            //    IsDeleted = false,
-            //    CreatedDate = DateTime.Now,
-            //    UpdatedDate = DateTime.Now
-            //};
+            var roleAdmin = new Role
+            {
+                Id = 1,
+                Name = "Admin",
+                Description = "System administrator with full access",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
-            //var roleCustomer = new Role
-            //{
-            //    Id = 2,
-            //    Name = "Customer",
-            //    Description = "Can make reservations and manage bookings",
-            //    IsActive = true,
-            //    IsDeleted = false,
-            //    CreatedDate = DateTime.Now,
-            //    UpdatedDate = DateTime.Now
-            //};
+            var roleCustomer = new Role
+            {
+                Id = 2,
+                Name = "Customer",
+                Description = "Can make reservations and manage bookings",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
-            //var roleStaff = new Role
-            //{
-            //    Id = 3,
-            //    Name = "Staff",
-            //    Description = "Handles reservations and room management",
-            //    IsActive = true,
-            //    IsDeleted = false,
-            //    CreatedDate = DateTime.Now,
-            //    UpdatedDate = DateTime.Now
-            //};
+            var roleStaff = new Role
+            {
+                Id = 3,
+                Name = "Staff",
+                Description = "Handles reservations and room management",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
 
             // ===== Features =====
             var featureBooking = new Feature

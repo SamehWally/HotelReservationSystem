@@ -1,14 +1,11 @@
 ﻿using Application.DTOs.Room;
-using Application.DTOs.Room.DTO;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ViewModels;
 using Presentation.ViewModels.Response;
 using Presentation.ViewModels.Room;
 using Presentation.ViewModels.Room.Presentation.ViewModels.Room;
-using System.Collections;
 
 namespace Presentation.Controllers
 {

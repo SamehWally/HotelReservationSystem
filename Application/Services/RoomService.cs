@@ -1,16 +1,10 @@
-﻿using Application.DTOs.Room.DTO;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums.RoomType;
-using Domain.Models;
 using Domain.Models.Room;
-using Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.DTOs.Room;
+using Domain.Repositories;
 
 namespace Application.Services
 {
@@ -90,7 +84,7 @@ namespace Application.Services
             roomInDb.Name = roomDTO.Name;
             roomInDb.Type = (RoomType)roomDTO.Type;
             roomInDb.PricePerNight = roomDTO.PricePerNight;
-            roomInDb.Description = roomDTO.Description;
+            roomInDb.Description = roomDTO.Description??"empty";
             roomInDb.RoomFacilities.Clear();
             roomInDb.RoomFacilities = roomDTO.FacilityIds
                 .Select(id => new RoomFacility { FacilityId = id, RoomId = roomInDb.Id })
@@ -113,6 +107,5 @@ namespace Application.Services
             _roomRepository.DeleteRoom(id);
             return true;
         }
-
     }
 }

@@ -1,22 +1,6 @@
-﻿using Application.DTOs.Reservation;
-using AutoMapper;
-using Domain.Models.Reservation;
-
-﻿using Application.DTOs.Reservation;
-using AutoMapper;
-
-using System;
-using AutoMapper;
-using Domain.Models.Reservation;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Application.DTOs.Reservation;
-using Domain.Models.Reservation;
 using AutoMapper;
+using Domain.Models.Reservation;
 using Domain.Enums;
 using Application.DTOs;
 

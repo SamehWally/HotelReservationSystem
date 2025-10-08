@@ -62,11 +62,11 @@ namespace Application.Services
             if (customer == null) return ResponseDTO<Customer>.Failure(Domain.Enums.ErrorCode.NotFound, "Customer Not Found");
             return ResponseDTO<Customer>.Success(customer);
         }
-        public async Task<ResponseDTO<Customer>> UpdateCustomer(UpatedCustomerDto dto)
+        public  Task<ResponseDTO<Customer>> UpdateCustomer(UpatedCustomerDto dto)
         {
             throw new NotImplementedException();
         }
-        public async Task<ResponseDTO<Customer>> DeleteCustomer(int customerId)
+        public  Task<ResponseDTO<Customer>> DeleteCustomer(int customerId)
         {
             throw new NotImplementedException();
 

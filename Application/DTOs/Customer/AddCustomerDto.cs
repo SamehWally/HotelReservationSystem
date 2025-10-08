@@ -13,8 +13,8 @@ namespace Application.DTOs.Customer
         public string Email { get; set; } = default!;
         public string UserName { get; set; } = default!;
         public string Password { get; set; } = default!;
-        public string City { get; set; }
-        public string Country { get; set; }
+        public string? City { get; set; }
+        public string? Country { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? NationalId { get; set; }
 
