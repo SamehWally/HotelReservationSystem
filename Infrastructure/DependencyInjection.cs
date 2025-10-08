@@ -14,6 +14,7 @@ namespace Infrastructure
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
