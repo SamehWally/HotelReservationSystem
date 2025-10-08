@@ -1,10 +1,6 @@
 ﻿using Domain.Models.Auth.Interfaces;
 using Domain.Repositories;
-using Domain.Repositories.Staff;
-using Domain.Repositories.StaffRepo;
 using Infrastructure.Repository;
-using Infrastructure.Repository.Staff;
-using Infrastructure.Repository.StaffRepo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,13 +16,11 @@ namespace Infrastructure
 
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IRoleFeatureRepository, RoleFeatureRepository>();
             services.AddScoped<IFeatureRepository, FeatureRepository>();
-            services.AddScoped<IReservationRepository, ReservationRepository>();
-            services.AddScoped<IStaffRepository, StaffRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IRoleFeatureRepository, RoleFeatureRepository>();
             return services;
         }
     }

@@ -1,4 +1,12 @@
-﻿namespace Domain.Models.Users
+﻿using Domain.Models;
+using Domain.Models.AccessControl;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain.Models.Users
 {
     public class User : BaseModel
     {
@@ -11,5 +19,10 @@
         public string? Address { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
+
+        public Staff? Staff { get; set; }
+        public Customer? Customer { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
     }
 }

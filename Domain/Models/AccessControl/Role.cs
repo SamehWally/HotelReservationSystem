@@ -13,9 +13,9 @@ namespace Domain.Models.AccessControl
         [Required]
         [MaxLength(100)]
         public string Name { get; set; } = default!;
-        [MaxLength(300)]
         public string? Description { get; set; }
+
         public virtual ICollection<RoleFeature> RoleFeatures { get; set; } = new HashSet<RoleFeature>();
-        public virtual ICollection<Staff> StaffMembers { get; set; } = new HashSet<Staff>();
+        public virtual ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
     }
 }

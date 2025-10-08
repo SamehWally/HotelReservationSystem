@@ -84,7 +84,7 @@ namespace Application.Services
             roomInDb.Name = roomDTO.Name;
             roomInDb.Type = (RoomType)roomDTO.Type;
             roomInDb.PricePerNight = roomDTO.PricePerNight;
-            roomInDb.Description = roomDTO.Description;
+            roomInDb.Description = roomDTO.Description??"empty";
             roomInDb.RoomFacilities.Clear();
             roomInDb.RoomFacilities = roomDTO.FacilityIds
                 .Select(id => new RoomFacility { FacilityId = id, RoomId = roomInDb.Id })

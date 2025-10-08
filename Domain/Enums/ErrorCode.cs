@@ -24,5 +24,11 @@
 
         CancelFailed=101,
         ConfirmFailed=102,
+
+        InvalidCredentials = 300,
+        FaildRoleAssignment=301,
+
+        FaildResponseDto=400,
+        OperationFailed = 401
     }
 }

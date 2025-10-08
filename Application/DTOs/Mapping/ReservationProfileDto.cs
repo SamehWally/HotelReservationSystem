@@ -2,6 +2,7 @@ using Application.DTOs.Reservation;
 using AutoMapper;
 using Domain.Models.Reservation;
 using Domain.Enums;
+using Application.DTOs;
 
 namespace Application.Mappings
 {
