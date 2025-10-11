@@ -32,6 +32,7 @@ namespace Infrastructure
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             services.AddScoped<ITokenService, TokenService>();
            services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
 
             return services;
         }

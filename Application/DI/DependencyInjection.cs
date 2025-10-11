@@ -22,6 +22,7 @@ namespace Application.DI
             services.AddScoped<CredentialsAuthenticator>();
             services.AddScoped<BcryptPasswordHasher>();
             services.AddScoped<StaffService>();
+            services.AddScoped<ReportService>();
 
             return services;
         }
