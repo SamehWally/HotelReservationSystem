@@ -1,19 +1,9 @@
 using System.Text;
-using Application;
-using Application.DTOs;
 using Application.DTOs.Mapping;
 using Application.Helpers;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Domain.Models.Room;
-using Domain.Repositories;
 using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
 using Application.DTOs.Reservation;
@@ -67,7 +57,10 @@ namespace Presentation
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly);
             builder.Services.AddAutoMapper(typeof(ReservationProfileViewModel).Assembly,
-                typeof(UpdateReservationDto).Assembly);
+                typeof(UpdateReservationDto).Assembly,
+                typeof(StaffProfileDto).Assembly,
+                typeof(StaffProfileViewModel).Assembly);
+
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
             // builder.Services.AddAutoMapper(typeof(ReservationProfile));

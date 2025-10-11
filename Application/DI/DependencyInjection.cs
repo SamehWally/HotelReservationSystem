@@ -20,6 +20,7 @@ namespace Application.DI
             services.AddScoped<FeatureService>();
             services.AddScoped<UserRoleService>();
             services.AddScoped<RoleFeatureService>();
+            services.AddScoped<StaffService>();
 
             services.AddScoped<Application.Services.CustomerService>();
             services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
