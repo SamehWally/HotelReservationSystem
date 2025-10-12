@@ -69,102 +69,102 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "role.read",
                             Name = "عرض الأدوار",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "role.create",
                             Name = "إنشاء دور",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "role.update",
                             Name = "تعديل دور",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "role.delete",
                             Name = "حذف دور",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "role.assignFeatures",
                             Name = "تعيين الصلاحيات",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "feature.read",
                             Name = "عرض الصلاحيات",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 20,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "staff.read",
                             Name = "عرض الموظفين",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 21,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "staff.create",
                             Name = "إنشاء موظف",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 22,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "staff.update",
                             Name = "تعديل موظف",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 23,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             IsActive = true,
                             IsDeleted = false,
                             Key = "staff.delete",
                             Name = "حذف موظف",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         });
                 });
 
@@ -214,12 +214,12 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             Description = "النظام/كل الصلاحيات",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Admin",
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         });
                 });
 
@@ -268,102 +268,102 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1001,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 1,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1002,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 2,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1003,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 3,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1004,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 4,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1005,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 5,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1010,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 10,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1020,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 20,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1021,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 21,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1022,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 22,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         },
                         new
                         {
                             Id = 1023,
-                            CreatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896),
+                            CreatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001),
                             FeatureId = 23,
                             IsActive = true,
                             IsDeleted = false,
                             RoleId = 1,
-                            UpdatedDate = new DateTime(2025, 10, 11, 14, 54, 20, 548, DateTimeKind.Utc).AddTicks(2896)
+                            UpdatedDate = new DateTime(2025, 10, 12, 10, 28, 42, 247, DateTimeKind.Utc).AddTicks(2001)
                         });
                 });
 
