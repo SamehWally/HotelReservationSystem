@@ -11,8 +11,9 @@
         OfferNotFound=100,
         
         //Reservations
-        UpdatedFailed = 200,
+        UpdatedFailed = 199,
         ReservationNotFound = 200,
+        AddedFailed = 201,
 
         FeedbackFailed = 300,
         ReplyFailed = 301,

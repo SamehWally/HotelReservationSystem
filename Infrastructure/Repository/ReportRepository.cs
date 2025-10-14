@@ -17,7 +17,7 @@ namespace Infrastructure.Repository
 
         public IQueryable<Reservation> GetAllReservations()
         {
-            return _context.Reservations;
+            return _context.Reservations.AsQueryable();
         }
 
         public IQueryable<Room> GetAllRooms()

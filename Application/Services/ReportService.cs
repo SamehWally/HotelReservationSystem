@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Report;
 using AutoMapper;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Application.Services;
@@ -56,11 +57,13 @@ public class ReportService
     }
     public List<CustomerBookingAnalyticsDto> GetCustomerBookingAnalytics()
     {
-        var groups = _reportRepository.GetAllReservations()
+        var query = _reportRepository.GetAllReservations()
+            .Include(c => c.Customer)
+            .ThenInclude(static c => c.User)
             .GroupBy(r => r.CustomerId)
             .ToList();
 
-        var report = _mapper.Map<List<CustomerBookingAnalyticsDto>>(groups);
+        var report = _mapper.Map<List<CustomerBookingAnalyticsDto>>(query);
 
         return report.OrderByDescending(r => r.TotalReservations).ToList();
     }

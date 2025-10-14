@@ -1,17 +1,10 @@
-
 using Domain.Models.FeedbackModel;
-﻿using Domain.Helpers;
 using Domain.Models.AccessControl;
 using Domain.Models.Offer;
 using Domain.Models.Reservation;
 using Domain.Models.Room;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure
 {
@@ -25,7 +18,6 @@ namespace Infrastructure
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<RoomPicture> RoomPictures { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-
         public DbSet<Offer> Offers { get; set; }
         public DbSet<OfferRoom> OfferRooms { get; set; }
         public DbSet<User> Users { get; set; }
@@ -35,7 +27,6 @@ namespace Infrastructure
         public DbSet<Feature> Features { get; set; }
         public DbSet<RoleFeature> RoleFeatures { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
-
         public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -397,7 +388,7 @@ namespace Infrastructure
                 b.HasOne(c => c.User)
                  .WithOne(u => u.Customer)
                  .HasForeignKey<Customer>(c => c.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
+                 .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<Staff>(b =>
@@ -408,7 +399,7 @@ namespace Infrastructure
                 b.HasOne(s => s.User)
                  .WithOne(u => u.Staff)
                  .HasForeignKey<Staff>(s => s.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
+                 .OnDelete(DeleteBehavior.NoAction);
             });
 
             base.OnModelCreating(modelBuilder);

@@ -22,7 +22,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("monthly-bookings")]
-        public ActionResult<ResponseViewModel<IEnumerable<BookingReportViewModel>>> GetMonthlyBookingReport()
+        public ResponseViewModel<IEnumerable<BookingReportViewModel>> GetMonthlyBookingReport()
         {
             var report = _reportService.GetMonthlyBookingReport();
 
@@ -32,7 +32,6 @@ namespace Presentation.Controllers
             var viewModel = _mapper.Map<IEnumerable<BookingReportViewModel>>(report);
             return new SuccessResponseViewModel<IEnumerable<BookingReportViewModel>>(viewModel);
         }
-
         //[HttpGet("monthly-revenue")]
         //public ActionResult<ResponseViewModel<IEnumerable<RevenueReportViewModel>>> GetMonthlyRevenueReport()
         //{
@@ -44,9 +43,8 @@ namespace Presentation.Controllers
         //    var viewModel = _mapper.Map<IEnumerable<RevenueReportViewModel>>(report);
         //    return new SuccessResponseViewModel<IEnumerable<RevenueReportViewModel>>(viewModel);
         //}
-
         [HttpGet("popular-rooms")]
-        public ActionResult<ResponseViewModel<IEnumerable<PopularRoomViewModel>>> GetPopularRoomsReport()
+        public ResponseViewModel<IEnumerable<PopularRoomViewModel>> GetPopularRoomsReport()
         {
             var report = _reportService.GetPopularRoomsReport();
 
@@ -58,7 +56,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("customer-analytics")]
-        public ActionResult<ResponseViewModel<IEnumerable<CustomerBookingAnalyticsViewModel>>> GetCustomerBookingAnalytics()
+        public ResponseViewModel<IEnumerable<CustomerBookingAnalyticsViewModel>> GetCustomerBookingAnalytics()
         {
             var report = _reportService.GetCustomerBookingAnalytics();
 

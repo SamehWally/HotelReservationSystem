@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Report;
 using AutoMapper;
 using Presentation.ViewModels.Report;
+using static Domain.Models.Reservation.Reservation;
 
 namespace Presentation.ViewModels.Mapping
 {
@@ -9,6 +10,14 @@ namespace Presentation.ViewModels.Mapping
     {
         public ReportViewModelProfile()
         {
+            CreateMap<Domain.Models.Reservation.Reservation, CustomerBookingAnalyticsDto>()
+             .ForMember(d => d.CustomerId, o => o.MapFrom(s => s.Id))
+             .ForMember(dest => dest.CustomerName, opt =>
+                    opt.MapFrom(src => src.Customer != null && src.Customer.User != null
+                        ? $"{src.Customer.User.FirstName} {src.Customer.User.LastName}"
+                        : string.Empty));
+          
+
             // Booking Report → BookingReportViewModel
             CreateMap<BookingReportDto, BookingReportViewModel>()
                 .ForMember(d => d.Month, o => o.MapFrom(s => s.Month))

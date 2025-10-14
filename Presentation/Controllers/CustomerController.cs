@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Customer;
 using Application.Services;
 using AutoMapper;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Customer;
 using Presentation.ViewModels.Response;

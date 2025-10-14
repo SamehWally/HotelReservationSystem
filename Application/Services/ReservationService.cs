@@ -85,24 +85,18 @@ namespace Application.Services
             return result;
         }
         #endregion
-
-        // 🔹 Search
         public async Task<IEnumerable<SearchReservationDto>> SearchAsync(int? roomId = null, int? customerId = null,
             DateOnly? from = null, DateOnly? to = null, ReservationStatus? status = null)
         {
             var query = _reservationRepository.Search(roomId, customerId, from, to, status);
             return await query.ProjectTo<SearchReservationDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
-
-        // 🔹 GetById
         public async Task<ReservationDto?> GetByIdAsync(int id)
         {
             var reservation = await _reservationRepository.GetByIdAsync(id);
 
             return reservation == null ? null : _mapper.Map<ReservationDto>(reservation);
         }
-
-        // 🔹 GetDetails
         public async Task<ReservationDto?> GetDetailsAsync(int id)
         {
             var query = _reservationRepository.GetDetails(id);
@@ -110,7 +104,6 @@ namespace Application.Services
 
             return reservation == null ? null : _mapper.Map<ReservationDto>(reservation);
         }
-
         public ReservationResponse addReservation(AddReservationDto addReservationDto)
         {
 
@@ -138,7 +131,6 @@ namespace Application.Services
 
             return ReservationResponse;
         }
-
         public async Task<bool> CancelReservation(CancelReservationDto cancelReservationDto)
         {
             var reservation = await _reservationRepository.GetByIdAsync(cancelReservationDto.ReservationId);
@@ -152,7 +144,6 @@ namespace Application.Services
             await _reservationRepository.UpdateStatusAsync(mappedReservation);
             return true;
         }
-
         public async Task<bool> ConfirmReservation(ConfirmReservationDto confirmReservationDto)
         {
             var reservation = await _reservationRepository.GetByIdAsync(confirmReservationDto.ReservationId);
@@ -165,8 +156,6 @@ namespace Application.Services
             await _reservationRepository.UpdateStatusAsync(mappedReservation);
             return true;
         }
-
-
         public async Task<bool> UpdateAsync(UpdateReservationDto dto)
         {
             if (dto is null || dto.Id <= 0) return false;
@@ -176,7 +165,6 @@ namespace Application.Services
             var isUpdated = await _reservationRepository.UpdateAsync(reservatio);
             return isUpdated;
         }
-
         public async Task<bool> UpdateDateAsync(UpdateReservationDateDto dto)
         {
             if (dto is null || dto.Id <= 0) return false;
@@ -186,7 +174,6 @@ namespace Application.Services
             var isUpdated = await _reservationRepository.UpdateAsync(reservatio);
             return isUpdated;
         }
-
         public async Task<IEnumerable<GetReservationByRoomIdDto>> GetByRoomAsync(GetReservationByRoomIdDto dto)
         {
             if (dto is null) throw new ArgumentNullException(nameof(dto));

@@ -2,7 +2,9 @@
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Filters;
 using Presentation.ViewModels.Response;
 using Presentation.ViewModels.Staff;
 
@@ -19,6 +21,8 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("register")]
+        [Authorize]
+        [TypeFilter<CustomAuthorizeFilter>(Arguments = new object[] { "Manage Rooms" })]
         public async Task<ResponseViewModel<StaffVM>> RegisterStaff([FromQuery] AddStaffVM staffVM)
         {
             var dto = _mapper.Map<CreateStaffDto>(staffVM);

@@ -3,6 +3,8 @@ using Application.Filters;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
+using Domain.Models.Reservation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Reservation;
 using Presentation.ViewModels.Response;
@@ -76,7 +78,6 @@ namespace Presentation.Controllers
 
             return new SuccessResponseViewModel<ReservationDto>(result, "Reservation fetched successfully.");
         }
-
         [HttpGet("Details/{id}")]
         public async Task<ResponseViewModel<ReservationDto>> GetDetails(int id)
         {
@@ -87,9 +88,8 @@ namespace Presentation.Controllers
 
             return new SuccessResponseViewModel<ReservationDto>(result, "Reservation details fetched successfully.");
         }
-
         [HttpPost]
-        public ReservationResponse AddReservation([FromForm] AddReservationVM addReservationVM)
+        public ResponseViewModel<ReservationResponse> AddReservation([FromForm] AddReservationVM addReservationVM)
         {
             //var ReservationDto = new AddReservationDto
             //{
@@ -103,9 +103,11 @@ namespace Presentation.Controllers
 
             var ReservationDto = _mapper.Map<AddReservationDto>(addReservationVM);
             var Reselt = _reservationService.addReservation(ReservationDto);
-            return Reselt;
+            if(Reselt.Message == "Reservation created successfully")
+            return new SuccessResponseViewModel<ReservationResponse>(Reselt);
+            else
+                return new ErrorResponseViewModel<ReservationResponse>(ErrorCode.AddedFailed, Reselt.Message);
         }
-
         [HttpPut("cancel")]
         public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
         {
@@ -117,7 +119,6 @@ namespace Presentation.Controllers
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.CancelFailed);
 
         }
-
         [HttpPut("{confirm}")]
         public async Task<ResponseViewModel<bool>> ConfirmReservation(ConfirmReservationViewModel confirmReservationVM)
         {
@@ -128,7 +129,6 @@ namespace Presentation.Controllers
             else
                 return new ErrorResponseViewModel<bool>(Domain.Enums.ErrorCode.ConfirmFailed);
         }
-
         [HttpPut]
         public async Task<ResponseViewModel<UpdateReservationVM>> UpdateAsync([FromForm] UpdateReservationVM vm)
         {
@@ -143,7 +143,6 @@ namespace Presentation.Controllers
             }
             return new ErrorResponseViewModel<UpdateReservationVM>(ErrorCode.UpdatedFailed);
         }
-
         [HttpPut("Date")]
         public async Task<ResponseViewModel<UpdateReservationDateVM>> UpdateDateAsync([FromForm] UpdateReservationDateVM vm)
         {
@@ -158,9 +157,6 @@ namespace Presentation.Controllers
             }
             return new ErrorResponseViewModel<UpdateReservationDateVM>(ErrorCode.UpdatedFailed);
         }
-
-
-
         [HttpGet("Room Id")]
         public async Task<ResponseViewModel<IEnumerable<GetReservationByRoomIdVM>>> GetByRoom([FromQuery] GetReservationByRoomIdVM vm)
         {

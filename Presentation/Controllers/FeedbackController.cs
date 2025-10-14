@@ -21,7 +21,7 @@ namespace Presentation.Controllers
 
         #region SubmitFeedbackAsync
         [HttpPost("submit")]
-        public async Task<IActionResult> SubmitFeedbackAsync([FromBody] AddFeedbackViewModel addFeedbackViewModel)
+        public async Task<IActionResult> SubmitFeedbackAsync([FromQuery] AddFeedbackViewModel addFeedbackViewModel)
         {
             var feedbackMapped = _mapper.Map<AddFeedbackDto>(addFeedbackViewModel);
 
@@ -47,7 +47,7 @@ namespace Presentation.Controllers
 
         #region ReplyToFeedbackAsync
         [HttpPut("reply/{id}")]
-        public async Task<IActionResult> ReplyToFeedbackAsync(int id, [FromBody] ReplyToFeedbackDto dto)
+        public async Task<IActionResult> ReplyToFeedbackAsync(int id, [FromQuery] ReplyToFeedbackDto dto)
         {
             if (id != dto.FeedbackId)
                 return BadRequest(new ErrorResponseViewModel<bool>(ErrorCode.InvalidInput, "Feedback ID mismatch."));
