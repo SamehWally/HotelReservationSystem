@@ -1,3 +1,5 @@
+
+using Domain.Models.FeedbackModel;
 ﻿using Domain.Helpers;
 using Domain.Models.AccessControl;
 using Domain.Models.Offer;
@@ -16,7 +18,7 @@ namespace Infrastructure
     public class Context : DbContext
     {
         public Context(DbContextOptions<Context> options) : base(options) { }
-        
+
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Facility> Facilities { get; set; }
@@ -28,13 +30,13 @@ namespace Infrastructure
         public DbSet<OfferRoom> OfferRooms { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Staff> Staff {  get; set; }
+        public DbSet<Staff> Staff { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<RoleFeature> RoleFeatures { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
 
-
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -259,7 +261,7 @@ namespace Infrastructure
                 Id = 1,
                 Key = "BOOKING_MANAGEMENT",
                 Name = "Manage Bookings",
-                Description="Allows creating, updating, and cancelling bookings",
+                Description = "Allows creating, updating, and cancelling bookings",
                 IsActive = true,
                 IsDeleted = false,
                 CreatedDate = DateTime.Now,
@@ -271,7 +273,7 @@ namespace Infrastructure
                 Id = 2,
                 Key = "ROOM_MANAGEMENT",
                 Name = "Manage Rooms",
-                Description =" Allows adding, updating, and removing rooms",
+                Description = " Allows adding, updating, and removing rooms",
                 IsActive = true,
                 IsDeleted = false,
                 CreatedDate = DateTime.Now,
@@ -283,7 +285,7 @@ namespace Infrastructure
                 Id = 3,
                 Key = "REPORTS_VIEW",
                 Name = "View Reports",
-                Description= "Allows viewing various system reports",
+                Description = "Allows viewing various system reports",
                 IsActive = true,
                 IsDeleted = false,
                 CreatedDate = DateTime.Now,

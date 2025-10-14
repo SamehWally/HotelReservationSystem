@@ -18,7 +18,7 @@ namespace Infrastructure.Repository
             return _context.Reservations.AsQueryable();
         }
 
-        public IQueryable<Reservation> GetByCustomer(int customerId)
+        public IQueryable<Reservation> GetReservationsByCustomer(int customerId)
         {
             return _context.Reservations.Where(r => r.CustomerId == customerId && !r.IsDeleted);
         }
@@ -30,11 +30,6 @@ namespace Infrastructure.Repository
         }
 
         public Task<IQueryable<Reservation>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IQueryable<Reservation>> GetByCustomerAsync(int customerId, DateOnly? from, DateOnly? to, ReservationStatus? status = null)
         {
             throw new NotImplementedException();
         }

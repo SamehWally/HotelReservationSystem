@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-using Application.Services;
+﻿using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
 
 namespace Presentation.Filters
 {
@@ -28,8 +28,8 @@ namespace Presentation.Filters
                 { StatusCode = StatusCodes.Status401Unauthorized };
                 return;
             }
-            
-            
+
+
             var roleClaims = user.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
 
             if (!roleClaims.Any())
@@ -44,7 +44,7 @@ namespace Presentation.Filters
 
             bool hasAccess = false;
 
-            
+
             foreach (var roleClaim in roleClaims)
             {
                 if (int.TryParse(roleClaim, out int roleId))

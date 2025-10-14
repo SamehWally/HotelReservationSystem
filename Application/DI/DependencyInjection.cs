@@ -10,6 +10,7 @@ namespace Application.DI
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<FeedbackService>();
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
 
@@ -27,7 +28,7 @@ namespace Application.DI
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             services.AddScoped<ITokenService, TokenService>();
 
-         
+
             return services;
         }
     }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models.AccessControl;
+﻿using Domain.Models.AccessControl;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,7 +40,7 @@ namespace Infrastructure.Repository
 
             if (userRole != null)
             {
-                userRole.IsDeleted=true;
+                userRole.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
             return true;
@@ -53,12 +48,12 @@ namespace Infrastructure.Repository
 
         public async Task<IList<Role>> GetUserRolesAsync(int userId)
         {
-            var roles= await _context.UserRoles
+            var roles = await _context.UserRoles
                 .Where(ur => ur.UserId == userId && !ur.IsDeleted)
                 .Select(ur => ur.Role)
                 .ToListAsync();
             return roles;
         }
-    
+
     }
 }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models.Users;
+﻿using Domain.Models.Users;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 
 namespace Infrastructure.Repository
@@ -43,7 +38,7 @@ namespace Infrastructure.Repository
 
         public async Task<Customer> GetByEmailAsync(string email)
         {
-            var customer=await _context.Customers
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(c => c.User.Email == email && !c.IsDeleted && !c.User.IsDeleted);
 
             return customer!;
@@ -60,14 +55,14 @@ namespace Infrastructure.Repository
         {
             //var customer = await _context.Customers
             //    .Where(predicate).FirstOrDefaultAsync();
-            var customer =await _context.Customers
-                .FirstOrDefaultAsync( predicate );
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(predicate);
             return customer!;
         }
 
         public async Task UpdateAsync(Customer customer)
         {
-             _context.Customers.Update(customer);
+            _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
         }
     }

@@ -1,5 +1,4 @@
-﻿using Domain.Models.Auth.Interfaces;
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +13,7 @@ namespace Infrastructure
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();

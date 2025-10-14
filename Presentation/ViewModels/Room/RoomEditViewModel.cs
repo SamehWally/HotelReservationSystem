@@ -27,5 +27,5 @@
             //public List<string>? ExistingPictureUrlsToKeep { get; set; }
         }
     }
-    }
+}
 
