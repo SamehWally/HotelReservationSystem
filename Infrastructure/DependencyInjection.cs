@@ -22,6 +22,8 @@ namespace Infrastructure
             services.AddScoped<IFeatureRepository, FeatureRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IRoleFeatureRepository, RoleFeatureRepository>();
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
             return services;
         }
     }

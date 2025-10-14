@@ -8,9 +8,9 @@ namespace Presentation.ViewModels.Mapping
     {
         public StaffProfileViewModel()
         {
-            CreateMap<AddStaffVM, AddStaffDto>();
-
+            CreateMap<AddStaffVM, CreateStaffDto>();
             CreateMap<StaffDto, StaffVM>();
+            CreateMap<StaffUpdateDto, StaffUpdateVM>().ReverseMap();
         }
     }
 }

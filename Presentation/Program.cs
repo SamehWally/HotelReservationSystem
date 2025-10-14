@@ -57,7 +57,10 @@ namespace Presentation
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly);
             builder.Services.AddAutoMapper(typeof(ReservationProfileViewModel).Assembly,
-                typeof(UpdateReservationDto).Assembly);
+                typeof(UpdateReservationDto).Assembly,
+                typeof(StaffProfileDto).Assembly,
+                typeof(StaffProfileViewModel).Assembly);
+
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
             // builder.Services.AddAutoMapper(typeof(ReservationProfile));

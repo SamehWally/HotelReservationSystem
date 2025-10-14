@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterCustomer([FromBody] AddCustomerVM cutomerVM)
+        public async Task<IActionResult> RegisterCustomer([FromQuery] AddCustomerVM cutomerVM)
         {
             var dto = _mapper.Map<AddCustomerDto>(cutomerVM);
 

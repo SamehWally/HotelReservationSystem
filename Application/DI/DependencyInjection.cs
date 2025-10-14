@@ -15,12 +15,13 @@ namespace Application.DI
             services.AddScoped<ReservationService>();
 
             services.AddScoped<AuthService>();
-
+            services.AddScoped<OfferService>();
             services.AddScoped<UserService>();
             services.AddScoped<RoleService>();
             services.AddScoped<FeatureService>();
             services.AddScoped<UserRoleService>();
             services.AddScoped<RoleFeatureService>();
+            services.AddScoped<StaffService>();
 
             services.AddScoped<Application.Services.CustomerService>();
             services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
