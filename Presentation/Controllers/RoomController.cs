@@ -2,6 +2,7 @@
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Response;
 using Presentation.ViewModels.Room;
@@ -24,7 +25,10 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Consumes("multipart/form-data")]
+        [TypeFilter<Filters.CustomAuthorizeFilter>(Arguments = new object[] { "Manage Rooms" })] // to use custom authorization filter]
+
         public async Task<ResponseViewModel<int>> AddRoom([FromForm] AddRoomViewModel viewModel)
         {
             var pictureUrls = await SavePictures(viewModel.PictureUrls);

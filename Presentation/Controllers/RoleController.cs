@@ -1,32 +1,41 @@
-﻿using Application.Services;
+﻿using Application.DTOs.Role;
+using Application.Services;
+using AutoMapper;
 using Domain.Enums;
 using Domain.Models.AccessControl;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Response;
+using Presentation.ViewModels.Role;
+using Presentation.ViewModels.Room;
 
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]/[Action]")]
     public class RoleController : ControllerBase
     {
         private readonly RoleService _roleService;
-
-        public RoleController(RoleService roleService)
+        private readonly IMapper _mapper;
+        public RoleController(RoleService roleService, IMapper mapper)
         {
             _roleService = roleService;
+            _mapper = mapper;
         }
 
-        [HttpPost("add")]
-        public async Task<ResponseViewModel<Role>> AddRole([FromBody] Role role)
+        [HttpPost]
+        public async Task<ResponseViewModel<Role>> AddRole([FromBody] AddRoleVM model)
         {
-            var result = await _roleService.AddRoleAsync(role);
+            var roleDto = _mapper.Map<AddRoleDto>(model);
+
+            var result = await _roleService.AddRoleAsync(roleDto);
+
             return result.IsSuccess
                 ? new SuccessResponseViewModel<Role>(result.Data!, result.Message)
                 : new ErrorResponseViewModel<Role>(ErrorCode.OperationFailed, result.Message);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ResponseViewModel<bool>> DeleteRole(int id)
         {
             var result = await _roleService.DeleteRoleAsync(id);
@@ -35,7 +44,7 @@ namespace Presentation.Controllers
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
 
-        [HttpGet("get-by-id/{id}")]
+        [HttpGet("{id}")]
         public async Task<ResponseViewModel<Role?>> GetRoleById(int id)
         {
             var result = await _roleService.GetRoleByIdAsync(id);
@@ -44,7 +53,7 @@ namespace Presentation.Controllers
                 : new ErrorResponseViewModel<Role?>(ErrorCode.NotFound, result.Message);
         }
 
-        [HttpGet("get-by-name/{name}")]
+        [HttpGet("{name}")]
         public async Task<ResponseViewModel<Role?>> GetRoleByName(string name)
         {
             var result = await _roleService.GetRoleByNameAsync(name);

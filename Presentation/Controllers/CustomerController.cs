@@ -8,7 +8,7 @@ using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[Action]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -19,9 +19,8 @@ namespace Presentation.Controllers
             _customerService = customerService;
             _mapper = mapper;
         }
-
-        [HttpPost("register")]
-        public async Task<ResponseViewModel<bool>> RegisterCustomer([FromQuery] AddCustomerVM cutomerVM)
+        [HttpPost]
+        public async Task<ResponseViewModel<bool>> RegisterCustomer([FromBody] AddCustomerVM cutomerVM)
         {
             var dto = _mapper.Map<AddCustomerDto>(cutomerVM);
 
@@ -34,5 +33,6 @@ namespace Presentation.Controllers
             var mapped = _mapper.Map<bool>(result.Data);
             return new SuccessResponseViewModel<bool>(mapped);
         }
+
     }
 }

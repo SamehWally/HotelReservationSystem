@@ -177,7 +177,7 @@ namespace Infrastructure
                 Id = 2,
                 Username = "staff1",
                 Email = "staff1@email.com",
-                PasswordHash = "hashed_password_2",
+                PasswordHash = HashHelper.ComputeHash("staff123"),
                 FirstName = "Sara",
                 LastName = "Youssef",
                 PhoneNumber = "0100000002",
