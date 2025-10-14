@@ -20,7 +20,6 @@ namespace Presentation.Controllers
 
         [HttpPost("add")]
         [Authorize]
-
         public async Task<ResponseViewModel<Feature>> AddFeature([FromBody] Feature feature)
         {
             var result = await _featureService.AddFeatureAsync(feature);
@@ -28,7 +27,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<Feature>(result.Data!, result.Message)
                 : new ErrorResponseViewModel<Feature>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpDelete("delete/{id}")]
         public async Task<ResponseViewModel<bool>> DeleteFeature(int id)
         {
@@ -37,7 +35,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpGet("get-by-id/{id}")]
         public async Task<ResponseViewModel<Feature?>> GetFeatureById(int id)
         {
@@ -46,7 +43,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<Feature?>(result.Data!, result.Message)
                 : new ErrorResponseViewModel<Feature?>(ErrorCode.NotFound, result.Message);
         }
-
         [HttpGet("get-by-name/{name}")]
         public async Task<ResponseViewModel<Feature?>> GetFeatureByName(string name)
         {

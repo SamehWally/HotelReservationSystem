@@ -25,7 +25,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpDelete("remove-soft")]
         public async Task<ResponseViewModel<bool>> SoftRemoveRole(int userId, int roleId)
         {
@@ -34,7 +33,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpDelete("remove-hard")]
         public async Task<ResponseViewModel<bool>> HardRemoveRole(int userId, int roleId)
         {
@@ -43,7 +41,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpGet("user-roles/{userId}")]
         public async Task<ResponseViewModel<IList<Role>>> GetUserRoles(int userId)
         {

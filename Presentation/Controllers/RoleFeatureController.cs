@@ -21,7 +21,6 @@ namespace Presentation.Controllers
         [HttpPost("assign")]
         [Authorize]
         [TypeFilter<Filters.CustomAuthorizeFilter>(Arguments = new object[] { "CanAssignFeatureToRole" })] // to use custom authorization filter]
-
         public async Task<ResponseViewModel<bool>> AssignFeatureToRole(int roleId, int featureId)
         {
             var result = await _roleFeatureService.AssignFeatureToRoleAsync(roleId, featureId);
@@ -29,7 +28,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpDelete("remove")]
         public async Task<ResponseViewModel<bool>> RemoveFeatureFromRole(int roleId, int featureId)
         {
@@ -38,7 +36,6 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-
         [HttpGet("get-features/{roleId}")]
         public async Task<ResponseViewModel<IEnumerable<Feature>>> GetFeaturesByRole(int roleId)
         {

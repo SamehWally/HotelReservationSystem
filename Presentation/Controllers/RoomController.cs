@@ -43,7 +43,6 @@ namespace Presentation.Controllers
 
             return new SuccessResponseViewModel<int>(newRoomId, "Room added successfully");
         }
-
         private async Task<List<string>> SavePictures(List<IFormFile> pictures)
         {
             var urls = new List<string>();

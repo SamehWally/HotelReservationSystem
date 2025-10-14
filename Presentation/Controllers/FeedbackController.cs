@@ -32,7 +32,6 @@ namespace Presentation.Controllers
             return Ok(new SuccessResponseViewModel<bool>(true, "Feedback submitted successfully."));
         }
         #endregion
-
         #region GetAllFeedbacksAsync
         [HttpGet("all")]
         public async Task<ResponseViewModel<IEnumerable<GetAllFeedbacksViewModel>>> GetAllFeedbacksAsync()
@@ -44,7 +43,6 @@ namespace Presentation.Controllers
             return new SuccessResponseViewModel<IEnumerable<GetAllFeedbacksViewModel>>(feedbacksViewModels);
         }
         #endregion
-
         #region ReplyToFeedbackAsync
         [HttpPut("reply/{id}")]
         public async Task<IActionResult> ReplyToFeedbackAsync(int id, [FromQuery] ReplyToFeedbackDto dto)

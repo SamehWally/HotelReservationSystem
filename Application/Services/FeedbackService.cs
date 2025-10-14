@@ -38,7 +38,6 @@ namespace Application.Services
             return true;
         }
         #endregion
-
         #region GetAllFeedbacksAsync
         public async Task<IEnumerable<GetAllFeedbacksDto>> GetAllFeedbacksAsync()
         {
@@ -47,7 +46,6 @@ namespace Application.Services
             return feedbacksMapped;
         }
         #endregion
-
         #region ReplyToFeedbackAsync
         public async Task<bool> ReplyToFeedbackAsync(ReplyToFeedbackDto dto)
         {
