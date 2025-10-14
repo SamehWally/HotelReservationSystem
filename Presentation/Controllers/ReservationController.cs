@@ -3,6 +3,7 @@ using Application.Filters;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Domain.Models.Reservation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -89,7 +90,9 @@ namespace Presentation.Controllers
             return new SuccessResponseViewModel<ReservationDto>(result, "Reservation details fetched successfully.");
         }
         [HttpPost]
-        public ResponseViewModel<ReservationResponse> AddReservation([FromForm] AddReservationVM addReservationVM)
+        [Authorize]
+        [TypeFilter<Filters.CustomAuthorizeFilter>(Arguments = new object[] { "Manage Rooms" })]
+        public ReservationResponse AddReservation([FromForm] AddReservationVM addReservationVM)
         {
             //var ReservationDto = new AddReservationDto
             //{
@@ -103,10 +106,24 @@ namespace Presentation.Controllers
 
             var ReservationDto = _mapper.Map<AddReservationDto>(addReservationVM);
             var Reselt = _reservationService.addReservation(ReservationDto);
-            if(Reselt.Message == "Reservation created successfully")
-            return new SuccessResponseViewModel<ReservationResponse>(Reselt);
+            if (Reselt.Message == "Reservation created successfully")
+                return new ReservationResponse
+                {
+                    CheckIn = Reselt.CheckIn,
+                    CheckOut = Reselt.CheckOut,
+                    RoomId = Reselt.RoomId,
+                    CustomerId = Reselt.CustomerId,
+                    Message = Reselt.Message
+                };
             else
-                return new ErrorResponseViewModel<ReservationResponse>(ErrorCode.AddedFailed, Reselt.Message);
+                return new ReservationResponse
+                {
+                    CheckIn = Reselt.CheckIn,
+                    CheckOut = Reselt.CheckOut,
+                    RoomId = Reselt.RoomId,
+                    CustomerId = Reselt.CustomerId,
+                    Message = "Reservation creation failed"
+                }; ;
         }
         [HttpPut("cancel")]
         public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)

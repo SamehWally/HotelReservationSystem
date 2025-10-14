@@ -1,23 +1,31 @@
-﻿using Application.DTOs.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.DTOs.Response;
+using Application.DTOs.Role;
+using AutoMapper;
 using Domain.Enums;
 using Domain.Models.AccessControl;
 using Domain.Repositories;
-
-
 namespace Application.Services
 {
     public class RoleService
     {
         private readonly IRoleRepository _roleRepository;
-
-        public RoleService(IRoleRepository roleRepository)
+        private readonly IMapper _mapper;
+        public RoleService(IRoleRepository roleRepository,IMapper mapper)
         {
             _roleRepository = roleRepository;
+            _mapper = mapper;
         }
-
-        public async Task<ResponseDTO<Role>> AddRoleAsync(Role role)
+        public async Task<ResponseDTO<Role>> AddRoleAsync(AddRoleDto roleDto)
         {
+            var role = _mapper.Map<Role>(roleDto);
+
             await _roleRepository.AddAsync(role);
+
             return ResponseDTO<Role>.Success(role, "Role added successfully.");
         }
         public async Task<ResponseDTO<bool>> DeleteRoleAsync(int id)

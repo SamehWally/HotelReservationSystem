@@ -7,7 +7,7 @@ using Presentation.ViewModels.Response;
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]/[Action]")]
     public class UserRoleController : ControllerBase
     {
         private readonly UserRoleService _userRoleService;
@@ -17,7 +17,7 @@ namespace Presentation.Controllers
             _userRoleService = userRoleService;
         }
 
-        [HttpPost("assign")]
+        [HttpPost()]
         public async Task<ResponseViewModel<bool>> AssignRole(int userId, int roleId)
         {
             var result = await _userRoleService.AssignRoleToUserAsync(userId, roleId);
@@ -25,7 +25,8 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-        [HttpDelete("remove-soft")]
+
+        [HttpDelete()]
         public async Task<ResponseViewModel<bool>> SoftRemoveRole(int userId, int roleId)
         {
             var result = await _userRoleService.SoftRemoveRoleFromUserAsync(userId, roleId);
@@ -33,7 +34,8 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-        [HttpDelete("remove-hard")]
+
+        [HttpDelete()]
         public async Task<ResponseViewModel<bool>> HardRemoveRole(int userId, int roleId)
         {
             var result = await _userRoleService.HardRemoveRoleFromUserAsync(userId, roleId);
@@ -41,7 +43,8 @@ namespace Presentation.Controllers
                 ? new SuccessResponseViewModel<bool>(true, result.Message)
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
-        [HttpGet("user-roles/{userId}")]
+
+        [HttpGet()]
         public async Task<ResponseViewModel<IList<Role>>> GetUserRoles(int userId)
         {
             var result = await _userRoleService.GetUserRolesAsync(userId);

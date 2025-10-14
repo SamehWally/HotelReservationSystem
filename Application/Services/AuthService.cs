@@ -38,7 +38,7 @@ namespace Application.Services
                 features.AddRange(await _roleFeatureRepo.GetFeatuesOfRoleAsync(role.Id));
             }
 
-            var token = TokenGenerator.GenerateToken(user.Id, user.Username, roles.Select(r => r.Name).ToList());
+            var token = TokenGenerator.GenerateToken(user.Id, user.Username, roles.Select(r => r.Id.ToString()).ToList());
 
             var response = new LoginResponseDto
             {

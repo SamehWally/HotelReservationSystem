@@ -5,6 +5,7 @@ using Domain.Models.Reservation;
 using Domain.Models.Room;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
+using Application.Helpers;
 
 namespace Infrastructure
 {
@@ -177,7 +178,7 @@ namespace Infrastructure
                 Id = 2,
                 Username = "staff1",
                 Email = "staff1@email.com",
-                PasswordHash = "hashed_password_2",
+                PasswordHash = HashHelper.ComputeHash("staff123"),
                 FirstName = "Sara",
                 LastName = "Youssef",
                 PhoneNumber = "0100000002",

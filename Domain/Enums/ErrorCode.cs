@@ -34,7 +34,8 @@
         InvalidCredentials = 300,
         FaildRoleAssignment = 301,
 
-        FaildResponseDto = 400,
-        OperationFailed = 401
+        FaildResponseDto=400,
+        OperationFailed = 401,
+        Duplicate = 402
     }
 }
