@@ -1,4 +1,6 @@
-﻿using Domain.Models.AccessControl;
+﻿using Domain.Helpers;
+using Domain.Models.AccessControl;
+using Domain.Models.Offer;
 using Domain.Models.Reservation;
 using Domain.Models.Room;
 using Domain.Models.Users;
@@ -8,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Helpers;
 
 namespace Infrastructure
 {
@@ -23,7 +24,8 @@ namespace Infrastructure
         public DbSet<RoomPicture> RoomPictures { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
 
-
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<OfferRoom> OfferRooms { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Staff> Staff {  get; set; }

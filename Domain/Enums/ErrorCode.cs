@@ -7,7 +7,7 @@
         RoomNotFound = 100,
         InvalidRoomId = 101,
         NoRoomsAvailableBetweenThisDate=102,
-
+        OfferNotFound=100,
         //Reservations
         UpdatedFailed = 200,
         ReservationNotFound = 200,

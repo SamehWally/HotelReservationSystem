@@ -14,7 +14,7 @@ namespace Application.DI
             services.AddScoped<ReservationService>();
 
             services.AddScoped<AuthService>();
-
+            services.AddScoped<OfferService>();
             services.AddScoped<UserService>();
             services.AddScoped<RoleService>();
             services.AddScoped<FeatureService>();
