@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs.Feature;
 using Application.DTOs.Response;
+using AutoMapper;
 using Domain.Enums;
 using Domain.Models.AccessControl;
 using Domain.Repositories;
@@ -13,15 +15,19 @@ namespace Application.Services
     public class FeatureService
     {
         private readonly IFeatureRepository _featureRepository;
-
-        public FeatureService(IFeatureRepository featureRepository)
+        private readonly IMapper _mapper;
+        public FeatureService(IFeatureRepository featureRepository,IMapper mapper)
         {
             _featureRepository = featureRepository;
+            _mapper = mapper;
         }
 
-        public async Task<ResponseDTO<Feature>> AddFeatureAsync(Feature feature)
+        public async Task<ResponseDTO<Feature>> AddFeatureAsync(AddFeatureDto featureDto)
         {
+            var feature = _mapper.Map<Feature>(featureDto);
+
             await _featureRepository.AddAsync(feature);
+
             return ResponseDTO<Feature>.Success(feature, "Feature added successfully.");
         }
 

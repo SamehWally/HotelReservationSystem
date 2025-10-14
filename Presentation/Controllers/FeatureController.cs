@@ -1,35 +1,40 @@
-﻿using Application.Services;
+﻿using Application.DTOs.Feature;
+using Application.Services;
+using AutoMapper;
 using Domain.Enums;
 using Domain.Models.AccessControl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ViewModels.Feature;
 using Presentation.ViewModels.Response;
+using static Presentation.ViewModels.Feature.AddFeatureVM;
 
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]/[Action]")]
     public class FeatureController : ControllerBase
     {
         private readonly FeatureService _featureService;
-
-        public FeatureController(FeatureService featureService)
+        private readonly IMapper _mapper;
+        public FeatureController(FeatureService featureService, IMapper mapper)
         {
             _featureService = featureService;
+            this._mapper = mapper;
         }
 
-        [HttpPost("add")]
-        [Authorize]
-
-        public async Task<ResponseViewModel<Feature>> AddFeature([FromBody] Feature feature)
+        [HttpPost]
+        public async Task<ResponseViewModel<Feature>> AddFeature([FromBody] AddFeatureVM model)
         {
-            var result = await _featureService.AddFeatureAsync(feature);
+            var featureDto = _mapper.Map<AddFeatureDto>(model);
+            var result = await _featureService.AddFeatureAsync(featureDto);
+
             return result.IsSuccess
                 ? new SuccessResponseViewModel<Feature>(result.Data!, result.Message)
                 : new ErrorResponseViewModel<Feature>(ErrorCode.OperationFailed, result.Message);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ResponseViewModel<bool>> DeleteFeature(int id)
         {
             var result = await _featureService.DeleteFeatureAsync(id);
@@ -38,7 +43,7 @@ namespace Presentation.Controllers
                 : new ErrorResponseViewModel<bool>(ErrorCode.OperationFailed, result.Message);
         }
 
-        [HttpGet("get-by-id/{id}")]
+        [HttpGet("{id}")]
         public async Task<ResponseViewModel<Feature?>> GetFeatureById(int id)
         {
             var result = await _featureService.GetFeatureByIdAsync(id);
@@ -47,7 +52,7 @@ namespace Presentation.Controllers
                 : new ErrorResponseViewModel<Feature?>(ErrorCode.NotFound, result.Message);
         }
 
-        [HttpGet("get-by-name/{name}")]
+        [HttpGet("{name}")]
         public async Task<ResponseViewModel<Feature?>> GetFeatureByName(string name)
         {
             var result = await _featureService.GetFeatureByNameAsync(name);

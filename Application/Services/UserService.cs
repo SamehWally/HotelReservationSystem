@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOs.Response;
 using Application.DTOs.User;
 using Domain.Repositories;
 
@@ -65,8 +66,8 @@ namespace Application.Services
                 LastName = userDto.LastName,
                 Email = userDto.Email,
                 PhoneNumber = userDto.PhoneNumber,
-                Username = userDto.Username,
-                PasswordHash = userDto.Password,// In a real application, ensure to hash the password properly
+                Username = Helpers.HashHelper.ComputeHash(userDto.Username),
+                PasswordHash = Helpers.HashHelper.ComputeHash(userDto.Password),// In a real application, ensure to hash the password properly
                 Address= userDto.Address,
                 City= userDto.City,
                 Country= userDto.Country
@@ -75,7 +76,30 @@ namespace Application.Services
             return true;
         }
 
+        public ResponseDTO<IEnumerable<UserInfoDto>> GetAllUsers()
+        {
+            var users = _userRepository.GetAllUsers();
+            // I will use AutoMapper in the future
+            var userDtos =   users.Select(user => new UserInfoDto
+            {
+                Id = user.Id,
+                FullName = $"{user.FirstName} {user.LastName}",
+                Email = user.Email ?? "empty",
+                PhoneNumber = user.PhoneNumber ?? "empty",
+            }).ToList();
+            return ResponseDTO<IEnumerable<UserInfoDto>>.Success(userDtos);
+        }
 
+        public async Task<bool> DeleteUserAsync(int userId)
+        {
+            var existingUser = await _userRepository.GetByIdAsync(userId);
+            if (existingUser == null)
+            {
+                return false; // User not found
+            }
+            await _userRepository.DeleteAsync(userId);
+            return true;
+        }
 
 
     }

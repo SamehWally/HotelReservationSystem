@@ -63,5 +63,14 @@ namespace Infrastructure.Repository
             return features;
         }
 
+        public async Task<bool> CheckFeatureAccessAsync(List<int> roleIds, string featureName)
+        {
+            return await _context.RoleFeatures
+                .AnyAsync(rf =>
+                    roleIds.Contains(rf.RoleId) &&
+                    !rf.IsDeleted &&
+                    rf.Feature.Name == featureName);
+        }
+
     }
 }

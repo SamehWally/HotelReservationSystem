@@ -15,7 +15,7 @@ namespace Domain.Repositories
         Task<User> GetByEmailAsync(string email);
 
         Task<User>GetWhere(Expression<Func<User, bool>> predicate);
-
+        public IQueryable<User> GetAllUsers();
         Task AddAsync(User user);
         Task UpdateAsync(User entity);
         Task DeleteAsync(int id);

@@ -45,13 +45,25 @@ namespace Infrastructure.Repository
         }
 
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FirstOrDefaultAsync(u=>u.Id==id);
+            if (user != null)
+            {
+                //user.IsDeleted = true;
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
         }
         public Task UpdateAsync(User entity)
         {
             throw new NotImplementedException();
+        }
+
+        public IQueryable<User> GetAllUsers()
+        {
+            var users = _context.Users.Where(u => !u.IsDeleted);
+            return users;
         }
     }
 }

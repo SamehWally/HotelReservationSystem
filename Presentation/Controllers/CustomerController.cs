@@ -4,10 +4,11 @@ using AutoMapper;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Customer;
+using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[Action]")]
     [ApiController]
     public class CustomerController:ControllerBase
     {
@@ -18,17 +19,18 @@ namespace Presentation.Controllers
             _customerService = customerService;
             _mapper = mapper;
         }
-        [HttpPost("register")]
-        public async Task<IActionResult> RegisterCustomer([FromBody] AddCustomerVM cutomerVM)
+        [HttpPost]
+        public async Task<ResponseViewModel<bool>> RegisterCustomer([FromBody] AddCustomerVM cutomerVM)
         {
            var dto= _mapper.Map<AddCustomerDto>(cutomerVM);
 
             var result = await _customerService.RegisterCustomerAsync(dto);
             if (!result.IsSuccess)
-        {
-                return BadRequest(result);
+            {
+                return new ErrorResponseViewModel<bool>(ErrorCode.NotFound);
             }
-            return Ok(result);
+            return new SuccessResponseViewModel<bool> (result.Data);
         }
+
     }
 }

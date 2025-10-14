@@ -3,6 +3,7 @@ using Application.Filters;
 using Application.Services;
 using AutoMapper;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Reservation;
 using Presentation.ViewModels.Response;
@@ -85,6 +86,8 @@ namespace Presentation.Controllers
             return new SuccessResponseViewModel<ReservationDto>(result, "Reservation details fetched successfully.");
         }
         [HttpPost]
+        [Authorize]
+        [TypeFilter<Filters.CustomAuthorizeFilter>(Arguments = new object[] { "Manage Rooms" })]
         public ReservationResponse AddReservation([FromForm] AddReservationVM addReservationVM)
         {
 

@@ -55,5 +55,10 @@ namespace Application.Services
             var features = await _roleFeatureRepository.GetFeatuesOfRoleAsync(roleId);
             return ResponseDTO<IEnumerable<Feature>>.Success(features, "Features retrieved successfully.");
         }
+
+        public async Task<bool> CheckFeatureAccessAsync(List<int> roleIds, string featureName)
+        {
+            return await _roleFeatureRepository.CheckFeatureAccessAsync(roleIds, featureName);
+        }
     }
 }

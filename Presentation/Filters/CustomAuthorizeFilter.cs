@@ -30,33 +30,9 @@ namespace Presentation.Filters
             }
             
             
-            var roleClaims = user.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+            var roleIds = user.FindAll(ClaimTypes.Role).Select(r => int.Parse(r.Value)).ToList();
 
-            if (!roleClaims.Any())
-            {
-                context.Result = new JsonResult(new
-                {
-                    Message = "Forbidden: No roles found in token."
-                })
-                { StatusCode = StatusCodes.Status403Forbidden };
-                return;
-            }
-
-            bool hasAccess = false;
-
-            
-            foreach (var roleClaim in roleClaims)
-            {
-                if (int.TryParse(roleClaim, out int roleId))
-                {
-                    if (await _roleFeatureService.CheckFeatureAccess(roleId, _featureName))
-                    {
-                        hasAccess = true;
-                        break;
-                    }
-                }
-            }
-
+            bool hasAccess = await _roleFeatureService.CheckFeatureAccessAsync(roleIds, _featureName);
             if (!hasAccess)
             {
                 context.Result = new JsonResult(new
@@ -66,6 +42,35 @@ namespace Presentation.Filters
                 { StatusCode = StatusCodes.Status403Forbidden };
                 return;
             }
+
+            #region Old Queries
+            //var roleClaims = user.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+            //if (!roleClaims.Any())
+            //{
+            //    context.Result = new JsonResult(new
+            //    {
+            //        Message = "Forbidden: No roles found in token."
+            //    })
+            //    { StatusCode = StatusCodes.Status403Forbidden };
+            //    return;
+            //}
+
+            //bool hasAccess = false;
+
+
+            //foreach (var roleClaim in roleClaims)
+            //{
+            //    if (int.TryParse(roleClaim, out int roleId))
+            //    {
+            //        if (await _roleFeatureService.CheckFeatureAccess(roleId, _featureName))
+            //        {
+            //            hasAccess = true;
+            //            break;
+            //        }
+            //    }
+            //}
+
+            #endregion
 
             await next();
         }

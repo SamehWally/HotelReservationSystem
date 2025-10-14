@@ -29,6 +29,7 @@
         FaildRoleAssignment=301,
 
         FaildResponseDto=400,
-        OperationFailed = 401
+        OperationFailed = 401,
+        Duplicate = 402
     }
 }
