@@ -7,6 +7,11 @@ public class ReservationProfileViewModel : Profile
 {
     public ReservationProfileViewModel()
     {
+        // GetAllReservationsViewModel
+        CreateMap<GetAllReservationsDto, GetAllReservationsViewModel>();
+
+        // GetReservationsByCustomer
+        CreateMap<GetReservationsByCustomerDto, GetReservationsByCustomerViewModel>();
 
         // GetById => DTO
         CreateMap<Reservation, ReservationDto>()
@@ -17,18 +22,18 @@ public class ReservationProfileViewModel : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
 
 
-            CreateMap<AddReservationDto, AddReservationVM>().ReverseMap();
+        CreateMap<AddReservationDto, AddReservationVM>().ReverseMap();
 
-            CreateMap<CancelReservationViewModel,CancelReservationDto>().ReverseMap();
-            CreateMap<ConfirmReservationViewModel,ConfirmReservationDto>().ReverseMap();
+        CreateMap<CancelReservationViewModel, CancelReservationDto>().ReverseMap();
+        CreateMap<ConfirmReservationViewModel, ConfirmReservationDto>().ReverseMap();
 
-            //      UpdateReservationVM <-> UpdateReservationDto
-            CreateMap<UpdateReservationVM, UpdateReservationDto>().ReverseMap();
+        //      UpdateReservationVM <-> UpdateReservationDto
+        CreateMap<UpdateReservationVM, UpdateReservationDto>().ReverseMap();
 
-            CreateMap<UpdateReservationDateVM, UpdateReservationDateDto>().ReverseMap();
+        CreateMap<UpdateReservationDateVM, UpdateReservationDateDto>().ReverseMap();
 
-            // VM <-> DTO
-            CreateMap<GetReservationByRoomIdDto, GetReservationByRoomIdVM>().ReverseMap();
+        // VM <-> DTO
+        CreateMap<GetReservationByRoomIdDto, GetReservationByRoomIdVM>().ReverseMap();
 
     }
 }

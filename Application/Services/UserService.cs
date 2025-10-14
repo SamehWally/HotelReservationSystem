@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.DTOs.User;
+﻿using Application.DTOs.User;
 using Domain.Repositories;
 
 namespace Application.Services
@@ -32,7 +27,7 @@ namespace Application.Services
                     PhoneNumber = user.PhoneNumber ?? "empty",
 
                 };
-            return userDto;
+                return userDto;
             }
             return null!;
         }
@@ -67,9 +62,9 @@ namespace Application.Services
                 PhoneNumber = userDto.PhoneNumber,
                 Username = userDto.Username,
                 PasswordHash = userDto.Password,// In a real application, ensure to hash the password properly
-                Address= userDto.Address,
-                City= userDto.City,
-                Country= userDto.Country
+                Address = userDto.Address,
+                City = userDto.City,
+                Country = userDto.Country
             };
             await _userRepository.AddAsync(user);
             return true;

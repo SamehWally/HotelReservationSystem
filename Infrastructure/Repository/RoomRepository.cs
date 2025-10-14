@@ -37,7 +37,7 @@ namespace Infrastructure.Repository
         }
         public IQueryable<Room> GetAvailableRooms(DateTime checkIn, DateTime checkOut)
         {
-            return  GetAllRooms().Where(r => r.IsAvailable)
+            return GetAllRooms().Where(r => r.IsAvailable)
                 .Where(r => !_context.Reservations.Any(res =>
                 res.RoomId == r.Id &&
                 res.Status != ReservationStatus.Canceled &&
@@ -66,12 +66,12 @@ namespace Infrastructure.Repository
             return !_context.Reservations
              .Any(r =>
                  r.RoomId == roomid &&
-     
+
                  (
                      (checkIn >= r.CheckIn && checkIn < r.CheckOut) ||   // CheckIn داخل فترة قديمة
                      (checkOut > r.CheckIn && checkOut <= r.CheckOut) || // CheckOut داخل فترة قديمة
                      (checkIn <= r.CheckIn && checkOut >= r.CheckOut)    // الفترة الجديدة تغطي حجز قديم
-               )  );
+               ));
         }
     }
 }

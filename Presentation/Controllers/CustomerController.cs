@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.Customer;
 using Application.Services;
 using AutoMapper;
-using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Customer;
 using Presentation.ViewModels.Response;
@@ -10,7 +9,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController:ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly CustomerService _customerService;
         private readonly IMapper _mapper;
@@ -19,10 +18,11 @@ namespace Presentation.Controllers
             _customerService = customerService;
             _mapper = mapper;
         }
+
         [HttpPost("register")]
         public async Task<ResponseViewModel<bool>> RegisterCustomer([FromQuery] AddCustomerVM cutomerVM)
         {
-           var dto= _mapper.Map<AddCustomerDto>(cutomerVM);
+            var dto = _mapper.Map<AddCustomerDto>(cutomerVM);
 
             var result = await _customerService.RegisterCustomerAsync(dto);
             if (!result.IsSuccess)

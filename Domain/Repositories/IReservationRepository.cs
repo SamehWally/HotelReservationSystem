@@ -6,7 +6,7 @@ namespace Domain.Repositories
     public interface IReservationRepository
     {
         IQueryable<Reservation> GetAll();
-        IQueryable<Reservation> GetByCustomer(int customerId);
+        IQueryable<Reservation> GetReservationsByCustomer(int customerId);
 
         void AddReservation(Reservation reservation);
         Task UpdateStatusAsync(Reservation reservation);
@@ -15,11 +15,11 @@ namespace Domain.Repositories
         Task<bool> UpdateDatesAsync(int id, DateOnly newCheckIn, DateOnly newCheckOut);
         Task<bool> UpdateStatusAsync(int id, ReservationStatus newStatus);
         IQueryable<Reservation> Search(
-       int? roomId = null,
-       int? customerId = null,
-       DateOnly? from = null,
-       DateOnly? to = null,
-       ReservationStatus? status = null);
+           int? roomId = null,
+           int? customerId = null,
+           DateOnly? from = null,
+           DateOnly? to = null,
+           ReservationStatus? status = null);
 
         Reservation? GetById(int id);
         IQueryable<Reservation> GetDetails(int id);

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models.Room
 {
-    public class Facility 
+    public class Facility
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

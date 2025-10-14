@@ -1,13 +1,13 @@
-using System.Text;
+using Application.DI;
 using Application.DTOs.Mapping;
+using Application.DTOs.Reservation;
 using Application.Helpers;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
-using Application.DTOs.Reservation;
-using Application.DI;
+using System.Text;
 
 namespace Presentation
 {
@@ -91,7 +91,7 @@ namespace Presentation
                     ValidateLifetime = true,
 
                 };
-            }); 
+            });
             #endregion
 
             var app = builder.Build();
