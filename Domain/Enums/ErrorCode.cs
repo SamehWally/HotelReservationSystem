@@ -6,11 +6,17 @@
 
         RoomNotFound = 100,
         InvalidRoomId = 101,
-        NoRoomsAvailableBetweenThisDate=102,
 
+        NoRoomsAvailableBetweenThisDate=102,
+        OfferNotFound=100,
+        
         //Reservations
-        UpdatedFailed = 200,
+        UpdatedFailed = 199,
         ReservationNotFound = 200,
+        AddedFailed = 201,
+
+        FeedbackFailed = 300,
+        ReplyFailed = 301,
 
         ValidationFailed = 2,
         Unauthorized = 3,
@@ -22,11 +28,11 @@
 
         NotFound = 103,
 
-        CancelFailed=101,
-        ConfirmFailed=102,
+        CancelFailed = 101,
+        ConfirmFailed = 102,
 
         InvalidCredentials = 300,
-        FaildRoleAssignment=301,
+        FaildRoleAssignment = 301,
 
         FaildResponseDto=400,
         OperationFailed = 401,

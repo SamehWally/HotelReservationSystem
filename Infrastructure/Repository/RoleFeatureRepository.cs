@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper.Features;
-using Domain.Models.AccessControl;
+﻿using Domain.Models.AccessControl;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class RoleFeatureRepository:IRoleFeatureRepository
+    public class RoleFeatureRepository : IRoleFeatureRepository
     {
         private readonly Context _context;
 
@@ -30,7 +24,7 @@ namespace Infrastructure.Repository
         public async Task<bool> HardRemoveFeatureFromRoleAsync(int roleId, int featureId)
         {
             var roleFeature = await _context.RoleFeatures
-                .FirstOrDefaultAsync(rf=>rf.RoleId==roleId && rf.FeatureId==featureId);
+                .FirstOrDefaultAsync(rf => rf.RoleId == roleId && rf.FeatureId == featureId);
 
             if (roleFeature != null)
             {
@@ -56,8 +50,8 @@ namespace Infrastructure.Repository
 
         public async Task<IList<Feature>> GetFeatuesOfRoleAsync(int roleId)
         {
-            var features= await _context.RoleFeatures
-                .Where(rf=>rf.RoleId==roleId &&!rf.IsDeleted)
+            var features = await _context.RoleFeatures
+                .Where(rf => rf.RoleId == roleId && !rf.IsDeleted)
                 .Select(rf => rf.Feature)
                 .ToListAsync();
             return features;

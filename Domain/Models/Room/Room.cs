@@ -6,7 +6,7 @@ namespace Domain.Models.Room
     {
         public string Name { get; set; } = string.Empty;
         public int Number { get; set; }
-        public RoomType Type { get; set; } 
+        public RoomType Type { get; set; }
         public decimal PricePerNight { get; set; }
         public string Description { get; set; } = string.Empty;
         public bool IsAvailable { get; set; }

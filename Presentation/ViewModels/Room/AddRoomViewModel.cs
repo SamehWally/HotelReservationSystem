@@ -3,7 +3,7 @@
     public class AddRoomViewModel
     {
         public string Name { get; set; } = string.Empty;
-        public int Type { get; set; } 
+        public int Type { get; set; }
         public decimal PricePerNight { get; set; }
         public string Description { get; set; } = string.Empty;
         public List<IFormFile> PictureUrls { get; set; } = new();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +9,9 @@ using AutoMapper;
 using Domain.Enums;
 using Domain.Models.AccessControl;
 using Domain.Repositories;
-
-
 namespace Application.Services
 {
-    public class RoleService 
+    public class RoleService
     {
         private readonly IRoleRepository _roleRepository;
         private readonly IMapper _mapper;
@@ -36,7 +34,7 @@ namespace Application.Services
             var result = await _roleRepository.DeleteAsync(id);
             return result
                 ? ResponseDTO<bool>.Success(true, "Role deleted successfully.")
-                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto,"Role not found or failed to delete.");
+                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Role not found or failed to delete.");
         }
 
         public async Task<ResponseDTO<Role?>> GetRoleByIdAsync(int id)
@@ -44,7 +42,7 @@ namespace Application.Services
             var role = await _roleRepository.GetByIdAsync(id);
             return role != null
                 ? ResponseDTO<Role?>.Success(role, "Role found.")
-                : ResponseDTO<Role?>.Failure(ErrorCode.FaildResponseDto,"Role not found.");
+                : ResponseDTO<Role?>.Failure(ErrorCode.FaildResponseDto, "Role not found.");
         }
 
         public async Task<ResponseDTO<Role?>> GetRoleByNameAsync(string roleName)
@@ -52,7 +50,7 @@ namespace Application.Services
             var role = await _roleRepository.GetByNameAsync(roleName);
             return role != null
                 ? ResponseDTO<Role?>.Success(role, "Role found.")
-                : ResponseDTO<Role?>.Failure(ErrorCode.FaildResponseDto,"Role not found.");
+                : ResponseDTO<Role?>.Failure(ErrorCode.FaildResponseDto, "Role not found.");
         }
     }
 

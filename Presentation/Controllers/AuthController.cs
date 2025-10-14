@@ -18,7 +18,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ResponseViewModel<LoginResponseDto>> Login([FromBody] LoginRequestDto dto)
+        public async Task<ResponseViewModel<LoginResponseDto>> Login([FromForm] LoginRequestDto dto)
         {
             var result = await _authService.LoginAsync(dto);
 

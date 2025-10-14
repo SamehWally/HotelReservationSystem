@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.DTOs.Login;
+﻿using Application.DTOs.Login;
 using Application.Helpers;
 using Domain.Models.AccessControl;
 using Domain.Repositories;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Services
 {
@@ -31,13 +25,13 @@ namespace Application.Services
             string hashedPassword = HashHelper.ComputeHash(dto.Password);
             string hashedUserName = HashHelper.ComputeHash(dto.UserName);
 
-            var user= await _userRepo.GetWhere(u=>u.PasswordHash==hashedPassword&&u.Username==hashedUserName);
+            var user = await _userRepo.GetWhere(u => u.PasswordHash == hashedPassword && u.Username == hashedUserName);
 
             if (user == null)
             {
                 return null; // User not found or invalid credentials
             }
-            var roles =await  _userRoleRepo.GetUserRolesAsync(user.Id);
+            var roles = await _userRoleRepo.GetUserRolesAsync(user.Id);
             var features = new List<Feature>();
             foreach (var role in roles)
             {
@@ -46,7 +40,7 @@ namespace Application.Services
 
             var token = TokenGenerator.GenerateToken(user.Id, user.Username, roles.Select(r => r.Id.ToString()).ToList());
 
-            var response= new LoginResponseDto
+            var response = new LoginResponseDto
             {
                 Token = token,
                 UserName = user.Username,

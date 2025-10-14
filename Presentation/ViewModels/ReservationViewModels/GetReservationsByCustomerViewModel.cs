@@ -1,8 +1,8 @@
 ﻿using Domain.Enums;
 
-namespace Application.DTOs.Reservation
+namespace Presentation.ViewModels.Reservation
 {
-    public class GetAllReservationDto
+    public class GetReservationsByCustomerViewModel
     {
         public int Id { get; set; }
 

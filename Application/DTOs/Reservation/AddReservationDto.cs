@@ -11,6 +11,6 @@ namespace Application.DTOs.Reservation
 
         public int RoomId { get; set; }
         public int CustomerId { get; set; }
-      
+
     }
 }

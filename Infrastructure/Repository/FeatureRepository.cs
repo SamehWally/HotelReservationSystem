@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models.AccessControl;
+﻿using Domain.Models.AccessControl;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +16,7 @@ namespace Infrastructure.Repository
 
         public async Task<Feature?> GetByIdAsync(int id)
         {
-            var feature= await _context.Features.FindAsync(id);
+            var feature = await _context.Features.FindAsync(id);
             return feature;
         }
 

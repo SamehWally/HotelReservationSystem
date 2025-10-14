@@ -115,14 +115,14 @@ namespace Presentation.Controllers
 
         }
         [HttpGet("id")]
-        public  ResponseViewModel<GetRoomViewModel> GetRoomById(int id)
+        public ResponseViewModel<GetRoomViewModel> GetRoomById(int id)
         {
             var room = _roomService.GetRoomById(id);
             var roomVM = _mapper.Map<GetRoomViewModel>(room);
 
             if (roomVM is not null)
                 return new SuccessResponseViewModel<GetRoomViewModel>(roomVM);
-            
+
             return new ErrorResponseViewModel<GetRoomViewModel>(ErrorCode.RoomNotFound);
         }
         [HttpGet]

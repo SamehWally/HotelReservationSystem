@@ -1,23 +1,13 @@
-using System.Text;
-using Application;
-using Application.DTOs;
+using Application.DI;
 using Application.DTOs.Mapping;
+using Application.DTOs.Reservation;
 using Application.Helpers;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Domain.Models.Room;
-using Domain.Repositories;
 using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
-using System.Security.Claims;
-using Application.DTOs.Reservation;
+using System.Text;
 
 namespace Presentation
 {
@@ -26,8 +16,13 @@ namespace Presentation
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(
+                    new System.Text.Json.Serialization.JsonStringEnumConverter());
+            });
+             // Add services to the container.
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddControllers();
@@ -41,7 +36,10 @@ namespace Presentation
             builder.Services.AddAutoMapper(typeof(RoomProfileViewModel).Assembly,
                 typeof(RoomProfileDto).Assembly);
             builder.Services.AddAutoMapper(typeof(ReservationProfileViewModel).Assembly,
-                typeof(UpdateReservationDto).Assembly);
+                typeof(UpdateReservationDto).Assembly,
+                typeof(StaffProfileDto).Assembly,
+                typeof(StaffProfileViewModel).Assembly);
+
 
             builder.Services.AddScoped<GlobalErrorHandlerMiddleware>();
             // builder.Services.AddAutoMapper(typeof(ReservationProfile));

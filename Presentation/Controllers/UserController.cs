@@ -9,14 +9,13 @@ namespace Presentation.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class UserController:ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly UserService _userService;
         public UserController(UserService userService)
         {
             _userService = userService;
         }
-
         [HttpGet]
         public ResponseViewModel<IEnumerable<UserInfoResponseViewModel>> GetAllUsers()
         {
@@ -73,6 +72,5 @@ namespace Presentation.Controllers
                 return new ErrorResponseViewModel<bool>(ErrorCode.NotFound, "User not found.");
             return new SuccessResponseViewModel<bool>(true, "User deleted successfully.");
         }
-
     }
 }

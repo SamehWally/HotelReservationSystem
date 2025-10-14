@@ -10,12 +10,23 @@ namespace Application.DI
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<FeedbackService>();
             services.AddScoped<RoomService>();
             services.AddScoped<ReservationService>();
+
+            services.AddScoped<AuthService>();
+            services.AddScoped<OfferService>();
+            services.AddScoped<UserService>();
+            services.AddScoped<RoleService>();
+            services.AddScoped<FeatureService>();
+            services.AddScoped<UserRoleService>();
+            services.AddScoped<RoleFeatureService>();
+            services.AddScoped<StaffService>();
+            services.AddScoped<ReportService>();
             services.AddScoped<Application.Services.CustomerService>();
             services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
-            services.AddScoped<ITokenService, TokenService>();  
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }

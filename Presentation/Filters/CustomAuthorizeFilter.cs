@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-using Application.Services;
+﻿using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
 
 namespace Presentation.Filters
 {
@@ -28,10 +28,7 @@ namespace Presentation.Filters
                 { StatusCode = StatusCodes.Status401Unauthorized };
                 return;
             }
-            
-            
             var roleIds = user.FindAll(ClaimTypes.Role).Select(r => int.Parse(r.Value)).ToList();
-
             bool hasAccess = await _roleFeatureService.CheckFeatureAccessAsync(roleIds, _featureName);
             if (!hasAccess)
             {
@@ -54,10 +51,6 @@ namespace Presentation.Filters
             //    { StatusCode = StatusCodes.Status403Forbidden };
             //    return;
             //}
-
-            //bool hasAccess = false;
-
-
             //foreach (var roleClaim in roleClaims)
             //{
             //    if (int.TryParse(roleClaim, out int roleId))

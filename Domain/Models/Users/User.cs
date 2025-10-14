@@ -1,10 +1,4 @@
-﻿using Domain.Models;
-using Domain.Models.AccessControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Models.AccessControl;
 
 namespace Domain.Models.Users
 {

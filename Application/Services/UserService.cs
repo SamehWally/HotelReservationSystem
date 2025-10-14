@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +33,7 @@ namespace Application.Services
                     PhoneNumber = user.PhoneNumber ?? "empty",
 
                 };
-            return userDto;
+                return userDto;
             }
             return null!;
         }
@@ -75,7 +75,6 @@ namespace Application.Services
             await _userRepository.AddAsync(user);
             return true;
         }
-
         public ResponseDTO<IEnumerable<UserInfoDto>> GetAllUsers()
         {
             var users = _userRepository.GetAllUsers();
@@ -100,7 +99,5 @@ namespace Application.Services
             await _userRepository.DeleteAsync(userId);
             return true;
         }
-
-
     }
 }

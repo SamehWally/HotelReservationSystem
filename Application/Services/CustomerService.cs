@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.DTOs.Customer;
+﻿using Application.DTOs.Customer;
 using Application.DTOs.Response;
 using Domain.Helpers;
 using Domain.Models.Users;
@@ -21,7 +16,7 @@ namespace Application.Services
         public async Task<ResponseDTO<bool>> RegisterCustomerAsync(AddCustomerDto dto)
         {
             var existing = await _customerRepository.GetByEmailAsync(dto.Email);
-            if (existing != null) return ResponseDTO<bool>.Failure(Domain.Enums.ErrorCode.InvalidInput,"This Email Is Already Exist");
+            if (existing != null) return ResponseDTO<bool>.Failure(Domain.Enums.ErrorCode.InvalidInput, "This Email Is Already Exist");
 
             var user = new User
             {
@@ -30,8 +25,8 @@ namespace Application.Services
                 Username = HashHelper.ComputeHash(dto.UserName),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                City= dto.City,
-                Country= dto.Country,
+                City = dto.City,
+                Country = dto.Country,
 
             };
 
@@ -43,7 +38,7 @@ namespace Application.Services
             };
 
             await _customerRepository.AddAsync(customer); // implement to add both user + customer or rely on cascade
-            return ResponseDTO<bool>.Success( true);
+            return ResponseDTO<bool>.Success(true);
         }
         public async Task<ResponseDTO<List<Customer>>> GetAllCustomersAsync()
         {
@@ -62,16 +57,14 @@ namespace Application.Services
             if (customer == null) return ResponseDTO<Customer>.Failure(Domain.Enums.ErrorCode.NotFound, "Customer Not Found");
             return ResponseDTO<Customer>.Success(customer);
         }
-        public  Task<ResponseDTO<Customer>> UpdateCustomer(UpatedCustomerDto dto)
+        public Task<ResponseDTO<Customer>> UpdateCustomer(UpatedCustomerDto dto)
         {
             throw new NotImplementedException();
         }
-        public  Task<ResponseDTO<Customer>> DeleteCustomer(int customerId)
+        public Task<ResponseDTO<Customer>> DeleteCustomer(int customerId)
         {
             throw new NotImplementedException();
 
         }
-
-
     }
 }

@@ -10,7 +10,7 @@ namespace Presentation.Controllers
 {
     [Route("[controller]/[Action]")]
     [ApiController]
-    public class CustomerController:ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly CustomerService _customerService;
         private readonly IMapper _mapper;
@@ -22,14 +22,16 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<ResponseViewModel<bool>> RegisterCustomer([FromBody] AddCustomerVM cutomerVM)
         {
-           var dto= _mapper.Map<AddCustomerDto>(cutomerVM);
+            var dto = _mapper.Map<AddCustomerDto>(cutomerVM);
 
             var result = await _customerService.RegisterCustomerAsync(dto);
             if (!result.IsSuccess)
-            {
-                return new ErrorResponseViewModel<bool>(ErrorCode.NotFound);
+        {
+                return new ErrorResponseViewModel<bool>(ErrorCode.InternalError, result.Message);
             }
-            return new SuccessResponseViewModel<bool> (result.Data);
+
+            var mapped = _mapper.Map<bool>(result.Data);
+            return new SuccessResponseViewModel<bool>(mapped);
         }
 
     }
