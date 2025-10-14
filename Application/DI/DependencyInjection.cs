@@ -22,12 +22,11 @@ namespace Application.DI
             services.AddScoped<UserRoleService>();
             services.AddScoped<RoleFeatureService>();
             services.AddScoped<StaffService>();
-
+            services.AddScoped<ReportService>();
             services.AddScoped<Application.Services.CustomerService>();
             services.AddScoped<ICredentialsAuthenticator, CredentialsAuthenticator>();
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             services.AddScoped<ITokenService, TokenService>();
-
 
             return services;
         }
