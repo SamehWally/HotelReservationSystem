@@ -66,7 +66,5 @@ namespace Application.Services
             throw new NotImplementedException();
 
         }
-
-
     }
 }

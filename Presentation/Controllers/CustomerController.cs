@@ -3,6 +3,7 @@ using Application.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels.Customer;
+using Presentation.ViewModels.Response;
 
 namespace Presentation.Controllers
 {
@@ -19,16 +20,18 @@ namespace Presentation.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterCustomer([FromQuery] AddCustomerVM cutomerVM)
+        public async Task<ResponseViewModel<bool>> RegisterCustomer([FromQuery] AddCustomerVM cutomerVM)
         {
             var dto = _mapper.Map<AddCustomerDto>(cutomerVM);
 
             var result = await _customerService.RegisterCustomerAsync(dto);
             if (!result.IsSuccess)
-            {
-                return BadRequest(result);
+        {
+                return new ErrorResponseViewModel<bool>(ErrorCode.InternalError, result.Message);
             }
-            return Ok(result);
+
+            var mapped = _mapper.Map<bool>(result.Data);
+            return new SuccessResponseViewModel<bool>(mapped);
         }
     }
 }
