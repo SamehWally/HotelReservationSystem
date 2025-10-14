@@ -5,7 +5,7 @@ namespace Presentation.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController:ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly UserService _userService;
         public UserController(UserService userService)
@@ -13,6 +13,6 @@ namespace Presentation.Controllers
             _userService = userService;
         }
 
-        
+
     }
 }

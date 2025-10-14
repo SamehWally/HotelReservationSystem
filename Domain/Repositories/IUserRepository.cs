@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Domain.Models.Users;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models.Users;
 
 namespace Domain.Repositories
 {
@@ -14,7 +9,7 @@ namespace Domain.Repositories
 
         Task<User> GetByEmailAsync(string email);
 
-        Task<User>GetWhere(Expression<Func<User, bool>> predicate);
+        Task<User> GetWhere(Expression<Func<User, bool>> predicate);
 
         Task AddAsync(User user);
         Task UpdateAsync(User entity);

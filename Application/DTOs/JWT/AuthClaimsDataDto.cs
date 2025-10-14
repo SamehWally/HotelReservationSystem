@@ -8,6 +8,6 @@
         IEnumerable<string> FeatureKeys,
         string? Username = null,
         string? Email = null,
-        string? AccountType = null 
+        string? AccountType = null
     );
 }

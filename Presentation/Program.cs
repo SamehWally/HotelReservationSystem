@@ -1,23 +1,13 @@
-using System.Text;
-using Application;
-using Application.DTOs;
+using Application.DI;
 using Application.DTOs.Mapping;
+using Application.DTOs.Reservation;
 using Application.Helpers;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Domain.Models.Room;
-using Domain.Repositories;
 using Infrastructure;
-using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
 using Presentation.Middlewares;
 using Presentation.ViewModels.Mapping;
-using Application.DTOs.Reservation;
-using Application.DI;
+using System.Text;
 
 namespace Presentation
 {
@@ -98,7 +88,7 @@ namespace Presentation
                     ValidateLifetime = true,
 
                 };
-            }); 
+            });
             #endregion
 
             var app = builder.Build();

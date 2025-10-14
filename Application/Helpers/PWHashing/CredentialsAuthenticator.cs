@@ -2,7 +2,6 @@
 using Domain.Models.Auth.Interfaces;
 using Domain.Models.Auth.Models;
 using Domain.Models.Users;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Helpers.PWHashing
 {

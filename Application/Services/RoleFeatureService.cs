@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.DTOs.Response;
+﻿using Application.DTOs.Response;
 using Domain.Enums;
 using Domain.Models.AccessControl;
 using Domain.Repositories;
@@ -26,7 +21,7 @@ namespace Application.Services
             var isAssigned = await _roleFeatureRepository.AssignFeatureToRoleAsync(roleId, featureId);
             return isAssigned
                 ? ResponseDTO<bool>.Success(true, "Feature assigned to role successfully.")
-                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto,"Failed to assign feature to role.");
+                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Failed to assign feature to role.");
         }
 
         public async Task<ResponseDTO<bool>> RemoveFeatureFromRoleAsync(int roleId, int featureId)
@@ -34,12 +29,12 @@ namespace Application.Services
             var isRemoved = await _roleFeatureRepository.SoftRemoveFeatureFromRoleAsync(roleId, featureId);
             return isRemoved
                 ? ResponseDTO<bool>.Success(true, "Feature removed from role successfully.")
-                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto,"Failed to remove feature from role.");
+                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Failed to remove feature from role.");
         }
         public async Task<bool> CheckFeatureAccess(int roleId, string featureName)
         {
-           
-            var features=await _roleFeatureRepository.GetFeatuesOfRoleAsync(roleId);
+
+            var features = await _roleFeatureRepository.GetFeatuesOfRoleAsync(roleId);
             foreach (var feature in features)
             {
                 if (feature.Name == featureName)
@@ -47,7 +42,7 @@ namespace Application.Services
             }
             return false;
 
-            
+
         }
 
         public async Task<ResponseDTO<IEnumerable<Feature>>> GetFeaturesByRoleAsync(int roleId)
