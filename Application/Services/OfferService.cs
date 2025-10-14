@@ -88,7 +88,6 @@ namespace Application.Services
 
             return "Offer created successfully";
         }
-
         public GetOfferById? GetOfferById(int id)
         {
             _offerRepository.UpdateStatus(id);
@@ -178,7 +177,6 @@ namespace Application.Services
             _offerRepository.DeleteOffer(id);
             return true;
         }
-
         public async Task<GetOfferByIdDto?> GetOfferByIdAsync(int id)
         {
             _offerRepository.UpdateStatus(id);

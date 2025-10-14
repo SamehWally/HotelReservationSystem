@@ -28,7 +28,6 @@ namespace Application.Services
 
             return ResponseDTO<Role>.Success(role, "Role added successfully.");
         }
-
         public async Task<ResponseDTO<bool>> DeleteRoleAsync(int id)
         {
             var result = await _roleRepository.DeleteAsync(id);
@@ -36,7 +35,6 @@ namespace Application.Services
                 ? ResponseDTO<bool>.Success(true, "Role deleted successfully.")
                 : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Role not found or failed to delete.");
         }
-
         public async Task<ResponseDTO<Role?>> GetRoleByIdAsync(int id)
         {
             var role = await _roleRepository.GetByIdAsync(id);
@@ -44,7 +42,6 @@ namespace Application.Services
                 ? ResponseDTO<Role?>.Success(role, "Role found.")
                 : ResponseDTO<Role?>.Failure(ErrorCode.FaildResponseDto, "Role not found.");
         }
-
         public async Task<ResponseDTO<Role?>> GetRoleByNameAsync(string roleName)
         {
             var role = await _roleRepository.GetByNameAsync(roleName);

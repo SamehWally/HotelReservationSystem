@@ -21,7 +21,6 @@ namespace Application.Services
                 ? ResponseDTO<bool>.Success(true, "Role assigned successfully.")
                 : ResponseDTO<bool>.Failure(ErrorCode.FaildRoleAssignment, "Failed to assign role.");
         }
-
         public async Task<ResponseDTO<bool>> SoftRemoveRoleFromUserAsync(int userId, int roleId)
         {
             var result = await _userRoleRepository.SoftRemoveRoleFromUserAsync(userId, roleId);
@@ -29,7 +28,6 @@ namespace Application.Services
                 ? ResponseDTO<bool>.Success(true, "Role removed (soft delete) successfully.")
                 : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Failed to soft remove role.");
         }
-
         public async Task<ResponseDTO<bool>> HardRemoveRoleFromUserAsync(int userId, int roleId)
         {
             var result = await _userRoleRepository.HardRemoveRoleFromUserAsync(userId, roleId);
@@ -37,7 +35,6 @@ namespace Application.Services
                 ? ResponseDTO<bool>.Success(true, "Role removed permanently.")
                 : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Failed to hard remove role.");
         }
-
         public async Task<ResponseDTO<IList<Role>>> GetUserRolesAsync(int userId)
         {
             var roles = await _userRoleRepository.GetUserRolesAsync(userId);

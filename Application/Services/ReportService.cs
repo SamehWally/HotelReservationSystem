@@ -31,7 +31,6 @@ public class ReportService
 
     //    return _mapper.Map<List<RevenueReportDto>>(groups);
     //}
-
     public List<PopularRoomDto> GetPopularRoomsReport()
     {
         // Group by RoomId

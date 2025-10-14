@@ -23,7 +23,6 @@ namespace Application.Services
                 ? ResponseDTO<bool>.Success(true, "Feature assigned to role successfully.")
                 : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Failed to assign feature to role.");
         }
-
         public async Task<ResponseDTO<bool>> RemoveFeatureFromRoleAsync(int roleId, int featureId)
         {
             var isRemoved = await _roleFeatureRepository.SoftRemoveFeatureFromRoleAsync(roleId, featureId);
@@ -44,7 +43,6 @@ namespace Application.Services
 
 
         }
-
         public async Task<ResponseDTO<IEnumerable<Feature>>> GetFeaturesByRoleAsync(int roleId)
         {
             var features = await _roleFeatureRepository.GetFeatuesOfRoleAsync(roleId);

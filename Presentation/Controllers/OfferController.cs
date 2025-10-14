@@ -61,10 +61,6 @@ namespace Presentation.Controllers
             return new SuccessResponseViewModel<GetOfferViewModel>(offerVM);
 
         }
-
-
-
-
         [HttpPut]
         [Consumes("multipart/form-data")]
         public async Task<ResponseViewModel<string>> UpdateOffer([FromForm] UpdateOfferVM viewModel)
@@ -88,7 +84,6 @@ namespace Presentation.Controllers
 
             return new SuccessResponseViewModel<string>(offer);
         }
-
         [HttpDelete("id")]
         public bool DeleteOffer(int id)
         {
@@ -99,11 +94,6 @@ namespace Presentation.Controllers
             }
             return true;
         }
-
-
-
-
-
         [HttpGet("GetOfferByIdWithRoom")]
         public async Task<ResponseViewModel<GetOfferByIdVM>> GetOfferByIdWithRoom(int id)
         {
@@ -127,9 +117,6 @@ namespace Presentation.Controllers
             return new SuccessResponseViewModel<GetOfferByIdVM>(offerVM);
 
         }
-
-
-
         [HttpGet("GetAllOfferWithRoom")]
         public async Task<ResponseViewModel<List<GetAllOfferVM>>> GetAllOfferWithRoom()
         {
