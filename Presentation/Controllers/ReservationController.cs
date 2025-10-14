@@ -106,10 +106,24 @@ namespace Presentation.Controllers
 
             var ReservationDto = _mapper.Map<AddReservationDto>(addReservationVM);
             var Reselt = _reservationService.addReservation(ReservationDto);
-            if(Reselt.Message == "Reservation created successfully")
-            return new SuccessResponseViewModel<ReservationResponse>(Reselt);
+            if (Reselt.Message == "Reservation created successfully")
+                return new ReservationResponse
+                {
+                    CheckIn = Reselt.CheckIn,
+                    CheckOut = Reselt.CheckOut,
+                    RoomId = Reselt.RoomId,
+                    CustomerId = Reselt.CustomerId,
+                    Message = Reselt.Message
+                };
             else
-                return new ErrorResponseViewModel<ReservationResponse>(ErrorCode.AddedFailed, Reselt.Message);
+                return new ReservationResponse
+                {
+                    CheckIn = Reselt.CheckIn,
+                    CheckOut = Reselt.CheckOut,
+                    RoomId = Reselt.RoomId,
+                    CustomerId = Reselt.CustomerId,
+                    Message = "Reservation creation failed"
+                }; ;
         }
         [HttpPut("cancel")]
         public async Task<ResponseViewModel<bool>> CancelReservation(CancelReservationViewModel cancelReservationVM)
