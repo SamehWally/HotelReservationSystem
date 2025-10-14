@@ -57,14 +57,20 @@ public class ReportService
     }
     public List<CustomerBookingAnalyticsDto> GetCustomerBookingAnalytics()
     {
-        var query = _reportRepository.GetAllReservations()
-            .Include(c => c.Customer)
-            .ThenInclude(static c => c.User)
-            .GroupBy(r => r.CustomerId)
-            .ToList();
+        var query =
+    from r in _reportRepository.GetAllReservations()
+    join c in _reportRepository.GetAllCustomers() on r.CustomerId equals c.Id
+    join u in _reportRepository.GetAllUsers() on c.UserId equals u.Id
+    group new { r, u } by new { c.Id, u.FirstName, u.LastName } into g
+    select new CustomerBookingAnalyticsDto
+    {
+        CustomerId = g.Key.Id,
+        CustomerName = $"{g.Key.FirstName} {g.Key.LastName}".Trim(),
+        TotalReservations = g.Count()
+    };
 
-        var report = _mapper.Map<List<CustomerBookingAnalyticsDto>>(query);
+        return query.OrderByDescending(r => r.TotalReservations).ToList();
 
-        return report.OrderByDescending(r => r.TotalReservations).ToList();
     }
+
 }

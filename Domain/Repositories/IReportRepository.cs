@@ -10,6 +10,8 @@ namespace Domain.Repositories
         IQueryable<Reservation> GetAllReservations();
         IQueryable<Room> GetAllRooms();
         IQueryable<Customer> GetAllCustomers();
+        IQueryable<User> GetAllUsers();
+
 
     }
 }

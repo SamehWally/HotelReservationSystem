@@ -29,5 +29,9 @@ namespace Infrastructure.Repository
         {
             return _context.Customers;
         }
+        public IQueryable<User> GetAllUsers()
+        {
+            return _context.Users;
+        }
     }
 }
