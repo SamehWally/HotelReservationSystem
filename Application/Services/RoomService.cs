@@ -1,10 +1,10 @@
-﻿using AutoMapper;
+﻿using Application.DTOs.Room;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Enums.RoomType;
 using Domain.Models.Room;
-using Microsoft.EntityFrameworkCore;
-using Application.DTOs.Room;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
@@ -39,7 +39,7 @@ namespace Application.Services
             _roomRepository.AddRoom(newRoom);
             return newRoom.Id;
         }
-        public  GetRoomDto? GetRoomById(int id)
+        public GetRoomDto? GetRoomById(int id)
         {
             var room = _roomRepository.GetRoomById(id);
             var roomDto = _mapper.Map<GetRoomDto>(room);
@@ -84,7 +84,7 @@ namespace Application.Services
             roomInDb.Name = roomDTO.Name;
             roomInDb.Type = (RoomType)roomDTO.Type;
             roomInDb.PricePerNight = roomDTO.PricePerNight;
-            roomInDb.Description = roomDTO.Description??"empty";
+            roomInDb.Description = roomDTO.Description ?? "empty";
             roomInDb.RoomFacilities.Clear();
             roomInDb.RoomFacilities = roomDTO.FacilityIds
                 .Select(id => new RoomFacility { FacilityId = id, RoomId = roomInDb.Id })

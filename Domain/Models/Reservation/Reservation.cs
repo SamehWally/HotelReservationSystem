@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Enums;
+﻿using Domain.Enums;
 using Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Domain.Models.Reservation
 {
     [Index(nameof(RoomId), nameof(CheckIn))]
     [Index(nameof(RoomId), nameof(CheckOut))]
-    public class Reservation:BaseModel
+    public class Reservation : BaseModel
     {
         public int Number { get; set; }
         public DateTime CheckIn { get; set; }

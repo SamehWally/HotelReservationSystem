@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.DTOs.Response;
+﻿using Application.DTOs.Response;
 using Domain.Enums;
 using Domain.Models.AccessControl;
 using Domain.Repositories;
@@ -30,7 +25,7 @@ namespace Application.Services
             var result = await _featureRepository.DeleteAsync(id);
             return result
                 ? ResponseDTO<bool>.Success(true, "Feature deleted successfully.")
-                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto,"Feature not found or failed to delete.");
+                : ResponseDTO<bool>.Failure(ErrorCode.FaildResponseDto, "Feature not found or failed to delete.");
         }
 
         public async Task<ResponseDTO<Feature?>> GetFeatureByIdAsync(int id)
@@ -38,7 +33,7 @@ namespace Application.Services
             var feature = await _featureRepository.GetByIdAsync(id);
             return feature != null
                 ? ResponseDTO<Feature?>.Success(feature, "Feature found.")
-                : ResponseDTO<Feature?>.Failure(ErrorCode.FaildResponseDto,"Feature not found.");
+                : ResponseDTO<Feature?>.Failure(ErrorCode.FaildResponseDto, "Feature not found.");
         }
 
         public async Task<ResponseDTO<Feature?>> GetFeatureByNameAsync(string featureName)
@@ -46,7 +41,7 @@ namespace Application.Services
             var feature = await _featureRepository.GetByNameAsync(featureName);
             return feature != null
                 ? ResponseDTO<Feature?>.Success(feature, "Feature found.")
-                : ResponseDTO<Feature?>.Failure(ErrorCode.FaildResponseDto,"Feature not found.");
+                : ResponseDTO<Feature?>.Failure(ErrorCode.FaildResponseDto, "Feature not found.");
         }
     }
 

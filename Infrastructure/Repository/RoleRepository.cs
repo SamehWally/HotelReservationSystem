@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Models.AccessControl;
+﻿using Domain.Models.AccessControl;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class RoleRepository:IRoleRepository
+    public class RoleRepository : IRoleRepository
     {
         private readonly Context _context;
         public RoleRepository(Context context)
@@ -25,10 +20,10 @@ namespace Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var role=await GetByIdAsync(id);
-            if(role is not null)
+            var role = await GetByIdAsync(id);
+            if (role is not null)
             {
-                role.IsDeleted=true;
+                role.IsDeleted = true;
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -37,7 +32,7 @@ namespace Infrastructure.Repository
 
         public async Task<Role?> GetByIdAsync(int id)
         {
-            var role = await _context.Roles.FirstOrDefaultAsync(r=>r.Id==id&&!r.IsDeleted);
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
             return role;
         }
 
