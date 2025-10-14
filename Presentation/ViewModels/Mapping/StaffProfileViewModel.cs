@@ -11,6 +11,8 @@ namespace Presentation.ViewModels.Mapping
             CreateMap<AddStaffVM, CreateStaffDto>();
             CreateMap<StaffDto, StaffVM>();
             CreateMap<StaffUpdateDto, StaffUpdateVM>().ReverseMap();
+
+
         }
     }
 }
